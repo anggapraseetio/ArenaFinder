@@ -395,7 +395,13 @@ $conn->close();
                                                         $totalAccepted = $rowAccepted["total_accepted"];
 
                                                         // Hitung persentase jadwal yang masih pending
-                                                        $persentasePending = ($totalPending / ($totalPending + $totalAccepted)) * 100;
+                                                        // $persentasePending = ($totalPending / ($totalPending + $totalAccepted)) * 100;
+                                                        if ($totalPending + $totalAccepted > 0) {
+                                                            $persentasePending = ($totalPending / ($totalPending + $totalAccepted)) * 100;
+                                                        } else {
+                                                            $persentasePending = 0; // Atau nilai default lainnya jika totalPending + totalAccepted = 0
+                                                        }
+                                                        
 
                                                         // Menampilkan hasil persentase ke dalam elemen sebelumnya
                                                         echo '<div class="col-auto">';

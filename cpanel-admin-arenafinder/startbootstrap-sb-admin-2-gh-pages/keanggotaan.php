@@ -7,6 +7,9 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 
+$error2 = "";
+$sukses2 = "";
+
 $email = $_SESSION['email'];
 
 $userName = $_SESSION['username'];

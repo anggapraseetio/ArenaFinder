@@ -1,9 +1,9 @@
 <?php
 // konfigurasi database
-$server = "103.247.11.134";
-$username = "tifz1761_root";
-$password = "tifnganjuk321";
-$database = "tifz1761_arenafinder";
+$server = "localhost"; 
+$username = "root";
+$password = "";
+$database = "arenafinder";
 
 // membuat koneksi ke databae
 $conn = new mysqli($server, $username, $password, $database);

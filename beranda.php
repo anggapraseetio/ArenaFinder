@@ -5,9 +5,24 @@ $username_db = "root";
 $password_db = "";
 $dbname = "arenafinder";
 
+// Membuat koneksi
 $conn = new mysqli($servername, $username_db, $password_db, $dbname);
 
+// Cek koneksi
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
+}
 ?>
+
+// session_start();
+// $servername = "localhost";
+// $username_db = "root";
+// $password_db = "";
+// $dbname = "arenafinder";
+
+// $conn = new mysqli($servername, $username_db, $password_db, $dbname);
+
+
 
 <!DOCTYPE html>
 <html lang="en">

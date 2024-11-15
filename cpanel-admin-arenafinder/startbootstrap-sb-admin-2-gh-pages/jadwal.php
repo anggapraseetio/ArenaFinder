@@ -7,6 +7,7 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 
+// $sportFromDB = ""; 
 if (isset($_SESSION['sport'])) {
     // Assign the value to $sportFromDB
     $sportFromDB = $_SESSION['sport'];

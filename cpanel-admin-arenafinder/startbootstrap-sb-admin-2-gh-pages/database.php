@@ -1,11 +1,11 @@
 <?php
 
-$servername = "localhost";
-$username_db = "tifz1761_root";
-$password_db = "tifnganjuk321";
-$dbname = "tifz1761_arenafinder";
+$server = "localhost"; 
+$username = "root";
+$password = "";
+$database = "arenafinder";
 
-$conn = new mysqli($servername, $username_db, $password_db, $dbname);
+$conn = new mysqli($server, $username, $password, $database);
 
 if ($conn->connect_errno) {
     die("Koneksi ke database gagal: " . $conn->connect_error);
