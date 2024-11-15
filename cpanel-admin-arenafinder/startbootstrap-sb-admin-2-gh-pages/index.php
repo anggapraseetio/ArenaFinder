@@ -23,7 +23,6 @@ if ($q2->num_rows > 0) {
     // Ambil hasil query`
     $row = $q2->fetch_assoc();
     $totalMember = $row["total_member"];
-
 } else {
     echo "Tidak ada data keanggotaan.";
 }
@@ -36,7 +35,6 @@ if ($q2->num_rows > 0) {
     // Ambil hasil query`
     $row = $q2->fetch_assoc();
     $totalPesan = $row["jadwal_dipesan"];
-
 } else {
     echo "Data jadwal dipesan tidak ditemukan.";
 }
@@ -49,7 +47,6 @@ if ($q2->num_rows > 0) {
     // Ambil hasil query`
     $row = $q2->fetch_assoc();
     $totalBelumDipesan = $row["jadwal_kosong"];
-
 } else {
     echo "Data jadwal belum dipesan tidak ditemukan.";
 }
@@ -73,6 +70,7 @@ $conn->close();
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -190,10 +188,10 @@ $conn->close();
 
             <!-- Your Badge Script with AJAX -->
             <script>
-                setInterval(function () {
+                setInterval(function() {
                     function loadDoc() {
                         var xhttp = new XMLHttpRequest();
-                        xhttp.onreadystatechange = function () {
+                        xhttp.onreadystatechange = function() {
                             if (this.readyState == 4 && this.status == 200) {
                                 document.getElementById("pesanan-link").innerHTML = this.responseText;
                             }
@@ -401,7 +399,7 @@ $conn->close();
                                                         } else {
                                                             $persentasePending = 0; // Atau nilai default lainnya jika totalPending + totalAccepted = 0
                                                         }
-                                                        
+
 
                                                         // Menampilkan hasil persentase ke dalam elemen sebelumnya
                                                         echo '<div class="col-auto">';
@@ -490,9 +488,12 @@ $conn->close();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
+
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -500,12 +501,7 @@ $conn->close();
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
 
