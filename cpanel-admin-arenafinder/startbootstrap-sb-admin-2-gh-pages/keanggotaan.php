@@ -188,7 +188,7 @@ if ($error || $sukses || $error2 || $sukses2) {
 
     <script>
         // JavaScript code to focus on the search input when "F" key is pressed
-        document.addEventListener('keydown', function (event) {
+        document.addEventListener('keydown', function(event) {
             // Check if the pressed key is 'F' (case-insensitive)
             if (event.key.toLowerCase() === '/') {
                 // Focus on the search input
@@ -292,10 +292,10 @@ if ($error || $sukses || $error2 || $sukses2) {
 
             <!-- Your Badge Script with AJAX -->
             <script>
-                setInterval(function () {
+                setInterval(function() {
                     function loadDoc() {
                         var xhttp = new XMLHttpRequest();
-                        xhttp.onreadystatechange = function () {
+                        xhttp.onreadystatechange = function() {
                             if (this.readyState == 4 && this.status == 200) {
                                 document.getElementById("pesanan-link").innerHTML = this.responseText;
                             }
@@ -394,7 +394,7 @@ if ($error || $sukses || $error2 || $sukses2) {
                             // Periksa level pengguna
                             if ($level != 'SUPER ADMIN') {
                                 // Tampilkan form hanya jika level bukan 'SUPER ADMIN'
-                                ?>
+                            ?>
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
                                         style="background-color: #02406d; color: white">
@@ -433,7 +433,7 @@ if ($error || $sukses || $error2 || $sukses2) {
 
 
                                                 <script>
-                                                    document.addEventListener('DOMContentLoaded', function () {
+                                                    document.addEventListener('DOMContentLoaded', function() {
                                                         // Function to create and display error messages
                                                         function showError(element, message) {
                                                             // Check if an error message element already exists
@@ -467,7 +467,7 @@ if ($error || $sukses || $error2 || $sukses2) {
                                                         var lokasiInput = document.getElementById('alamat');
 
                                                         // Add input event listeners to trigger validation
-                                                        namaTempatInput.addEventListener('input', function () {
+                                                        namaTempatInput.addEventListener('input', function() {
                                                             var namaTempatValue = this.value;
 
                                                             if (/^\d+$/.test(namaTempatValue)) {
@@ -481,7 +481,7 @@ if ($error || $sukses || $error2 || $sukses2) {
                                                             }
                                                         });
 
-                                                        lokasiInput.addEventListener('input', function () {
+                                                        lokasiInput.addEventListener('input', function() {
                                                             var lokasiValue = this.value;
 
                                                             // Memeriksa apakah input hanya terdiri dari angka
@@ -533,7 +533,7 @@ if ($error || $sukses || $error2 || $sukses2) {
                                                     var hargaInput = document.getElementById("harga");
 
                                                     // Tambahkan event listener untuk memantau perubahan pada pilihan jam_main
-                                                    jamMainSelect.addEventListener("change", function () {
+                                                    jamMainSelect.addEventListener("change", function() {
                                                         // Mendapatkan nilai yang dipilih oleh pengguna
                                                         var selectedValue = jamMainSelect.value;
 
@@ -556,7 +556,6 @@ if ($error || $sukses || $error2 || $sukses2) {
                                                         // Masukkan harga ke dalam input harga
                                                         hargaInput.value = harga;
                                                     });
-
                                                 </script>
 
                                                 <div class="mb-3 row">
@@ -570,7 +569,7 @@ if ($error || $sukses || $error2 || $sukses2) {
 
                                                         foreach ($daysOfWeek as $day) {
                                                             $isChecked = in_array($day, $selectedDays) ? "checked" : "";
-                                                            ?>
+                                                        ?>
                                                             <div class="form-check mx-3">
                                                                 <input class="form-check-input" type="checkbox"
                                                                     name="hari_main[]" id="<?= strtolower($day) ?>"
@@ -601,34 +600,34 @@ if ($error || $sukses || $error2 || $sukses2) {
                                                             required>
                                                             <option value="">-Durasi Main-</option>
                                                             <option value="1" <?php if ($durasi == "1")
-                                                                echo "selected" ?>>1
-                                                                    jam
-                                                                </option>
-                                                                <option value="2" <?php if ($durasi == "2")
-                                                                echo "selected" ?>>2
-                                                                    jam
-                                                                </option>
-                                                                <option value="3" <?php if ($durasi == "3")
-                                                                echo "selected" ?>>3
-                                                                    jam
-                                                                </option>
-                                                                <option value="4" <?php if ($durasi == "4")
-                                                                echo "selected" ?>>4
-                                                                    jam
-                                                                </option>
-                                                                <option value="5" <?php if ($durasi == "5")
-                                                                echo "selected" ?>>5
-                                                                    jam
-                                                                </option>
-                                                            </select>
-                                                        </div>
+                                                                                    echo "selected" ?>>1
+                                                                jam
+                                                            </option>
+                                                            <option value="2" <?php if ($durasi == "2")
+                                                                                    echo "selected" ?>>2
+                                                                jam
+                                                            </option>
+                                                            <option value="3" <?php if ($durasi == "3")
+                                                                                    echo "selected" ?>>3
+                                                                jam
+                                                            </option>
+                                                            <option value="4" <?php if ($durasi == "4")
+                                                                                    echo "selected" ?>>4
+                                                                jam
+                                                            </option>
+                                                            <option value="5" <?php if ($durasi == "5")
+                                                                                    echo "selected" ?>>5
+                                                                jam
+                                                            </option>
+                                                        </select>
                                                     </div>
+                                                </div>
 
-                                                    <div class="mb-3 row">
-                                                        <label for="harga" class="col-sm-2 col-form-label">Harga</label>
-                                                        <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="harga" name="harga"
-                                                                readonly value="<?php echo $harga ?>">
+                                                <div class="mb-3 row">
+                                                    <label for="harga" class="col-sm-2 col-form-label">Harga</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="harga" name="harga"
+                                                            readonly value="<?php echo $harga ?>">
                                                         <input type="text" class="form-control" id="status" name="status"
                                                             hidden value="Member Aktif">
                                                     </div>
@@ -654,7 +653,7 @@ if ($error || $sukses || $error2 || $sukses2) {
                                 var hargaInput = document.getElementById("harga");
 
                                 // Tambahkan event listener untuk memantau perubahan pada pilihan jam_main
-                                jamMainSelect.addEventListener("change", function () {
+                                jamMainSelect.addEventListener("change", function() {
                                     // Mendapatkan nilai yang dipilih oleh pengguna
                                     var selectedValue = jamMainSelect.value;
 
@@ -677,7 +676,6 @@ if ($error || $sukses || $error2 || $sukses2) {
                                     // Masukkan harga ke dalam input harga
                                     hargaInput.value = harga;
                                 });
-
                             </script>
 
                             <!-- DataTales Example -->
@@ -709,7 +707,7 @@ if ($error || $sukses || $error2 || $sukses2) {
                                         </form>
 
                                         <script>
-                                            document.getElementById('searchButton').addEventListener('click', function (event) {
+                                            document.getElementById('searchButton').addEventListener('click', function(event) {
                                                 var searchInput = document.getElementById('searchInput');
 
                                                 if (searchInput.value === '') {
@@ -721,7 +719,7 @@ if ($error || $sukses || $error2 || $sukses2) {
                                                     var xhr = new XMLHttpRequest();
                                                     xhr.open('GET', 'aktivitas.php?checkValue=' + encodeURIComponent(searchInput.value), true);
 
-                                                    xhr.onload = function () {
+                                                    xhr.onload = function() {
                                                         if (xhr.status === 200) {
                                                             console.log(xhr.responseText);
                                                             var response = JSON.parse(xhr.responseText);
@@ -742,13 +740,13 @@ if ($error || $sukses || $error2 || $sukses2) {
                                                 }
                                             });
 
-                                            document.getElementById('searchInput').addEventListener('click', function () {
+                                            document.getElementById('searchInput').addEventListener('click', function() {
                                                 var searchInput = document.getElementById('searchInput');
                                                 searchInput.placeholder = 'Cari Aktivitas';
                                                 searchInput.style.borderColor = '';
                                             });
 
-                                            document.addEventListener('keydown', function (event) {
+                                            document.addEventListener('keydown', function(event) {
                                                 var searchInput = document.getElementById('searchInput');
 
                                                 // Check if the 'F' key is pressed and the placeholder is 'Kolom pencarian tidak boleh kosong!'
@@ -865,8 +863,8 @@ if ($error || $sukses || $error2 || $sukses2) {
                                                     $harga = $r2['harga'];
                                                     $status = $r2['status'];
                                                     $email = $r2['email']; // Tambahkan baris ini untuk mendapatkan data email
-                                                
-                                                    ?>
+
+                                                ?>
                                                     <tr>
                                                         <th scope="row">
                                                             <?php echo $urut++ ?>
@@ -928,7 +926,6 @@ if ($error || $sukses || $error2 || $sukses2) {
                                                                 isset($_SESSION['email']) && $_SESSION['email'] ===
                                                                 'arenafinder.app@gmail.com'
                                                             ) {
-
                                                             } else {
                                                                 // User is not logged in or has a different email, show the Edit button
                                                                 echo '<a href="keanggotaan.php?op=edit&id=' . $id . '"><button type="button"
@@ -940,7 +937,7 @@ if ($error || $sukses || $error2 || $sukses2) {
                                                                     type="button" class="btn btn-danger">Delete</button></a>
                                                         </td>
                                                     </tr>
-                                                    <?php
+                                                <?php
                                                 } ?>
                                             </tbody>
 
@@ -1023,6 +1020,8 @@ if ($error || $sukses || $error2 || $sukses2) {
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
