@@ -121,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $tmp = $_FILES['foto']['tmp_name'];
 
                         // Tentukan folder tempat menyimpan gambar (ganti dengan folder Anda)
-                        $upload_folder = '../public/img/venue/';
+                        $upload_folder = '../';
 
                         // Pindahkan file gambar ke folder tujuan
                         if (move_uploaded_file($tmp, $upload_folder . $nama_file)) {
@@ -177,14 +177,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-if ($error || $sukses || $error2 || $sukses2) {
-    // Set header sebelum mencetak pesan
-    $refreshUrl = "aktivitas.php";
-    if ($error2 || $sukses2) {
-        $refreshUrl .= "#tabel-card";
-    }
-    header("refresh:2;url=$refreshUrl"); // 2 = detik
-}
+
 
 ?>
 <!DOCTYPE html>
@@ -603,7 +596,7 @@ if ($error || $sukses || $error2 || $sukses2) {
                                                 <?php
                                                 // Tampilkan gambar jika ada
                                                 if (!empty($nama_file)) {
-                                                    echo "<img src='../public/img/venue/$nama_file' alt='Gambar' style='width: 100px; height: auto;'>";
+                                                    echo "<img src='../$nama_file' alt='Gambar' style='width: 100px; height: auto;'>";
                                                 }
                                                 ?>
                                             </div>
