@@ -68,7 +68,7 @@ if ($op == 'edit') {
         $waktu_mulai = $r1['start_hour'];
         $waktu_selesai = $r1['end_hour'];
         $harga = $r1['price'];
-        $status = $r1['status_pemesanan'];
+        // $status = $r1['status_pemesanan'];
 
         if ($jenis_lap == '') {
             $error = "Data tidak ditemukan";
@@ -184,14 +184,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
 }
 
 
-if ($error || $sukses || $error2 || $sukses2) {
-    // Set header sebelum mencetak pesan
-    $refreshUrl = "jadwal.php";
-    if ($error2 || $sukses2) {
-        $refreshUrl .= "#tabel-card";
-    }
-    header("refresh:2;url=$refreshUrl"); // 2 = detik
-}
+// if ($error || $sukses || $error2 || $sukses2) {
+//     // Set header sebelum mencetak pesan
+//     $refreshUrl = "jadwal.php";
+//     if ($error2 || $sukses2) {
+//         $refreshUrl .= "#tabel-card";
+//     }
+//     header("refresh:2;url=$refreshUrl"); // 2 = detik
+// }
 
 ?>
 <!DOCTYPE html>
