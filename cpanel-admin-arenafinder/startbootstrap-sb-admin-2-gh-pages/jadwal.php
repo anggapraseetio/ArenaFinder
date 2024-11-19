@@ -68,7 +68,7 @@ if ($op == 'edit') {
         $waktu_mulai = $r1['start_hour'];
         $waktu_selesai = $r1['end_hour'];
         $harga = $r1['price'];
-        $status = $r1['status_pemesanan'];
+        //$status = $r1['status_pemesanan'];
 
         if ($jenis_lap == '') {
             $error = "Data tidak ditemukan";

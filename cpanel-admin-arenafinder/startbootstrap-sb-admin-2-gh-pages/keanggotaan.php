@@ -70,15 +70,24 @@ function generateAutoId($conn)
     return $newId;
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nama = $_POST['nama'];
-    $alamat = $_POST['alamat'];
-    $no_telp = $_POST['no_telp'];
-    $hari = implode(",", $_POST['hari_main']);
-    $waktu = $_POST['waktu_main'];
-    $durasi = $_POST['durasi_main'];
-    $harga = $_POST['harga'];
-    $status = $_POST['status'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") { 
+$nama = mysqli_real_escape_string($conn, $_POST['nama']);
+$alamat = mysqli_real_escape_string($conn, $_POST['alamat']);
+$no_telp = mysqli_real_escape_string($conn, $_POST['no_telp']);
+$hari = mysqli_real_escape_string($conn, implode(",", $_POST['hari_main']));
+$waktu = mysqli_real_escape_string($conn, $_POST['waktu_main']);
+$durasi = mysqli_real_escape_string($conn, $_POST['durasi_main']);
+$harga = mysqli_real_escape_string($conn, $_POST['harga']);
+$status = mysqli_real_escape_string($conn, $_POST['status']);
+
+    // $nama = $_POST['nama'];
+    // $alamat = $_POST['alamat'];
+    // $no_telp = $_POST['no_telp'];
+    // $hari = implode(",", $_POST['hari_main']);
+    // $waktu = $_POST['waktu_main'];
+    // $durasi = $_POST['durasi_main'];
+    // $harga = $_POST['harga'];
+    // $status = $_POST['status'];
 
     $email = $_SESSION['email'];
     $fetchVenueIdQuery = "SELECT id_venue, email FROM venues WHERE email = '$email'";
