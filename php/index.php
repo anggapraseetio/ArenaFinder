@@ -1,9 +1,10 @@
 <?php
 session_start();
-$servername = "localhost";
-$username_db = "tifz1761_root";
-$password_db = "tifnganjuk321";
-$dbname = "tifz1761_arenafinder";
+// $servername = "localhost";
+// $username_db = "tifz1761_root";
+// $password_db = "tifnganjuk321";
+// $dbname = "tifz1761_arenafinder";
+include("koneksi.php");
 
 $conn = new mysqli($servername, $username_db, $password_db, $dbname);
 
@@ -39,7 +40,7 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beranda</title>
-    <link rel="stylesheet" href="css/beranda.css">
+    <link rel="stylesheet" href="/ArenaFinder/css/beranda.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
@@ -51,7 +52,7 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
     <!-- Link Swiper's CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
     <!-- <link rel="icon" href="img_asset/logo (1).png"> -->
-    <link rel="icon" href="img_asset/login.png">
+    <link rel="icon" href="/ArenaFinder/img_asset/login.png">
     <style>
         body {
             overflow-x: hidden;
@@ -1158,7 +1159,7 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
                 margin-left: 0px;
                 margin-right: 0px;
             }
-            
+
             .swiper {
                 width: 80%;
                 margin-top: -900px;
@@ -1242,8 +1243,8 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
 
     <div class="constructor" id="con-awal">
         <div id="con-img">
-            <img src="img_asset/logo (1).png" class="img1 img-fluid" alt="..." />
-            <img src="img_asset/logo2.png" class="img2 img-fluid" alt="..." />
+            <img src="/ArenaFinder/img_asset/logo (1).png" class="img1 img-fluid" alt="..." />
+            <img src="/ArenaFinder/img_asset/logo2.png" class="img2 img-fluid" alt="..." />
         </div>
 
         <h1 id="judul" class="title">Aktivitas penunjang kehidupan yang lebih sehat dan menyenangkan</h1>
@@ -1263,7 +1264,7 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
             </form>
         </div>
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('DOMContentLoaded', function() {
                 flatpickr("#staticEmail", {
                     enableTime: false, // Enable time selection
                     minDate: "today", // Set the minimum date to today
@@ -1279,18 +1280,18 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
         <div class="btn-sub-menu">
             <a href="alur-pesan.php">
                 <button class="btn" type="button" style="font-weight: 100;" id="alur-btn">Alur Pemesanan
-                    <img src="img_asset/geocaching_40px (1).png" alt="">
+                    <img src="/ArenaFinder/img_asset/geocaching_40px (1).png" alt="">
                 </button>
             </a>
             <a href="aktivitas.php">
                 <button class="btn-1" type="button" style="font-weight: 100;">Aktivitas Komunitas
-                    <img src="img_asset/people_48px (1).png" alt="" id="aktiv-btn">
+                    <img src="/ArenaFinder/img_asset/people_48px (1).png" alt="" id="aktiv-btn">
                 </button>
             </a>
             <form method="post">
                 <button class="btn-2" type="submit" name="status_lap_button" style="font-weight: 100;">
                     Status Lapangan
-                    <img src="img_asset/info_64px (1).png" alt="" id="status-btn">
+                    <img src="/ArenaFinder/img_asset/info_64px (1).png" alt="" id="status-btn">
                 </button>
             </form>
             <a href="boots/pesanan.php">
@@ -1307,15 +1308,15 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
             <div class="persegi2"></div>
             <div id="button-type">
                 <button class="btn-4" type="button">
-                    <img src="img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt=""><span>Futsal</span></button>
+                    <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt=""><span>Futsal</span></button>
                 <button class="btn-5" type="button">
-                    <img src="img_asset/bulu tangkis.jpg" alt=""><span>Bulu Tangkis</span></button>
+                    <img src="/ArenaFinder/img_asset/bulu tangkis.jpg" alt=""><span>Bulu Tangkis</span></button>
                 <button class="btn-6" type="button">
-                    <img src="img_asset/voli.jpg" alt=""><span>Bola Voli </span></button>
+                    <img src="/ArenaFinder/img_asset/voli.jpg" alt=""><span>Bola Voli </span></button>
                 <button class="btn-7" type="button">
-                    <img src="img_asset/basket.jpg" alt=""><span>Bola Basket</span></button>
+                    <img src="/ArenaFinder/img_asset/basket.jpg" alt=""><span>Bola Basket</span></button>
                 <button class="btn-8" type="button">
-                    <img src="img_asset/sepak bola.jpg" alt=""><span>Sepak Bola</span></button>
+                    <img src="/ArenaFinder/img_asset/sepak bola.jpg" alt=""><span>Sepak Bola</span></button>
             </div>
         </div>
 
@@ -1333,15 +1334,15 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
                     </div>
                     <div class="carousel-inner mx-3 my-1">
                         <div class="carousel-item active">
-                            <img src="img_asset/connor-coyne-OgqWLzWRSaI-unsplash.jpg" class="d-block w-100" alt="..."
+                            <img src="/ArenaFinder/img_asset/connor-coyne-OgqWLzWRSaI-unsplash.jpg" class="d-block w-100" alt="..."
                                 style="height: 500px;">
                         </div>
                         <div class="carousel-item">
-                            <img src="img_asset/badmin_community.jpg" class="d-block w-100" alt="..."
+                            <img src="/ArenaFinder/img_asset/badmin_community.jpg" class="d-block w-100" alt="..."
                                 style="height: 500px;">
                         </div>
                         <div class="carousel-item">
-                            <img src="img_asset/bg-member.png" class="d-block w-100" alt="..." style="height: 500px;">
+                            <img src="/ArenaFinder/img_asset/bg-member.png" class="d-block w-100" alt="..." style="height: 500px;">
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
@@ -1372,8 +1373,8 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
                             $namaGambar = $row['photo']; // Assuming the 'photo' column contains the image filename
-                            $gambarURL = "public/img/venue/" . $namaGambar;
-                            ?>
+                            $gambarURL = "/ArenaFinder/public/img/venue/" . $namaGambar;
+                    ?>
 
                             <div class="swiper-slide" style="width: 400px;"> <!-- Sesuaikan lebar card -->
                                 <div class="card" style="height: 450px; padding: 0px;">
@@ -1399,7 +1400,7 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
                                 </div>
                             </div>
 
-                            <?php
+                    <?php
                         }
                     } else {
                         echo "0 results";
@@ -1412,6 +1413,7 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
             </section>
 
         </div>
+        
 
         <!-- Modal -->
         <div class="modal fade" id="modalAktivitas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -1439,7 +1441,7 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
 
         <!-- Script JavaScript untuk menutup modal -->
         <script>
-            document.getElementById('tutupModal').addEventListener('click', function () {
+            document.getElementById('tutupModal').addEventListener('click', function() {
                 $('#modalAktivitas').modal('hide'); // Sesuaikan dengan ID modal Anda
             });
         </script>
@@ -1449,9 +1451,9 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
 
         <!-- Script untuk menangani pembukaan modal -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 // Menangani klik pada tombol dengan kelas "tombol-aktivitas"
-                $('.tombol-aktivitas').click(function () {
+                $('.tombol-aktivitas').click(function() {
                     // Mendapatkan data dari atribut data pada tombol
                     var namaAktivitas = $(this).data('nama');
                     var lokasi = $(this).data('lokasi');
@@ -1459,7 +1461,7 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
                     var jam = $(this).data('jam');
                     var harga = $(this).data('harga');
                     var sport = $(this).data('sport');
-                    var foto = 'public/img/venue/' + $(this).data('foto'); // Ganti dengan path sesuai struktur folder Anda
+                    var foto = 'http://localhost/ArenaFinder/public/img/venue/' + $(this).data('foto'); // Ganti dengan path sesuai struktur folder Anda
 
                     // Memasukkan data ke dalam modal
                     $('#judulModal').text(namaAktivitas);
@@ -1482,7 +1484,7 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
                 <div class="swiper-wrapper">
                     <div class="card swiper-slide">
                         <div class="card__image">
-                            <img src="public/img_asset/1. Ahmad Baihaqi (1).JPG" alt="card image" />
+                            <img src="/ArenaFinder/public/img_asset/1. Ahmad Baihaqi (1).JPG" alt="card image" />
                         </div>
 
                         <div class="card__content">
@@ -1500,7 +1502,7 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
 
                     <div class="card swiper-slide">
                         <div class="card__image">
-                            <img src="public/img_asset/ninik.jpg" alt="card image" />
+                            <img src="/ArenaFinder/public/img_asset/ninik.jpg" alt="card image" />
                         </div>
 
                         <div class="card__content">
@@ -1518,7 +1520,7 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
 
                     <div class="card swiper-slide">
                         <div class="card__image">
-                            <img src="public/img_asset/E41222030_Afrizal Wahyu Alkautsar_Teknik Informatika.jpeg.jpg"
+                            <img src="/ArenaFinder/public/img_asset/E41222030_Afrizal Wahyu Alkautsar_Teknik Informatika.jpeg.jpg"
                                 alt="card image" />
                         </div>
 
@@ -1537,7 +1539,7 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
 
                     <div class="card swiper-slide">
                         <div class="card__image">
-                            <img src="public/img_asset/DSC_7443 e.jpg" alt="card image" />
+                            <img src="/ArenaFinder/public/img_asset/DSC_7443 e.jpg" alt="card image" />
                         </div>
 
                         <div class="card__content">
@@ -1555,7 +1557,7 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
 
                     <div class="card swiper-slide">
                         <div class="card__image">
-                            <img src="public/img_asset/E41222892_Widyasari Raisya _Teknik Informatika.JPG"
+                            <img src="/ArenaFinder/public/img_asset/E41222892_Widyasari Raisya _Teknik Informatika.JPG"
                                 alt="card image" />
                         </div>
 
@@ -1580,7 +1582,7 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
     <button id="backToTopBtn"><i class="fa-solid fa-chevron-up"></i></button>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             var backToTopBtn = document.getElementById("backToTopBtn");
 
             // Function to update button visibility
@@ -1596,12 +1598,12 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
             updateButtonVisibility();
 
             // Show or hide the button based on scroll position
-            window.onscroll = function () {
+            window.onscroll = function() {
                 updateButtonVisibility();
             };
 
             // Scroll to the top when the button is clicked
-            backToTopBtn.onclick = function () {
+            backToTopBtn.onclick = function() {
                 document.body.scrollTop = 0;
                 document.documentElement.scrollTop = 0;
             };
@@ -1664,8 +1666,11 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
     <!-- flatpickr -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-        flatpickr("input[type=datetime-local]", {});
+        document.addEventListener('DOMContentLoaded', function() {
+            flatpickr("input[type=datetime-local]", {});
+        });
     </script>
+
     <!-- Include Bootstrap JS (jQuery and Popper.js are required) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>

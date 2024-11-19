@@ -1,9 +1,13 @@
 <?php
 session_start();
+// $host = "localhost";
+// $user = "tifz1761_root";
+// $pass = "tifnganjuk321";
+// $db = "tifz1761_arenafinder";
 $host = "localhost";
-$user = "tifz1761_root";
-$pass = "tifnganjuk321";
-$db = "tifz1761_arenafinder";
+$user = "root";
+$pass = "";
+$db = "arenafinder";
 
 $koneksi = mysqli_connect($host, $user, $pass, $db);
 if (!$koneksi) {
@@ -18,7 +22,7 @@ if (!$koneksi) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aktivitas</title>
-  <link rel="stylesheet" href="css/aktivitas.css" />
+  <link rel="stylesheet" href="/ArenaFinder/css/aktivitas.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
@@ -26,7 +30,7 @@ if (!$koneksi) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
   <script src="https://kit.fontawesome.com/924b40cfb7.js" crossorigin="anonymous"></script>
-  <link rel="icon" href="img_asset/login.png">
+  <link rel="icon" href="/ArenaFinder/img_asset/login.png">
   <style>
     body {
       margin-top: 130px;
@@ -493,7 +497,7 @@ if (!$koneksi) {
       echo '<div class="card-body">';
 
       $namaGambar = $row['photo'];
-      $gambarURL = "public/img/venue/" . $namaGambar;
+      $gambarURL = "/ArenaFinder/public/img/venue/" . $namaGambar;
 
       echo '<img src="' . $gambarURL . '" alt="Gambar">';
       echo '<h5 class="card-title mt-3">' . $row['nama_aktivitas'] . '</h5>';
@@ -508,7 +512,7 @@ if (!$koneksi) {
       $count++;
     }
     ?>
-
+<!-- 
     <script>
       const container = document.querySelector('.con-type');
       let isDragging = false;
@@ -539,7 +543,7 @@ if (!$koneksi) {
         container.scrollLeft = scrollLeft - scrollX;
       });
 
-    </script>
+    </script> -->
 
 
   </div>

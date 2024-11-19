@@ -130,7 +130,7 @@ $conn->close();
 
             <!-- Nav Item - Web -->
             <li class="nav-item">
-                <a class="nav-link" href="../index.php">
+                <a class="nav-link" href="/ArenaFinder/php/index.php">
                     <i class="fa-brands fa-edge"></i>
                     <span>Lihat Website</span></a>
             </li>

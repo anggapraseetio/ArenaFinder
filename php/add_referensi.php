@@ -1,14 +1,14 @@
 <?php
 session_start();
-$host = "localhost";
-$user = "tifz1761_root";
-$pass = "tifnganjuk321";
-$db = "tifz1761_arenafinder";
-
 // $host = "localhost";
-// $user = "root";
-// $pass = "";
-// $db = "arenafinder";
+// $user = "tifz1761_root";
+// $pass = "tifnganjuk321";
+// $db = "tifz1761_arenafinder";
+
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db = "arenafinder";
 
 $koneksi = mysqli_connect($host, $user, $pass, $db);
 if (!$koneksi) {
@@ -130,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!empty($_FILES['foto']['name'])) {
             $nama_file = $_FILES['foto']['name'];
             $tmp = $_FILES['foto']['tmp_name'];
-            $upload_folder = 'public/img/venue/';
+            $upload_folder = '/ArenaFinder/public/img/venue/';
 
             if (move_uploaded_file($tmp, $upload_folder . $nama_file)) {
                 // Database Operation
@@ -206,7 +206,7 @@ if ($error || $sukses || $error2 || $sukses2) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/924b40cfb7.js" crossorigin="anonymous"></script>
-    <link rel="icon" href="img_asset/login.png">
+    <link rel="icon" href="/ArenaFinder/img_asset/login.png">
     <style>
         #drop-menu {
             background-color: white;
@@ -845,7 +845,7 @@ if ($error || $sukses || $error2 || $sukses2) {
                                                                 </button></a>
                                                         </td>
                                                         <td scope="row">
-                                                            <img src="/public/img/venue/<?php echo $foto; ?>" alt="Image"
+                                                            <img src="/ArenaFinder/public/img/venue/<?php echo $foto; ?>" alt="Image"
                                                                 style="width: 100px; height: 100px;">
                                                         </td>
                                                         <td scope="row">

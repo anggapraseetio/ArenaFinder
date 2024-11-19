@@ -1,10 +1,14 @@
 <?php
 session_start();
 // Include your database connection code here
+// $db_host = "localhost";
+// $db_name = "tifz1761_arenafinder";
+// $db_user = "tifz1761_root";
+// $db_pass = "tifnganjuk321";
 $db_host = "localhost";
-$db_name = "tifz1761_arenafinder";
-$db_user = "tifz1761_root";
-$db_pass = "tifnganjuk321";
+$db_user = "root";
+$db_pass = "";
+$db_name = "arenafinder";
 
 // Establish a connection to the database
 $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
@@ -41,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nama_file = $_FILES['fileUpload']['name'];
     $tmp = $_FILES['fileUpload']['tmp_name'];
 
-    $upload_folder = 'public/img/venue/';
+    $upload_folder = '/ArenaFinder/public/img/venue/';
 
     // Include automatic value for id_galery (timestamp)
     $id_galery = time();
@@ -124,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Info Mitra</title>
-  <link rel="stylesheet" href="css/info_mitra.css" />
+  <link rel="stylesheet" href="/ArenaFinder/css/info_mitra.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
@@ -132,7 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
   <script src="https://kit.fontawesome.com/924b40cfb7.js" crossorigin="anonymous"></script>
-  <link rel="icon" href="img_asset/login.png">
+  <link rel="icon" href="/ArenaFinder/img_asset/login.png">
   <style>
     body {
       overflow-x: hidden;
@@ -556,7 +560,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <div class="first-con">
     <div class="img-container">
       <div>
-        <img src="img_asset/blessing.png" alt="">
+        <img src="/ArenaFinder/img_asset/blessing.png" alt="">
       </div>
     </div>
 
@@ -646,20 +650,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <h3>Fasilitas Tempat</h3>
             <div id="fasilitasTempat">
               <div style="margin-bottom: 20px;">
-                <img src="img_asset/toilet.jpg" alt="">
+                <img src="/ArenaFinder/img_asset/toilet.jpg" alt="">
                 <h5 style="text-align: center;">Toilet</h5>
               </div>
 
               <div style="margin-bottom: 20px;">
-                <img src="img_asset/kursi.jpg" alt="">
+                <img src="/ArenaFinder/img_asset/kursi.jpg" alt="">
                 <h5 style="text-align: center; width: 80px;">Kursi Penonton</h5>
               </div>
               <div style="margin-bottom: 20px;">
-                <img src="img_asset/parkiran.jpg" alt="">
+                <img src="/ArenaFinder/img_asset/parkiran.jpg" alt="">
                 <h5 style="text-align: center;">Area Parkir</h5>
               </div>
               <div style="margin-bottom: 20px;">
-                <img src="img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt="">
+                <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt="">
                 <h5 style="text-align: center; width: 80px;">Lapangan Futsal</h5>
               </div>
             </div>
@@ -669,11 +673,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <h3>Pengelola</h3>
             <div id="pengelolaTempat">
               <div class="pengelola-item">
-                <img src="img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt="">
+                <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt="">
                 <h5>Admin</h5>
               </div>
               <div class="pengelola-item">
-                <img src="img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt="">
+                <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt="">
                 <h5>Super Admin</h5>
               </div>
             </div>
@@ -683,11 +687,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <h3>Sistem Keanggotaan</h3>
             <div id="pengelolaTempat">
               <div class="pengelola-item">
-                <img src="img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt="">
+                <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt="">
                 <h5>Member</h5>
               </div>
               <div class="pengelola-item">
-                <img src="img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt="">
+                <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt="">
                 <h5>Non Member</h5>
               </div>
             </div>
@@ -748,7 +752,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo '<div class="card-body" style="display: flex; flex-direction: column; align-items: center; text-align: center; color: #02406d;">';
 
             $namaGambar = $row['photo'];
-            $gambarURL = "public/img/venue/" . $namaGambar;
+            $gambarURL = "/ArenaFinder/public/img/venue/" . $namaGambar;
 
             echo '<img src="' . $gambarURL . '" alt="Gambar" style="width: 250px; height: 250px; border-radius: 10px;">';
             echo '<h5 class="card-title mt-3">' . $row['nama_aktivitas'] . '</h5>';
@@ -862,7 +866,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             foreach ($imageData as $image) {
               $imageId = $image['id_galery'];
               $imageFilename = $image['photo'];
-              $imagePath = "public/img/venue/" . $imageFilename;
+              $imagePath = "/ArenaFinder/public/img/venue/" . $imageFilename;
               ?>
               <div class="card" style="border: none;">
                 <img src="<?= $imagePath; ?>" alt="Gambar" style="width: 250px; height: 250px; border-radius: 5px;">
@@ -915,7 +919,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           foreach ($imageData as $image) {
             $imageId = $image['id_galery'];
             $imageFilename = $image['photo'];
-            $imagePath = "public/img/venue/" . $imageFilename;
+            $imagePath = "/ArenaFinder/public/img/venue/" . $imageFilename;
             ?>
             <div class="card" style="border: none;">
               <img src="<?= $imagePath; ?>" alt="Gambar" style="width: 250px; height: 250px; border-radius: 5px;">
@@ -951,7 +955,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
       <div class="card" style="margin-top: 30px; margin-left: -70px; width: 500px; border: 1px solid white;">
         <div class="card-body" style="display: flex; align-items: center;">
-          <img src="img_asset/telepon.png" alt="" style="width: 20%; border-radius: 5px;">
+          <img src="/ArenaFinder/img_asset/telepon.png" alt="" style="width: 20%; border-radius: 5px;">
           <h3 style="margin-left: 20px;">082247344544</h3>
           <div class="card"
             style="display: flex; width: 150px; text-align: center; height: 30px; background-color: #02406D; color: white; margin-left: 50px;">
