@@ -60,7 +60,7 @@ if (isset($_POST["register"])) {
 
         $password_hash = password_hash($password, PASSWORD_BCRYPT);
 
-        $result = mysqli_query($conn, "INSERT INTO users (username, email, password, is_verified, level) VALUES ('$username', '$email', '$password_hash', 0, '$level')");
+        $result = mysqli_query($conn, "INSERT INTO users (username, email, password, is_verified, level) VALUES ('$username', '$email', '$password_hash', 0, 'SUPER ADMIN')");
 
         // Eksekusi kode OTP jika data akun telah ditambahkan kedalam database
         if ($result) {
@@ -78,8 +78,8 @@ if (isset($_POST["register"])) {
           $mail->SMTPAuth = true;
           $mail->SMTPSecure = 'tls';
 
-          $mail->Username = 'mahennekkers27@gmail.com';
-          $mail->Password = 'fxqa zwoq vuji mhlk';
+          $mail->Username = 'tengkufarkhan3@gmail.com';
+          $mail->Password = 'bynv cdfj izrp wiho';
 
           $mail->setFrom('arenafinder.app@gmail.com', 'OTP Verification');
           $mail->addAddress($_POST["email"]);
@@ -159,7 +159,7 @@ function isValidPassword($password)
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
-  <link rel="icon" href="../img_asset/login.png">
+  <link rel="icon" href="/ArenaFinder/img_asset/login.png">
   <style>
     body {
       font-family: "Kanit", sans-serif;
@@ -204,7 +204,7 @@ function isValidPassword($password)
                 <div class="p-3">
                   <div class="text-center">
                     <h1 class="h2 text-gray-900 mb-2 ">Daftar Akun</h1>
-                    <img src="/img_asset/login.png" alt="" style="width: 200px; height: auto; margin-bottom: 20px" />
+                    <img src="/ArenaFinder/img_asset/login.png" alt="" style="width: 200px; height: auto; margin-bottom: 20px" />
                   </div>
                   <form class="user" method="POST" action="#" autocomplete="off" name="register">
                     <div class="form-group">

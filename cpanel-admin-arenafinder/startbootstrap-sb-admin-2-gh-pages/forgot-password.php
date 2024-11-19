@@ -18,7 +18,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link rel="icon" href="../img_asset/login.png">
+    <link rel="icon" href="/ArenaFinder/img_asset/login.png">
     <style>
         body {
             font-family: "Kanit", sans-serif;
@@ -65,7 +65,7 @@
                                         <h1 class="h2 text-gray-900 mb-2 ">Lupa Sandi?</h1>
                                         <p class="mb-4">Kami punya solusinya. Anda tinggal memasukkan email dan kami
                                             akan kirimkan sebuah link ke email anda untuk merubah sandi!</p>
-                                        <img src="/img_asset/login.png" alt=""
+                                        <img src="/ArenaFinder/img_asset/login.png" alt=""
                                             style="width: 200px; height: auto; margin-bottom: 20px" />
                                     </div>
 
@@ -163,8 +163,8 @@ if (isset($_POST["recover"])) {
             $mail->SMTPSecure = 'tls';
 
             // h-hotel account
-            $mail->Username = 'mahennekkers27@gmail.com';
-            $mail->Password = 'fxqa zwoq vuji mhlk';
+            $mail->Username = 'tengkufarkhan3@gmail.com';
+            $mail->Password = 'bynv cdfj izrp wiho';
 
             // send by h-hotel email
             $mail->setFrom('arenafinder.app@gmail.com', 'Password Reset');

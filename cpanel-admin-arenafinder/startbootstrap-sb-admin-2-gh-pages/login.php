@@ -115,7 +115,7 @@ if (isset($_POST["login"])) {
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet" />
-  <link rel="icon" href="../img_asset/login.png">
+  <link rel="icon" href="/ArenaFinder/img_asset/login.png">
 
   <style>
     body {
@@ -161,7 +161,7 @@ if (isset($_POST["login"])) {
                 <div class="p-3">
                   <div class="text-center">
                     <h1 class="h2 text-gray-900 mb-2 ">Masuk Akun</h1>
-                    <img src="../img_asset/login.png" alt="" style="width: 200px; height: auto; margin-bottom: 20px" />
+                    <img src="/ArenaFinder/img_asset/login.png" alt="" style="width: 200px; height: auto; margin-bottom: 20px" />
                   </div>
 
                   <form class="user" method="POST" action="#" autocomplete="off" name="login">
