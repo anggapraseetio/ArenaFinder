@@ -115,7 +115,7 @@ if (isset($_POST["login"])) {
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet" />
-  <link rel="icon" href="/ArenaFinder/img_asset/login.png">
+  <link rel="icon" href="../img_asset/login.png">
 
   <style>
     body {
