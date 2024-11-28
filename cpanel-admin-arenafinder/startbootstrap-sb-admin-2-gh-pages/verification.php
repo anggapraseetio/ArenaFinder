@@ -10,6 +10,10 @@ if (isset($_POST["verify"])) {
 
     // Check if OTP is expired
     if (time() > $otpExpiration) {
+        // Hapus data pengguna dari database
+        $deleteQuery = "DELETE FROM users WHERE email = '$email'";
+        mysqli_query($conn, $deleteQuery);
+        
         $verificationMessage = "Maaf, kode OTP sudah kadaluwarsa. Silakan daftar kembali.";
         echo <<<EOL
   <html>

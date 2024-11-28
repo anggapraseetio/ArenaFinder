@@ -2,6 +2,8 @@
 session_start();
 include('database.php');
 
+
+
 ?>
 
 <!doctype html>
@@ -27,7 +29,7 @@ include('database.php');
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="icon" href="../img_asset/login.png">
+    <link rel="icon" href="/ArenaFinder/img_asset/login.png">
     <!------ Include the above in your HEAD tag ---------->
     <style>
         body {
@@ -79,82 +81,110 @@ include('database.php');
                                     <div class="text-center">
                                         <h1 class="h2 text-gray-900 mb-2 ">Ganti Sandi</h1>
                                         <p class="mb-4">Silahkan masukkan sandi akun Anda yang baru!</p>
+
+
                                         <?php
-                                        if (isset($_GET['token'])) {
-                                            $tokenWithExpiration = $_GET['token'];
+                                        // Validasi token dari URL
+                                        if (!isset($_GET['token']) || empty($_GET['token'])) {
+                                            die("Token tidak ditemukan.");
+                                        }
 
-                                            // Pisahkan token dan waktu kedaluwarsa
-                                            list($token, $expirationTime) = explode('.', $tokenWithExpiration);
+                                        // Escape dan trim token
+                                        $tokenFromUrl = mysqli_real_escape_string($conn, trim($_GET['token']));
 
-                                            // Verifikasi jika token belum kedaluwarsa
-                                            if ($expirationTime >= time()) {
-                                                // Jika token benar, proses pergantian sandi
-                                                if (isset($_POST["reset"])) {
-                                                    include('database.php');
-                                                    $psw = $_POST["password"];
+                                        // echo "Token from URL: ";
+                                        // var_dump($tokenFromUrl);
+                                        // echo "<br>";
 
-                                                    // Verifikasi token lagi (untuk menghindari pemalsuan)
-                                                    if ($_SESSION['token'] === $tokenWithExpiration) {
-                                                        $email = $_SESSION['email'];
+                                        // $query = "SELECT reset_token,token_expiration FROM users WHERE reset_token='$tokenFromUrl'";
+                                        // $result = mysqli_query($conn, $query);
 
-                                                        // Periksa apakah sandi kosong
-                                                        if (empty($psw)) {
-                                                            displayAlert("Password tidak boleh kosong. Silahkan masukkan sandi lagi.");
-                                                        } elseif (!isValidPassword($psw)) {
-                                                            displayAlert("Password harus memiliki 8 sampai 12 karakter, mengandung angka, huruf besar, huruf kecil, dan karakter khusus");
-                                                        } else {
-                                                            // Ambil sandi yang ada dari database
-                                                            $existingPasswordQuery = mysqli_query($conn, "SELECT password FROM users WHERE email='$email'");
-                                                            $existingPasswordData = mysqli_fetch_assoc($existingPasswordQuery);
-                                                            $existingPassword = $existingPasswordData['password'];
+                                        // if ($result && mysqli_num_rows($result) > 0) {
+                                        //     while ($row = mysqli_fetch_assoc($result)) {
+                                        //         echo "Token in DB: ";
+                                        //         var_dump($row['reset_token']);
+                                        //         echo "<br>";
+                                        //     }
+                                        // } else {
+                                        //     echo "Token tidak ditemukan di database.<br>";
+                                        // }
 
-                                                            // Periksa apakah sandi baru sama dengan yang sudah ada
-                                                            if (password_verify($psw, $existingPassword)) {
-                                                                displayAlert("Password baru harus berbeda dengan password yang sudah ada sebelumnya.");
-                                                            } else {
-                                                                // Perbarui sandi jika berbeda
-                                                                $hash = password_hash($psw, PASSWORD_DEFAULT);
-                                                                mysqli_query($conn, "UPDATE users SET password='$hash' WHERE email='$email'");
-                                                                displayAlert("Selamat, sandi akun anda berhasil diganti", "login.php");
-                                                            }
-                                                        }
-                                                    } else {
-                                                        // Verifikasi token gagal
-                                                        displayAlert("Verifikasi token gagal.");
-                                                    }
-                                                }
 
+                                        // Cari token dan waktu kedaluwarsa di database
+                                        $query = "SELECT reset_token, token_expiration, email FROM users WHERE reset_token='$tokenFromUrl'";
+                                        $result = mysqli_query($conn, $query);
+
+                                        // // Debugging untuk memeriksa hasil query
+                                        // if (!$result) {
+                                        //     die("Query Error: " . mysqli_error($conn));
+                                        // }
+
+                                        if (mysqli_num_rows($result) == 0) {
+                                            die("Token tidak valid.");
+                                        }
+
+                                        $user = mysqli_fetch_assoc($result);
+                                        $dbToken = $user['reset_token'];
+                                        $expirationTime = $user['token_expiration'];
+                                        $email = $user['email'];
+
+                                        // // Debugging untuk memeriksa token dan waktu kedaluwarsa dari database
+                                        // echo "Token in DB: $dbToken<br>";
+                                        // echo "Expiration Time in DB: $expirationTime<br>";
+                                        // echo "Current Time: " . time() . "<br>";
+
+                                        // Periksa apakah token valid dan belum kedaluwarsa
+                                        if ($dbToken !== $tokenFromUrl) {
+                                            die("Token tidak cocok.");
+                                        }
+
+                                        if ($expirationTime < time()) {
+                                            die("Token sudah kedaluwarsa. Silakan minta tautan reset baru.");
+                                        }
+
+                                        // Proses reset password
+                                        if (isset($_POST['reset'])) {
+                                            $password = trim($_POST['password']);
+
+                                            if (empty($password)) {
+                                                echo "<div class='alert alert-danger'>Password tidak boleh kosong.</div>";
+                                            } elseif (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,12}$/", $password)) {
+                                                echo "<div class='alert alert-danger'>Password harus memiliki 8-12 karakter, termasuk angka, huruf besar, huruf kecil, dan karakter khusus.</div>";
                                             } else {
-                                                // Tautan sudah kedaluwarsa, redirect ke halaman pemulihan sandi
-                                                displayAlert("Link pergantian sandi telah kadaluwarsa, coba kirim ulang.", "forgot-password.php");
-                                            }
-                                        } else {
-                                            displayAlert("Invalid request.");
-                                            // Anda mungkin ingin melakukan redirect atau menampilkan pesan yang sesuai
-                                        }
+                                                // Ambil password lama dari database
+                                                $currentPasswordQuery = "SELECT password FROM users WHERE email='$email'";
+                                                $currentPasswordResult = mysqli_query($conn, $currentPasswordQuery);
 
-                                        // Fungsi untuk memeriksa kompleksitas sandi
-                                        function isValidPassword($password)
-                                        {
-                                            // Sandi sekurang-kurangnya harus mengandung 8 karakter, huruf besar, huruf kecil, dan karakter khusus
-                                            $pattern = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,12}$/";
-                                            return preg_match($pattern, $password);
-                                        }
+                                                if ($currentPasswordResult && mysqli_num_rows($currentPasswordResult) > 0) {
+                                                    $currentPasswordData = mysqli_fetch_assoc($currentPasswordResult);
+                                                    $currentPassword = $currentPasswordData['password'];
 
-                                        // Fungsi untuk menampilkan pesan alert
-                                        function displayAlert($message, $redirect = "")
-                                        {
-                                            echo "<script>alert('$message');";
-                                            if ($redirect) {
-                                                echo "window.location.replace('$redirect');";
+                                                    // Periksa apakah password baru sama dengan password lama
+                                                    if (password_verify($password, $currentPassword)) {
+                                                        echo "<div class='alert alert-danger'>Password baru tidak boleh sama dengan password lama.</div>";
+                                                    } else {
+                                                        // Hash password baru
+                                                        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+                                                        // Update password di database
+                                                        $updateQuery = "UPDATE users SET password='$hashedPassword', reset_token=NULL, token_expiration=NULL WHERE email='$email'";
+                                                        if (mysqli_query($conn, $updateQuery)) {
+                                                            echo "<div class='alert alert-success'>Password berhasil diperbarui. Silakan login.</div>";
+                                                            header("Location: login.php");
+                                                            exit();
+                                                        } else {
+                                                            echo "<div class='alert alert-danger'>Gagal memperbarui data: " . mysqli_error($conn) . "</div>";
+                                                        }
+                                                    }
+                                                } else {
+                                                    echo "<div class='alert alert-danger'>Gagal mengambil password lama.</div>";
+                                                }
                                             }
-                                            echo "</script>";
-                                            exit();
                                         }
                                         ?>
 
 
-                                        <img src="/img_asset/login.png" alt=""
+                                        <img src="/ArenaFinder/img_asset/login.png" alt=""
                                             style="width: 200px; height: auto; margin-bottom: 20px" />
                                     </div>
 
@@ -163,6 +193,9 @@ include('database.php');
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
                                                 id="exampleInputEmail" placeholder="Sandi Baru" name="password">
+                                            <small>
+                                                <input type="checkbox" id="togglePassword" style="margin-top: 10px;"> Tampilkan Password
+                                            </small>
                                         </div>
                                         <input class="btn btn-primary btn-user btn-block" type="submit"
                                             value="Ganti Sandi" name="reset" id="btn-reset">
@@ -203,14 +236,26 @@ include('database.php');
 
 <script>
     const toggle = document.getElementById('togglePassword');
-    const password = document.getElementById('password');
+    const password = document.getElementById('exampleInputEmail');
 
-    toggle.addEventListener('click', function () {
+    toggle.addEventListener('click', function() {
         if (password.type === "password") {
             password.type = 'text';
         } else {
             password.type = 'password';
         }
         this.classList.toggle('bi-eye');
+    });
+</script>
+
+<script>
+    // Fungsi untuk mengontrol visibilitas password
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordInput = document.getElementById('passwordInput');
+        if (this.checked) {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
     });
 </script>

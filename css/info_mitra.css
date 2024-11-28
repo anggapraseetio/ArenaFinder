@@ -9,7 +9,7 @@ body {
 }
 .nav-item {
   display: flex;
-  align-item: center;
+  align-items: center;
   padding-left: 30px;
 }
 
@@ -169,7 +169,7 @@ body {
   margin-left: 30px;
   display: flex;
   justify-content: center;
-  align-item: center;
+  align-items: center;
   text-align: justify;
   border-top: 1px solid #02406d;
   border-bottom: 1px solid #02406d;
@@ -311,4 +311,125 @@ body {
 
 .hierarki a:hover {
   color: #a1ff9f;
+}
+/* Mobile Devices */
+@media (max-width: 767px) {
+  .nav-item {
+    padding-left: 15px;
+  }
+
+  .img-container img {
+    height: 300px;
+  }
+
+  .box .rectangle, .box .div {
+    left: 5px;
+    width: 10px;
+  }
+
+  .title button {
+    width: 80px;
+  }
+
+  .footer {
+    flex-direction: column;
+    height: auto;
+    margin-top: 50px;
+  }
+
+  .link-body {
+    flex-direction: column;
+    gap: 30px;
+    margin-left: 0;
+  }
+
+  .harga, .fasilitas {
+    margin-left: 0;
+  }
+
+  /* For Facilities and Pengelola */
+  #fasilitasTempat, #pengelolaTempat {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #fasilitasTempat img, #pengelolaTempat img {
+    width: 80px;
+    height: 80px;
+  }
+
+  #fasilitasTempat h5, #pengelolaTempat h5 {
+    padding-top: 10px;
+  }
+}
+
+/* Tablet Devices */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .img-container img {
+    height: 450px;
+  }
+
+  .box .rectangle, .box .div {
+    left: 15px;
+    width: 12px;
+  }
+
+  .title button {
+    width: 90px;
+  }
+
+  .footer {
+    flex-direction: column;
+    height: auto;
+    margin-top: 50px;
+  }
+
+  .link-body {
+    flex-direction: column;
+    gap: 30px;
+    margin-left: 0;
+  }
+
+  #fasilitasTempat, #pengelolaTempat {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #fasilitasTempat img, #pengelolaTempat img {
+    width: 90px;
+    height: 90px;
+  }
+}
+
+/* Desktop Devices */
+@media (min-width: 1025px) {
+  .img-container img {
+    height: 550px;
+  }
+
+  .box .rectangle, .box .div {
+    left: 20px;
+    width: 13px;
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .link-body {
+    flex-direction: row;
+    gap: 50px;
+    margin-left: 30px;
+  }
+
+  #fasilitasTempat, #pengelolaTempat {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  #fasilitasTempat img, #pengelolaTempat img {
+    width: 100px;
+    height: 100px;
+  }
 }

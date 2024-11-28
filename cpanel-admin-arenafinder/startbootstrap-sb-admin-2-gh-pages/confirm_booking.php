@@ -1,12 +1,17 @@
 <?php
 session_start();
 
-require '../controllers/mobile/notification/Notification.php';
+// require '/controllers/mobile/notification/Notification.php';
+require '../startbootstrap-sb-admin-2-gh-pages/controllers/mobile/notification/Notification.php';
 
+// $servername = "localhost";
+// $username = "tifz1761_root";
+// $password = "tifnganjuk321";
+// $dbname = "tifz1761_arenafinder";
 $servername = "localhost";
-$username = "tifz1761_root";
-$password = "tifnganjuk321";
-$dbname = "tifz1761_arenafinder";
+$username = "root";
+$password = "";
+$dbname = "arenafinder";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -111,26 +116,27 @@ if (isset($_GET['membershipId'])) {
         }
     }
 
-    // Perform the deletion using prepared statements to avoid SQL injection
-    $query = "UPDATE venue_membership SET nama = 'Awokawokawok' WHERE id_membership = $membershipId";
-    $stmt = $conn->prepare($query);
+// Perform the deletion using prepared statements to avoid SQL injection
+$query = "UPDATE venue_membership SET nama = ? WHERE id_membership = ?";
+$stmt = $conn->prepare($query);
 
-    // Bind the parameter
-    $stmt->bind_param("i", $membershipId);
+// Bind the parameters
+$nama = 'Awokawokawok';
+$stmt->bind_param("si", $nama, $membershipId); // 'si' berarti string untuk nama dan integer untuk id_membership
 
-    // Execute the statement
-    $result = $stmt->execute();
+// Execute the statement
+$result = $stmt->execute();
 
-    if ($result) {
-        // Redirect back to the original page after deletion
-        header("Location: pesanan.php");
-        exit();
-    } else {
-        echo "Error deleting membership" . $stmt->error;
-    }
+if ($result) {
+    // Redirect back to the original page after deletion
+    header("Location: pesanan.php");
+    exit();
+} else {
+    echo "Error deleting membership: " . $stmt->error;
+}
 
-    // Close the statement
-    $stmt->close();
+// Close the statement
+$stmt->close();
 }
 
 // Check if the form is submitted with the Batalkan button

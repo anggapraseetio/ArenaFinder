@@ -96,7 +96,7 @@ $userName = $_SESSION['username'];
         }
 
         .container-fluid {
-            width: 150rem;
+            width: 125rem;
             margin-top: 100px;
             margin-left: 220px;
         }

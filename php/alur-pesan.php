@@ -22,7 +22,7 @@ if (!$koneksi) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aktivitas</title>
-    <link rel="stylesheet" href="css/beranda.css" />
+    <link rel="stylesheet" href="/ArenaFinder/css/beranda.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
@@ -31,7 +31,7 @@ if (!$koneksi) {
     <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://kit.fontawesome.com/924b40cfb7.js" crossorigin="anonymous"></script>
-    <link rel="icon" href="img_asset/login.png">
+    <link rel="icon" href="/ArenaFinder/img_asset/login.png">
     <style>
         body {
             margin-top: 150px;
@@ -503,7 +503,7 @@ if (!$koneksi) {
                     if (isset($_SESSION['email'])) {
                         // User is logged in, show the "Panel Pengelola" button
                         echo '<li class="nav-item dropdown" id="nav-down1">
-                    <a class="nav-link" id="nav-down-item1" href="boots/" style="width: 200px;">
+                    <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/index.php" style="width: 200px;">
                       <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
                       Panel Pengelola
                     </a>
@@ -511,10 +511,10 @@ if (!$koneksi) {
                     } else {
                         // User is not logged in, show the "Login" and "Register" buttons
                         echo '<li class="nav-item dropdown" id="nav-down1">
-                    <a class="nav-link" id="nav-down-item1" href="boots/login.php" style="width: 100px;">Masuk</a>
+                    <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php" style="width: 100px;">Masuk</a>
                   </li>
                   <li class="nav-item dropdown" id="nav-down1">
-                    <a class="nav-link" id="nav-down-item2" href="boots/register.php" style="width: 100px;">Daftar</a>
+                    <a class="nav-link" id="nav-down-item2" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php" style="width: 100px;">Daftar</a>
                   </li>';
                     }
                     ?>
