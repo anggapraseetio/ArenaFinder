@@ -43,7 +43,7 @@ $userName = $_SESSION['username'];
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/924b40cfb7.js" crossorigin="anonymous"></script>
-    <link rel="icon" href="../img_asset/login.png">
+    <link rel="icon" href="/ArenaFinder/img_asset/login.png">
     <style>
         body {
             font-family: "Kanit", sans-serif;
@@ -467,6 +467,7 @@ $userName = $_SESSION['username'];
                                     // ORDER BY vm.created_at DESC";
                                     
                                     $id_venue = $_SESSION['id_venue'];
+                                    $sport = $_SESSION['sport'];
                                     $sql = "SELECT v.id_booking AS id_membership, v.total_price as harga, v.created_at, 
                                     u.full_name as nama, u.no_hp, u.alamat, u.email,
                                     CONCAT(p.start_hour, ' - ',  p.end_hour) AS waktu_main, DAYNAME(p.date) AS hari_main 
@@ -498,7 +499,7 @@ $userName = $_SESSION['username'];
                                         <div class="card shadow mb-4" id="cardContainer' . $row['id_membership'] . '">
                                             <!-- Card Header - Accordion -->
                                             <div class="card-header py-1 d-flex justify-content-between align-items-center" style="background-color: #02406d">
-                                                <h6 class="m-0 font-weight-bold" style="color: white;">Pemesanan Lapangan ' . $row['venue_sport'] . '<span style="color: #a1ff9f;"> - ' . $row['nama'] . '</span></h6>
+                                                <h6 class="m-0 font-weight-bold" style="color: white;">Pemesanan Lapangan ' . $sport . '<span style="color: #a1ff9f;"> - ' . $row['nama'] . '</span></h6>
                                 
                                                 <!-- Add a dropdown button with increased size -->
                                                 <button id="toggleButton' . $row['id_membership'] . '" class="btn btn-lg dropdown-toggle py-1" style="color: white; border: 1px solid white; font-size: 15px;"type="button" data-toggle="collapse" data-target="#collapseCard' . $row['id_membership'] . '" aria-expanded="false" aria-controls="collapseCard' . $row['id_membership'] . '">
@@ -509,7 +510,7 @@ $userName = $_SESSION['username'];
                                             <div class="card-body collapse" id="collapseCard' . $row['id_membership'] . '">
                                                 <h6>Nama : <strong>' . htmlspecialchars($row['nama']) . '</strong></h6>
                                                 <h6>Alamat : <strong>' . htmlspecialchars($row['alamat']) . '</strong></h6>
-                                                    <h6>No. Telepon : <strong>' . htmlspecialchars($row['no_telp']) . '</strong></h6>
+                                                    <h6>No. Telepon : <strong>' . htmlspecialchars($row['no_hp']) . '</strong></h6>
                                                     <h6>Hari Main : <strong>' . htmlspecialchars($row['hari_main']) . '</strong></h6>
                                                     <h6>Waktu Main : <strong>' . htmlspecialchars($row['waktu_main']) . '</strong></h6>
                                                     <h6>Waktu Pemesanan : <strong>' . htmlspecialchars($row['created_at']) . '</strong></h6>
