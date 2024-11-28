@@ -10,6 +10,10 @@ if (isset($_POST["verify"])) {
 
     // Check if OTP is expired
     if (time() > $otpExpiration) {
+        // Hapus data pengguna dari database
+        $deleteQuery = "DELETE FROM users WHERE email = '$email'";
+        mysqli_query($conn, $deleteQuery);
+        
         $verificationMessage = "Maaf, kode OTP sudah kadaluwarsa. Silakan daftar kembali.";
         echo <<<EOL
   <html>
@@ -72,7 +76,7 @@ EOL;
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet" />
-    <link rel="icon" href="../img_asset/login.png">
+    <link rel="icon" href="/ArenaFinder/img_asset/login.png">
     <title>Verifikasi Akun</title>
     <style>
         body {
@@ -112,7 +116,7 @@ EOL;
                                         <div class="verification-message">
                                             <?php echo isset($verificationMessage) ? $verificationMessage : ''; ?>
                                         </div>
-                                        <img src="/img_asset/login.png" alt=""
+                                        <img src="/ArenaFinder/img_asset/login.png" alt=""
                                             style="width: 200px; height: auto; margin-bottom: 20px" />
                                     </div>
 
@@ -139,6 +143,8 @@ EOL;
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.2/js/bootstrap.min.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>

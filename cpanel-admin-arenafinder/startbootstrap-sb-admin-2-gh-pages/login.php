@@ -9,33 +9,34 @@ if (isset($_POST["login"])) {
 
   // Validation: Check if email and password are not empty
   if (empty($email) && empty($password)) {
-    ?>
-        <script>
-          alert("Mohon isi email dan sandi.");
-          window.location.replace('login.php');
-        </script>
-        <?php
-        exit();
+?>
+    <script>
+      alert("Mohon isi email dan sandi.");
+      window.location.replace('login.php');
+    </script>
+  <?php
+    exit();
   } elseif (empty($email)) {
-    ?>
-        <script>
-          alert("Mohon isi email.");
-          window.location.replace('login.php');
-        </script>
-        <?php
-        exit();
+  ?>
+    <script>
+      alert("Mohon isi email.");
+      window.location.replace('login.php');
+    </script>
+  <?php
+    exit();
   } elseif (empty($password)) {
-    ?>
-        <script>
-          alert("Mohon isi sandi.");
-          window.location.replace('login.php');
-        </script>
-        <?php
-        exit();
+  ?>
+    <script>
+      alert("Mohon isi sandi.");
+      window.location.replace('login.php');
+    </script>
+    <?php
+    exit();
   }
 
   // Fetch user data and venue data based on the email
-  $sql = mysqli_query($conn,
+  $sql = mysqli_query(
+    $conn,
     "SELECT u.*, 
       IFNULL(v.id_venue, 0) AS id_venue, 
       v.venue_name AS nama_venue, 
@@ -74,25 +75,26 @@ if (isset($_POST["login"])) {
       header("Location: index.php");
       exit();
     } else {
-      ?>
-            <script>
-              alert("<?php echo "Password Salah, Mohon Coba Lagi." ?>");
-              window.location.replace('login.php');
-            </script>
-            <?php
-            exit();
+    ?>
+      <script>
+        alert("<?php echo "Password Salah, Mohon Coba Lagi." ?>");
+        window.location.replace('login.php');
+      </script>
+    <?php
+      exit();
     }
   } else {
     // Email not registered
     ?>
-        <script>
-          alert("<?php echo "Email belum terdaftar. Silakan daftar terlebih dahulu." ?>");
-          window.location.replace('register.php'); // Change 'register.php' to your registration page
-        </script>
-        <?php
-        exit();
+    <script>
+      alert("<?php echo "Email belum terdaftar. Silakan daftar terlebih dahulu." ?>");
+      window.location.replace('register.php'); // Change 'register.php' to your registration page
+    </script>
+<?php
+    exit();
   }
 }
+
 
 ?>
 
@@ -115,7 +117,43 @@ if (isset($_POST["login"])) {
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet" />
-  <link rel="icon" href="../img_asset/login.png">
+  <link rel="icon" href="/ArenaFinder/img_asset/login.png">
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const emailInput = document.getElementById('email-input');
+      const emailSuggestions = document.getElementById('email-suggestions');
+
+      // Muat daftar email dari localStorage
+      const savedEmails = JSON.parse(localStorage.getItem('savedEmails')) || [];
+
+      // Fungsi untuk mengisi datalist dengan email
+      function populateEmailSuggestions() {
+        emailSuggestions.innerHTML = ''; // Kosongkan datalist
+        savedEmails.forEach(email => {
+          const option = document.createElement('option');
+          option.value = email;
+          emailSuggestions.appendChild(option);
+        });
+      }
+
+      // Isi datalist saat halaman dimuat
+      populateEmailSuggestions();
+
+      // Simpan email baru ke localStorage saat form disubmit
+      document.querySelector('form[name="login"]').addEventListener('submit', function(event) {
+        const emailValue = emailInput.value.trim();
+
+        // Tambahkan email jika belum ada dalam daftar
+        if (emailValue && !savedEmails.includes(emailValue)) {
+          savedEmails.push(emailValue);
+          localStorage.setItem('savedEmails', JSON.stringify(savedEmails)); // Simpan ke localStorage
+          populateEmailSuggestions(); // Perbarui datalist
+        }
+      });
+    });
+  </script>
 
   <style>
     body {
@@ -161,21 +199,28 @@ if (isset($_POST["login"])) {
                 <div class="p-3">
                   <div class="text-center">
                     <h1 class="h2 text-gray-900 mb-2 ">Masuk Akun</h1>
-                    <img src="../img_asset/login.png" alt="" style="width: 200px; height: auto; margin-bottom: 20px" />
+                    <img src="/ArenaFinder/img_asset/login.png" alt="" style="width: 200px; height: auto; margin-bottom: 20px" />
                   </div>
 
                   <form class="user" method="POST" action="#" autocomplete="off" name="login">
                     <div class="form-group">
                       <input type="email" class="form-control form-control-user" id="email-input" name="email"
-                        aria-describedby="emailHelp" placeholder="Enter Email Address..." autocomplete="off"
+                        aria-describedby="emailHelp" placeholder="Enter Email Address..." list="email-suggestions" autocomplete="off"
                         autofocus />
-                    </div>
-                    <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="exampleInputEmail"
-                        placeholder="Password" name="password" autocomplete="off" />
 
-                      <input type="hidden" name="level" value="<?php echo $levelValue; ?>" id="level" />
+                      <datalist id="email-suggestions">
+                        <!-- Sugesti email akan diisi secara dinamis -->
+                      </datalist>
                     </div>
+
+                    <div class="form-group">
+                      <input type="password" class="form-control form-control-user" id="passwordInput"
+                        placeholder="Password" name="password" autocomplete="off" />
+                      <small>
+                        <input type="checkbox" id="togglePassword" style="margin-top: 10px;"> Tampilkan Password
+                      </small>
+                    </div>
+
                     <div class="form-group">
                       <button class="btn btn-user btn-block" id="btn-login" name="login">Masuk</button>
                     </div>
@@ -209,7 +254,7 @@ if (isset($_POST["login"])) {
 
   <!-- JavaScript (tambahkan sebelum tag </body>) -->
   <script>
-    document.getElementById('show-hide-password').addEventListener('click', function () {
+    document.getElementById('show-hide-password').addEventListener('click', function() {
       var passwordInput = document.getElementById('exampleInputPassword');
       var passwordFieldType = passwordInput.getAttribute('type');
 
@@ -220,6 +265,19 @@ if (isset($_POST["login"])) {
       }
     });
   </script>
+
+  <script>
+    // Fungsi untuk mengontrol visibilitas password
+    document.getElementById('togglePassword').addEventListener('click', function() {
+      const passwordInput = document.getElementById('passwordInput');
+      if (this.checked) {
+        passwordInput.type = 'text';
+      } else {
+        passwordInput.type = 'password';
+      }
+    });
+  </script>
+
 </body>
 
 </html>

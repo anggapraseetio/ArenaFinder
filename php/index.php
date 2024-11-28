@@ -54,6 +54,114 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
     <!-- <link rel="icon" href="img_asset/logo (1).png"> -->
     <link rel="icon" href="/ArenaFinder/img_asset/login.png">
     <style>
+        /* Default styling (untuk layar besar) */
+        body {
+            font-family: 'Kanit', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .container-type-sport {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 400px;
+            margin: 10px auto;
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .carousel-inner img {
+            width: 100%;
+            height: auto;
+        }
+
+        .footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .footer .hierarki {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+        }
+
+        #backToTopBtn {
+            right: 10px;
+            bottom: 10px;
+            font-size: 18px;
+            padding: 10px;
+        }
+
+        /* Media query untuk layar kecil (mobile-first) */
+        @media (max-width: 768px) {
+
+            .img1,
+            .img2 {
+                width: 90%;
+                margin: 0 auto;
+            }
+
+            .title {
+                font-size: 1.5rem;
+                text-align: center;
+                margin-top: 20px;
+            }
+
+            .input-jenis-lapangan,
+            #staticEmail,
+            .button {
+                width: 90%;
+                margin: 10px auto;
+                font-size: 1rem;
+            }
+
+            .btn-4,
+            .btn-5,
+            .btn-6,
+            .btn-7,
+            .btn-8 {
+                width: 45%;
+                margin: 10px 2%;
+            }
+
+            .carousel-inner img {
+                height: 250px;
+                object-fit: cover;
+            }
+
+            .swiper-wrapper {
+                flex-direction: column;
+            }
+
+            .swiper-slide {
+                width: 90%;
+            }
+
+            .footer .hierarki {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
         body {
             overflow-x: hidden;
         }
@@ -1221,7 +1329,7 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
                     if (isset($_SESSION['email'])) {
                         // User is logged in, show the "Panel Pengelola" button
                         echo '<li class="nav-item dropdown" id="nav-down1">
-                    <a class="nav-link" id="nav-down-item1" href="boots/" style="width: 200px;">
+                    <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/" style="width: 200px;">
                       <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
                       Panel Pengelola
                     </a>
@@ -1229,10 +1337,10 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
                     } else {
                         // User is not logged in, show the "Login" and "Register" buttons
                         echo '<li class="nav-item dropdown" id="nav-down1">
-                    <a class="nav-link" id="nav-down-item1" href="boots/login.php" style="width: 100px;">Masuk</a>
+                    <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php" style="width: 100px;">Masuk</a>
                   </li>
                   <li class="nav-item dropdown" id="nav-down1">
-                    <a class="nav-link" id="nav-down-item2" href="boots/register.php" style="width: 100px;">Daftar</a>
+                    <a class="nav-link" id="nav-down-item2" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php" style="width: 100px;">Daftar</a>
                   </li>';
                     }
                     ?>
@@ -1294,7 +1402,7 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
                     <img src="/ArenaFinder/img_asset/info_64px (1).png" alt="" id="status-btn">
                 </button>
             </form>
-            <a href="boots/pesanan.php">
+            <a href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/pesanan.php">
                 <button class="btn-3" type="button" style="font-weight: 100;">Daftar Pesanan
                     <img src="   https://cdn-icons-png.flaticon.com/512/1187/1187525.png " width="100" height="150"
                         alt="" title="" class="img-small">
@@ -1413,7 +1521,7 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
             </section>
 
         </div>
-        
+
 
         <!-- Modal -->
         <div class="modal fade" id="modalAktivitas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -1650,8 +1758,8 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
                 <a href="">Siapa target penggunanya?</a>
                 <a href="">Bagaimana sistem ini bekerja?</a>
                 <a href="">Saat kapan pengguna dapat mengetahui pesanan?</a>
-                <a href="/boots/login.php">Masuk aplikasi??</a>
-                <a href="/boots/register.php">Daftar aplikasi??</a>
+                <a href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php">Masuk aplikasi??</a>
+                <a href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php">Daftar aplikasi??</a>
             </p>
             <p style="font-size: 20px; color: white; margin-left: 120px;">Narahubung
                 <a href="https://wa.me/62895807400305">https://wa.me/62895807400305

@@ -4,10 +4,10 @@
   margin: 0px;
 }
 
-.nav-item{
+.nav-item {
   display: flex;
-  align-item: center;
-  padding-left: 30px;
+  align-items: center; /* Perbaikan typo pada align-items */
+  padding-left: 2rem; /* Gunakan rem untuk skala lebih responsif */
 }
 /* Mengganti warna teks item menu navbar */
 .navbar-nav .nav-link {

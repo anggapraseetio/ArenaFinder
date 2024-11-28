@@ -10,7 +10,7 @@ $conn = new mysqli($servername, $username_db, $password_db, $dbname);
 
 // Cek koneksi
 if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
+  die("Koneksi gagal: " . $conn->connect_error);
 }
 ?>
 
@@ -40,6 +40,8 @@ if ($conn->connect_error) {
   <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <script src="https://kit.fontawesome.com/924b40cfb7.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+
   <style>
     .title-con {
       background-color: blue;
@@ -334,13 +336,13 @@ if ($conn->connect_error) {
             <a class="nav-link active" href="">Beranda</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="aktivitas.php">Aktivitas</a>
+            <a class="nav-link" href="/ArenaFinder/php/aktivitas.php">Aktivitas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="referensi.php">Referensi</a>
+            <a class="nav-link" href="/ArenaFinder/php/referensi.php">Referensi</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="info_mitra.php">Info Mitra</a>
+            <a class="nav-link" href="/ArenaFinder/php/info_mitra.php">Info Mitra</a>
           </li>
         </ul>
         <ul class="navbar-nav ml-auto"> <!-- Menggunakan 'ml-auto' untuk komponen di akhir navbar -->
@@ -389,7 +391,7 @@ if ($conn->connect_error) {
       <button class="button" type="submit">Temukan</button>
     </form>
     <script>
-      document.addEventListener('DOMContentLoaded', function () {
+      document.addEventListener('DOMContentLoaded', function() {
         flatpickr("#staticEmail", {
           enableTime: false, // Enable time selection
           minDate: "today", // Set the minimum date to today
@@ -401,7 +403,7 @@ if ($conn->connect_error) {
   </div>
 
   <div class="persegi"></div>
-  <a href="alur-pesan.php">
+  <a href="/ArenaFinder/php/alur-pesan.php">
     <button class="btn" type="button" style="font-weight: 100;" id="alur-btn">Alur Pemesanan
       <img src="/ArenaFinder/img_asset/geocaching_40px (1).png" alt="">
     </button>
@@ -410,7 +412,7 @@ if ($conn->connect_error) {
     <button class="btn-1" type="button" style="font-weight: 100;">Aktivitas Komunitas
       <img src="/ArenaFinder/img_asset/people_48px (1).png" alt="" id="aktiv-btn"></button>
   </a>
-  <a href="status-lap.php">
+  <a href="/ArenaFinder/php/status-lap.php">
     <button class="btn-2" type="button" style="font-weight: 100;">Status Lapangan
       <img src="/ArenaFinder/img_asset/info_64px (1).png" alt="" id="status-btn"></button>
   </a>
@@ -469,68 +471,101 @@ if ($conn->connect_error) {
       </button>
     </div>
   </div>
-
   <div class="container">
-    <div class="community" id="r-a" style="margin-top: 150px; margin-left: -100px;"> Rekomendasi Aktivitas </div>
+    <div class="community" id="r-a" style="margin-top: 150px; margin-left: -100px;">Rekomendasi Aktivitas</div>
     <div class="card-slider w-40 h-50" id="cardSlider">
+      <!-- Swiper JS -->
+      <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
+      <!-- Initialize Swiper -->
+      <script>
+        var swiper = new Swiper(".mySwiper", {
+          effect: "coverflow",
+          grabCursor: true,
+          centeredSlides: true,
+          slidesPerView: "auto",
+          coverflowEffect: {
+            rotate: 0,
+            stretch: 0,
+            depth: 300,
+            modifier: 1,
+            slideShadows: false,
+          },
+          pagination: {
+            el: ".swiper-pagination",
+          },
+        });
+      </script>
       <?php
-      // Replace 'your_database_credentials' with your actual database connection details
+      // Koneksi ke database
       $conn = new mysqli('localhost', 'root', '', 'arenafinder');
 
-      // Check connection
+      // Periksa koneksi
       if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+        die("Koneksi gagal: " . $conn->connect_error);
       }
 
-      // Assuming 'venue_aktivitas' table has columns like 'judul', 'lokasi', 'tanggal', 'jam', 'harga'
-      $sql = "SELECT va.*, v.location
-      FROM venue_aktivitas va
-      JOIN venues v ON va.id_venue = v.id_venue";
+      // Query data dari database
+      $sql = "SELECT va.*, v.location 
+            FROM venue_aktivitas va
+            JOIN venues v ON va.id_venue = v.id_venue";
       $result = $conn->query($sql);
 
+      // Periksa apakah ada hasil
       if ($result->num_rows > 0) {
-        // Output data of each row
+        // Tampilkan setiap data dalam bentuk card
         while ($row = $result->fetch_assoc()) {
-          $namaGambar = $row['photo']; // Assuming the 'photo' column contains the image filename
-          $gambarURL = "/ArenaFinder/public/img/venue/" . $namaGambar;
-          ?>
+          // Sanitasi data untuk mencegah XSS
+          $namaGambar = htmlspecialchars($row['photo']);
+          $namaAktivitas = htmlspecialchars($row['nama_aktivitas']);
+          $lokasi = htmlspecialchars($row['location']);
+          $tanggal = htmlspecialchars($row['date']);
+          $jam = htmlspecialchars($row['jam_main']);
+          $harga = htmlspecialchars($row['price']);
 
-          <div class="card" style=" margin-left: 10px; height: 35rem; margin-top: -20px;">
-            <!-- Use the data from the database to populate the card -->
-            <img src="<?php echo $gambarURL; ?>" class="card-img-top" alt="..." style="height: 200px;">
+          // URL gambar
+          $gambarURL = "/ArenaFinder/public/img/venue/" . $namaGambar;
+      ?>
+
+          <div class="card" style="margin-left: 10px; height: 35rem; margin-top: -20px;">
+            <img src="<?php echo $gambarURL; ?>" class="card-img-top" alt="Gambar Aktivitas" style="height: 200px;">
             <div class="card-body">
-              <h5 class="card-title" style="margin-top: 10px;">
-                <?php echo $row['nama_aktivitas']; ?>
-              </h5>
-              <h6 class="card-text">Lokasi :
-                <?php echo $row['location']; ?>
-              </h6>
-              <h6 class="card-text">Hari/Tgl :
-                <?php echo $row['date']; ?>
-              </h6>
-              <h6 class="card-text">Jam :
-                <?php echo $row['jam_main']; ?>
-              </h6>
-              <h6 class="card-text">Harga :
-                <?php echo $row['price']; ?>/orang
-              </h6>
-              <button href="#" class="tombol-aktivitas">Lihat Aktivitas</button>
+              <h5 class="card-title" style="margin-top: 10px;"><?php echo $namaAktivitas; ?></h5>
+              <h6 class="card-text">Lokasi: <?php echo $lokasi; ?></h6>
+              <h6 class="card-text">Hari/Tgl: <?php echo $tanggal; ?></h6>
+              <h6 class="card-text">Jam: <?php echo $jam; ?></h6>
+              <h6 class="card-text">Harga: <?php echo $harga; ?>/orang</h6>
+              <button class="tombol-aktivitas" onclick="lihatAktivitas()">Lihat Aktivitas</button>
             </div>
           </div>
-          <?php
+
+      <?php
         }
       } else {
-        echo "0 results";
+        echo "<p>Tidak ada data aktivitas yang tersedia.</p>";
       }
 
-      // Close the database connection
+      // Tutup koneksi database
       $conn->close();
       ?>
     </div>
   </div>
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const cardSlider = document.getElementById('cardSlider');
+      if (cardSlider) {
+        console.log('Element cardSlider ditemukan!');
+        // Tambahkan manipulasi elemen jika diperlukan
+      } else {
+        console.error('Element cardSlider tidak ditemukan.');
+      }
+    });
 
+    function lihatAktivitas() {
+      alert("Fitur ini belum tersedia.");
+    }
+  </script>
 
   <script src="/ArenaFinder/js/script.js"></script>
 
@@ -566,10 +601,11 @@ if ($conn->connect_error) {
   <script>
     flatpickr("input[type=datetime-local]", {});
   </script>
-  <!-- Include Bootstrap JS and jQuery -->
+
+  <!-- Include Bootstrap JS (jQuery and Popper.js are required) -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
 

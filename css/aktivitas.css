@@ -10,7 +10,7 @@ body {
 
 .nav-item {
   display: flex;
-  align-item: center;
+  align-items: center; /* Corrected */
   padding-left: 30px;
 }
 
@@ -35,7 +35,7 @@ body {
   margin-right: 20px;
   width: 100px;
   height: 35px;
-  font-weight: regular;
+  font-weight: 400;
   text-decoration: none;
   padding: 5px;
   padding-left: 15px;
@@ -57,7 +57,7 @@ body {
   margin-right: 10px;
   width: 80px;
   height: 35px;
-  font-weight: regular;
+  font-weight: 400;
   text-decoration: none;
   padding-top: 5px;
   padding-left: 5px;
@@ -70,8 +70,6 @@ body {
   transition: 1s;
   transform: scale(1.1);
 }
-
-// Menu Aktivitas
 
 .box {
   position: relative;
@@ -111,14 +109,15 @@ body {
 
 @keyframes slideDown {
   0% {
-    transform: translateY(0%); /* Elemen dimulai dari bawah */
-    opacity: 0; /* Elemen transparan saat dimulai */
+    transform: translateY(-100%);
+    opacity: 0;
   }
-  50% {
-    transform: translateY(100%); /* Elemen dimulai dari bawah */
-    opacity: 1; /* Elemen transparan saat dimulai */
+  100% {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
+
 
 .second-sep {
   height: 60px;
@@ -131,7 +130,8 @@ body {
 
 .third-sep {
   height: 1px;
-  width: 85rem;
+  width: 100%; /* Fallback untuk layar kecil */
+  max-width: 85rem; /* Tetap membatasi pada layar besar */
   margin-top: 50px;
   margin-left: 40px;
   background-color: #02406d;
@@ -172,7 +172,7 @@ body {
   margin-top: 20px;
   margin-left: 40px;
   font-size: 25px;
-  font-weight: regular;
+  font-weight: 400;
   animation: slideRight 2s ease-in-out;
 }
 
@@ -191,8 +191,7 @@ body {
   color: #02406d;
   margin-top: 20px;
   margin-left: 20px;
-  font-size: 25px;
-  font-weight: regular;
+  font-weight: 400;
   font-size: 15px;
   animation: slideRight 2s ease-in-out;
 }
@@ -207,8 +206,9 @@ body {
 }
 
 .all img:hover {
-  scale: 105%;
+  transform: scale(1.05); /* Corrected */
 }
+
 
 @keyframes slideRight {
   0% {
@@ -249,3 +249,71 @@ body {
 .hierarki a:hover {
   color: #a1ff9f;
 }
+/* Default styles (already provided) */
+
+/* Media query untuk perangkat kecil (smartphone) */
+@media only screen and (max-width: 600px) {
+  .nav-item {
+    flex-direction: column;
+    padding-left: 10px;
+  }
+  .tombol-daftar, .tombol-masuk {
+    width: 100%;
+    margin: 5px 0;
+  }
+  .title_activity {
+    font-size: 25px;
+    margin-left: 20px;
+  }
+  .sub_title_activity {
+    font-size: 14px;
+    margin-left: 20px;
+  }
+  .footer {
+    flex-direction: column;
+    padding: 10px;
+  }
+}
+
+/* Media query untuk perangkat sedang (tablet) */
+@media only screen and (min-width: 601px) and (max-width: 768px) {
+  .nav-item {
+    padding-left: 20px;
+  }
+  .tombol-daftar, .tombol-masuk {
+    width: 120px;
+    font-size: 14px;
+  }
+  .title_activity {
+    font-size: 28px;
+    margin-left: 30px;
+  }
+  .sub_title_activity {
+    font-size: 16px;
+    margin-left: 30px;
+  }
+}
+
+/* Media query untuk layar besar (desktop) */
+@media only screen and (min-width: 769px) {
+  .nav-item {
+    padding-left: 30px;
+  }
+  .tombol-daftar {
+    width: 150px;
+  }
+  .tombol-masuk {
+    width: 100px;
+  }
+  .footer {
+    margin-left: 0;
+    padding-left: 40px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .card-container {
+    flex-direction: column;
+  }
+}
+

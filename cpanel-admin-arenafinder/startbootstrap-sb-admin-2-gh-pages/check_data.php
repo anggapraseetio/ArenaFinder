@@ -7,12 +7,18 @@ if (isset($_SESSION['level'])) {
     $userLevel = $_SESSION['level'];
 }
 
-require '../controllers/mobile/notification/Notification.php';
+// require '../controllers/mobile/notification/Notification.php';
+require '../startbootstrap-sb-admin-2-gh-pages/controllers/mobile/notification/Notification.php';
+
+// $servername = "localhost";
+// $username = "tifz1761_root";
+// $password = "tifnganjuk321";
+// $dbname = "tifz1761_arenafinder";
 
 $servername = "localhost";
-$username = "tifz1761_root";
-$password = "tifnganjuk321";
-$dbname = "tifz1761_arenafinder";
+$username = "root";
+$password = "";
+$dbname = "arenafinder";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 

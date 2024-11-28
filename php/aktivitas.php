@@ -134,7 +134,7 @@ if (!$koneksi) {
     }
 
     .card-container {
-      width: 88.5rem;
+      width: 100% !important;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -309,7 +309,7 @@ if (!$koneksi) {
 
 <body>
   <nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color: #02406D;">
-    <div class="container">
+    <div class="container-fluid">
       <a class="navbar-brand" href="#">
         <span style="font-family: 'Kanit', sans-serif; color: white;">Arena</span>
         <span style="font-family: 'Kanit', sans-serif; color: #A1FF9F;">Finder</span>
@@ -342,7 +342,7 @@ if (!$koneksi) {
           if (isset($_SESSION['email'])) {
             // User is logged in, show the "Panel Pengelola" button
             echo '<li class="nav-item dropdown" id="nav-down1">
-                    <a class="nav-link" id="nav-down-item1" href="boots/" style="width: 200px;">
+                    <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/index.php" style="width: 200px;">
                       <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
                       Panel Pengelola
                     </a>
@@ -350,10 +350,10 @@ if (!$koneksi) {
           } else {
             // User is not logged in, show the "Login" and "Register" buttons
             echo '<li class="nav-item dropdown" id="nav-down1">
-                    <a class="nav-link" id="nav-down-item1" href="boots/login.php" style="width: 100px;">Masuk</a>
+                    <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php" style="width: 100px;">Masuk</a>
                   </li>
                   <li class="nav-item dropdown" id="nav-down1">
-                    <a class="nav-link" id="nav-down-item2" href="boots/register.php" style="width: 100px;">Daftar</a>
+                    <a class="nav-link" id="nav-down-item2" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php" style="width: 100px;">Daftar</a>
                   </li>';
           }
           ?>
@@ -394,17 +394,17 @@ if (!$koneksi) {
           // Loop through each sport and generate a button
           foreach ($sports as $sport) {
             $sportName = $sport['sport'];
-            ?>
+          ?>
 
             <button class="all" type="submit" name="sport" value="<?php echo $sportName; ?>"
               data-sport-name="<?php echo $sportName; ?>">
               <!-- You may want to use a more specific image for each sport -->
-              <img src="/img_asset/<?php echo strtolower($sportName); ?>.jpg" alt="" />
+              <img src="/ArenaFinder/img_asset/<?php echo strtolower($sportName); ?>.jpg" alt="" />
               <span>
                 <?php echo $sportName; ?>
               </span>
             </button>
-            <?php
+          <?php
           }
           ?>
         </div>
@@ -448,7 +448,6 @@ if (!$koneksi) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       // Get the selected sport value
       $selectedSport = isset($_POST['sport']) ? $_POST['sport'] : 'Semua';
-
     }
 
     // Display the selected sport in the label
@@ -485,7 +484,7 @@ if (!$koneksi) {
     // Execute the modified query
     $q3 = mysqli_query($koneksi, $sql3);
     $count = 0; // Untuk menghitung jumlah kartu pada setiap baris
-    
+
     while ($row = mysqli_fetch_array($q3)) {
       // Membuka baris baru setiap kali 4 kartu telah ditampilkan
       if ($count % 4 == 0) {
@@ -512,7 +511,7 @@ if (!$koneksi) {
       $count++;
     }
     ?>
-<!-- 
+    <!-- 
     <script>
       const container = document.querySelector('.con-type');
       let isDragging = false;

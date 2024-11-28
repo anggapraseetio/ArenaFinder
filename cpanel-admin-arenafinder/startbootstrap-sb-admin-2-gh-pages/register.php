@@ -33,14 +33,14 @@ if (isset($_POST["register"])) {
     $rowCount = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM users WHERE email = '$email'"));
 
     if ($rowCount > 0) {
-      ?>
+?>
       <script>
         alert("Pengguna dengan email ini sudah terdaftar!");
         window.location.replace('register.php');
       </script>
-      <?php
+    <?php
     } elseif (usernameExists($conn, $username)) {
-      ?>
+    ?>
       <script>
         alert("Nama pengguna sudah terdaftar. Mohon pilih nama pengguna lain.");
         window.location.replace('register.php');
@@ -50,7 +50,7 @@ if (isset($_POST["register"])) {
       // Cek validasi sandi akun
       if (!isValidPassword($password)) {
         // Notifikasi peringatan jika sandi salah
-        ?>
+      ?>
         <script>
           alert("Password harus memiliki 8 sampai 12 karakter, mengandung angka, huruf besar, huruf kecil, dan karakter khusus.");
           window.location.replace('register.php');
@@ -66,7 +66,7 @@ if (isset($_POST["register"])) {
         if ($result) {
           $otp = rand(100000, 999999);
           $_SESSION['otp'] = $otp;
-          $_SESSION['otp_expiration'] = time() + (15 * 60); // Set expiration time to 15 minutes
+          $_SESSION['otp_expiration'] = time() + (5 * 60); // Set expiration time to 15 minutes
           $_SESSION['mail'] = $email;
 
           require "Mail/phpmailer/PHPMailerAutoload.php";
@@ -78,8 +78,8 @@ if (isset($_POST["register"])) {
           $mail->SMTPAuth = true;
           $mail->SMTPSecure = 'tls';
 
-          $mail->Username = 'mahennekkers27@gmail.com';
-          $mail->Password = 'fxqa zwoq vuji mhlk';
+          $mail->Username = 'tengkufarkhan3@gmail.com';
+          $mail->Password = 'bynv cdfj izrp wiho';
 
           $mail->setFrom('arenafinder.app@gmail.com', 'OTP Verification');
           $mail->addAddress($_POST["email"]);
@@ -92,21 +92,20 @@ if (isset($_POST["register"])) {
               <b>arenafinder.app@gmail.com</b>";
 
           if (!$mail->send()) {
-            ?>
+        ?>
             <script>
               alert("<?php echo "Daftar akun gagal, email tidak valid" ?>");
             </script>
-            <?php
+          <?php
           } else {
-            ?>
+          ?>
             <script>
               alert("<?php echo "Daftar akun sukses, kode OTP dikirim ke " . $email ?>");
               window.location.replace('verification.php');
             </script>
-            <?php
+  <?php
           }
         }
-
       }
     }
   }
@@ -119,7 +118,7 @@ if (isset($message)) {
     alert("<?php echo $message; ?>");
     window.location.replace('register.php');
   </script>
-  <?php
+<?php
   exit();
 }
 
@@ -159,7 +158,7 @@ function isValidPassword($password)
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
-  <link rel="icon" href="../img_asset/login.png">
+  <link rel="icon" href="/ArenaFinder/img_asset/login.png">
   <style>
     body {
       font-family: "Kanit", sans-serif;
@@ -204,7 +203,7 @@ function isValidPassword($password)
                 <div class="p-3">
                   <div class="text-center">
                     <h1 class="h2 text-gray-900 mb-2 ">Daftar Akun</h1>
-                    <img src="/img_asset/login.png" alt="" style="width: 200px; height: auto; margin-bottom: 20px" />
+                    <img src="/ArenaFinder/img_asset/login.png" alt="" style="width: 200px; height: auto; margin-bottom: 20px" />
                   </div>
                   <form class="user" method="POST" action="#" autocomplete="off" name="register">
                     <div class="form-group">
@@ -215,11 +214,16 @@ function isValidPassword($password)
                       <input type="email" class="form-control form-control-user" id="email-input" name="email"
                         aria-describedby="emailHelp" placeholder="Masukkan Alamat Email" />
                     </div>
+
                     <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="exampleInputPassword"
+                      <input type="password" class="form-control form-control-user" id="passwordInput"
                         placeholder="Masukkan Sandi" name="password" />
+                      <small>
+                        <input type="checkbox" id="togglePassword" style="margin-top: 10px;"> Tampilkan Sandi
+                      </small>
                       <input type="hidden" name="level" value="ADMIN" id="level" />
                     </div>
+
                     <div class="form-group">
                       <button class="btn btn-user btn-block" id="btn-login" name="register">Daftar</button>
                     </div>
@@ -248,6 +252,19 @@ function isValidPassword($password)
 
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
+
+  <!-- Show and Hidden Password-->
+  <script>
+    document.getElementById('togglePassword').addEventListener('click', function() {
+      const passwordInput = document.getElementById('passwordInput');
+      if (this.checked) {
+        passwordInput.type = 'text';
+      } else {
+        passwordInput.type = 'password';
+      }
+    });
+  </script>
+
 </body>
 
 </html>

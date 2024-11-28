@@ -1,126 +1,207 @@
 <?php
 session_start();
-// Include your database connection code here
-// $db_host = "localhost";
-// $db_name = "tifz1761_arenafinder";
-// $db_user = "tifz1761_root";
-// $db_pass = "tifnganjuk321";
+
+// Database connection
 $db_host = "localhost";
 $db_user = "root";
 $db_pass = "";
 $db_name = "arenafinder";
 
-// Establish a connection to the database
 $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
 
-// Check the connection
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
+// Inisialisasi variabel
+$imageData = [];
+$id_venue = null;
+$latitude = null;
+$longitude = null;
+$harga = 0;
+$harga_member = 0;
+$isLoggedIn = false;
+
+// Cek apakah pengguna login
 if (isset($_SESSION['email'])) {
   $email = $_SESSION['email'];
-  $isLoggedIn = ($email === 'afrizal.alkautsar@gmail.com');
+  $isLoggedIn = true;
 
-  // Jika user yang login adalah afrizal.alkautsar@gmail.com
-  if ($isLoggedIn) {
-    // Mengambil data gambar dari database jika pengguna sudah login
-    $sql = "SELECT id_galery, photo FROM venue_galery";
-    $result = $conn->query($sql);
+  // Ambil id_venue berdasarkan email pengguna
+  $stmt = $conn->prepare("SELECT id_venue FROM venues WHERE email = ?");
+  if ($stmt === false) {
+    die('Query prepare failed: ' . $conn->error);
+  }
+  $stmt->bind_param("s", $email);
+  $stmt->execute();
+  $result = $stmt->get_result();
 
-    // Fetch data sebagai array asosiatif
-    $imageData = [];
+  if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $id_venue = $row['id_venue']; // Simpan id_venue
+  }
+
+
+
+  // Ambil id_venue berdasarkan email pengguna
+  $stmt = $conn->prepare("SELECT username FROM users WHERE email = ?");
+  if ($stmt === false) {
+    die('Query prepare failed: ' . $conn->error);
+  }
+  $stmt->bind_param("s", $email);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $username = $row['username']; // Simpan id_venue
+  }
+
+  // Ambil data nama dan jumlah lapangan dari database untuk venue yang sedang login
+  $stmt = $conn->prepare("SELECT venue_name, total_lapangan, sport FROM venues WHERE email = ?");
+  if ($stmt === false) {
+    die('Query prepare failed: ' . $conn->error);
+  }
+  $stmt->bind_param("s", $email);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $nama_venue = $row['venue_name']; // Nama venue
+    $lapangan = $row['total_lapangan']; // Jumlah lapangan
+    $sport = $row['sport']; // Sport
+
+  } else {
+    $nama_venue = "Nama Venue Tidak Ditemukan";
+    $lapangan = 0;
+  }
+
+  // Mengambil data foto venue dari database
+  $venueId = $id_venue; // Ambil id_venue jika sudah ada
+  $imagePath = "/ArenaFinder/img_asset/default_image.png"; // Gambar default jika tidak ada
+
+  $stmt = $conn->prepare("SELECT venue_photo FROM venues WHERE id_venue = ?");
+  $stmt->bind_param("i", $venueId);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $imageName = $row['venue_photo'];
+
+    // Tentukan path gambar, misalnya gambar disimpan dalam folder 'public/img/venue/'
+    $imagePath = "/ArenaFinder/public/img/venue/" . $imageName;
+  }
+
+  // Ambil deskripsi dari database
+  $deskripsi = "Deskripsi belum tersedia."; // Default jika tidak ada data
+  $stmt = $conn->prepare("SELECT desc_venue, price_membership, price FROM venues WHERE email = ?");
+  if ($stmt === false) {
+    die('Query prepare failed: ' . $conn->error);
+  }
+  $stmt->bind_param("s", $email);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $deskripsi = $row['desc_venue'];
+    $harga_member = $row['price_membership'];
+    $harga = $row['price'];
+  }
+
+  // Ambil data koordinat berdasarkan id_venue
+  if ($isLoggedIn && $id_venue) {
+    $stmt = $conn->prepare("SELECT coordinate FROM venues WHERE id_venue = ?");
+    if ($stmt === false) {
+      die('Query prepare failed: ' . $conn->error);
+    }
+    $stmt->bind_param("i", $id_venue);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+      $row = $result->fetch_assoc();
+      $coordinates = $row['coordinate'];
+
+      // Pisahkan latitude dan longitude
+      if (!empty($coordinates)) {
+        list($latitude, $longitude) = explode(',', $coordinates);
+        $latitude = trim($latitude);
+        $longitude = trim($longitude);
+      }
+    }
+  }
+
+  // Ambil data galeri jika login
+  $sql = "SELECT id_galery, photo FROM venue_galery WHERE id_venue = ?";
+  $stmt = $conn->prepare($sql);
+  if ($stmt === false) {
+    die('Query prepare failed: ' . $conn->error);
+  }
+  $stmt->bind_param("i", $id_venue);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
       $imageData[] = $row;
     }
   }
-} else {
-  $isLoggedIn = false;
 }
 
-
+// File upload & delete logic
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  // Handling file upload
+  // Upload file
   if (!empty($_FILES['fileUpload']['name'])) {
-    $nama_file = $_FILES['fileUpload']['name'];
+    $nama_file = basename($_FILES['fileUpload']['name']);
     $tmp = $_FILES['fileUpload']['tmp_name'];
 
-    $upload_folder = '/ArenaFinder/public/img/venue/';
+    $upload_folder = __DIR__ . 'ArenaFinder/public/img/venue/';
+    $target_file = $upload_folder . $nama_file;
+    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-    // Include automatic value for id_galery (timestamp)
-    $id_galery = time();
-
-    // Ensure that the session has started
-    $email = $_SESSION['email'];
-    $sqlGetVenueId = "SELECT id_venue FROM venues WHERE email = ?";
-    $stmtGetVenueId = $conn->prepare($sqlGetVenueId);
-    $stmtGetVenueId->bind_param("s", $email);
-    $stmtGetVenueId->execute();
-    $result = $stmtGetVenueId->get_result();
-    $row = $result->fetch_assoc();
-    $id_venue = $row['id_venue'];
-    $stmtGetVenueId->close();
-
-    // Move the image file to the destination folder
-    if (move_uploaded_file($tmp, $upload_folder . $nama_file)) {
-      // Insert image information into the database
-      $sqlInsert = "INSERT INTO venue_galery (id_galery, id_venue, photo) VALUES (?, ?, ?)";
-      $stmtInsert = $conn->prepare($sqlInsert);
-
-      // Read the image content
-      $image_data = file_get_contents($upload_folder . $nama_file);
-
-      // Bind parameters
-      $stmtInsert->bind_param("iis", $id_galery, $id_venue, $nama_file);
-
-      // Execute the statement
-      if ($stmtInsert->execute()) {
-        ?>
-        <script>
-          alert("Foto berhasil ditambahkan.");
-          window.location.replace('info_mitra.php');
-        </script>
-        <?php
-        exit();
-      } else {
-        echo "Error executing SQL statement: " . $stmtInsert->error;
+    // Validasi file
+    if (!in_array($imageFileType, ['jpg', 'jpeg', 'png', 'gif'])) {
+      echo "<script>alert('Format file tidak didukung. Hanya JPG, JPEG, PNG, dan GIF diperbolehkan.');</script>";
+    } elseif (move_uploaded_file($tmp, $target_file)) {
+      // Insert ke database
+      $id_galery = time();
+      $stmt = $conn->prepare("INSERT INTO venue_galery (id_galery, id_venue, photo) VALUES (?, ?, ?)");
+      if ($stmt === false) {
+        die('Query prepare failed: ' . $conn->error);
       }
-
-      // Close the statement
-      $stmtInsert->close();
+      $stmt->bind_param("iis", $id_galery, $id_venue, $nama_file);
+      if ($stmt->execute()) {
+        echo "<script>alert('Foto berhasil ditambahkan.'); window.location.href='info_mitra.php';</script>";
+      } else {
+        echo "<script>alert('Gagal menyimpan data ke database.');</script>";
+      }
     } else {
-      echo "Error moving uploaded file.";
+      echo "<script>alert('Gagal mengunggah file.');</script>";
     }
-  } elseif (isset($_POST['deleteImage'])) {
-    // Handling image deletion request
+  }
+
+  // Hapus file
+  if (isset($_POST['deleteImage'])) {
     $imageIdToDelete = $_POST['deleteImage'];
-
-    // Delete image data from the database
-    $sqlDelete = "DELETE FROM venue_galery WHERE id_galery = ?";
-    $stmtDelete = $conn->prepare($sqlDelete);
-    $stmtDelete->bind_param("i", $imageIdToDelete);
-
-    // Execute the deletion statement
-    if ($stmtDelete->execute()) {
-      ?>
-      <script>
-        alert("Foto berhasil dihapus.");
-        window.location.replace('info_mitra.php');
-      </script>
-      <?php
-      exit();
-    } else {
-      echo "Error executing delete statement: " . $stmtDelete->error;
+    $stmt = $conn->prepare("DELETE FROM venue_galery WHERE id_galery = ?");
+    if ($stmt === false) {
+      die('Query prepare failed: ' . $conn->error);
     }
+    $stmt->bind_param("i", $imageIdToDelete);
 
-    // Close the deletion statement
-    $stmtDelete->close();
-  } else {
-    echo "Mohon pilih file foto atau berikan permintaan penghapusan.";
+    if ($stmt->execute()) {
+      echo "<script>alert('Foto berhasil dihapus.'); window.location.href='info_mitra.php';</script>";
+    } else {
+      echo "<script>alert('Gagal menghapus foto dari database.');</script>";
+    }
   }
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -140,17 +221,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <style>
     body {
       overflow-x: hidden;
+      font-family: "Kanit", sans-serif;
     }
 
     .img-container {
       display: flex;
-      align-item: center;
+      align-items: center;
       justify-content: center;
     }
 
     .img-container img {
       display: flex;
-      align-item: center;
+      align-items: center;
       justify-content: center;
       margin-top: 50px;
       max-width: 100%;
@@ -179,6 +261,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     .title button:active {
       background-color: #02406D;
+    }
+
+    .title-con {
+      margin-left: 50%;
+      transform: translateX(-50%);
     }
 
     #drop-menu {
@@ -276,20 +363,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       /* Sesuaikan ukuran ikon */
     }
 
-    .facebook {
-      background-color: #1877F2;
-      /* Warna Facebook */
-    }
 
-    .twitter {
-      background-color: #1DA1F2;
-      /* Warna Twitter */
-    }
-
-    .instagram {
-      background-color: #E4405F;
-      /* Warna Instagram */
-    }
 
     .social-button:hover {
       background-color: #02406D;
@@ -537,7 +611,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           if (isset($_SESSION['email'])) {
             // User is logged in, show the "Panel Pengelola" button
             echo '<li class="nav-item dropdown" id="nav-down1">
-                <a class="nav-link" id="nav-down-item1" href="boots/" style="width: 200px;">
+                <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/index.php" style="width: 200px;">
                   <i class="fa-solid fa-id-card fa-flip" style="margin-right: 5px;"></i>
                   Panel Pengelola
                 </a>
@@ -545,10 +619,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           } else {
             // User is not logged in, show the "Login" and "Register" buttons
             echo '<li class="nav-item dropdown" id="nav-down1">
-                <a class="nav-link" id="nav-down-item1" href="boots/login.php" style="width: 100px;">Masuk</a>
+                <a class="nav-link" id="nav-down-item1" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php" style="width: 100px;">Masuk</a>
               </li>
               <li class="nav-item dropdown" id="nav-down1">
-                <a class="nav-link" id="nav-down-item2" href="boots/register.php" style="width: 100px;">Daftar</a>
+                <a class="nav-link" id="nav-down-item2" href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php" style="width: 100px;">Daftar</a>
               </li>';
           }
           ?>
@@ -557,34 +631,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
   </nav>
 
+  <!-- HTML untuk menampilkan gambar -->
   <div class="first-con">
     <div class="img-container">
       <div>
-        <img src="/ArenaFinder/img_asset/blessing.png" alt="">
+        <!-- Menampilkan gambar dari database -->
+        <img src="<?php echo $imagePath; ?>" alt="Venue Photo">
+      </div>
+    </div>
+  </div>
+
+  <div class="title-con">
+    <div class="box">
+      <div class="group">
+        <div class="rectangle"></div>
+        <div class="div"></div>
       </div>
     </div>
 
-    <div class="title-con">
-      <div class="box">
-        <div class="group">
-          <div class="rectangle"></div>
-          <div class="div"></div>
-        </div>
-      </div>
-
-      <div class="title">
-        <h2>Blessing Futsal
-        </h2>
-        <h5>2 Lapangan</h5>
-      </div>
-    </div>
-
-    <div class="social-buttons">
-      <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
-        class="social-button facebook"><i class="fab fa-facebook"></i></a>
-      <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
-      <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg==" class="social-button instagram"><i
-          class="fab fa-instagram"></i></a>
+    <div class="title">
+      <h2><?php echo $nama_venue; ?></h2> <!-- Menampilkan nama venue -->
+      <h5><?php echo $lapangan . " Lapangan"; ?></h5> <!-- Menampilkan jumlah lapangan -->
     </div>
 
   </div>
@@ -614,6 +681,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <li><a class="link" id="link4" href="#section4" data-target="section4">GALERI</a></li>
             <li><a class="link" id="link5" href="#section5" data-target="section5">KONTAK</a></li>
           </ul>
+
         </nav>
       </div>
     </div>
@@ -622,29 +690,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <div class="tentang-con">
         <div class="deskripsi">
           <h3>Deskripsi</h3>
-          <h6 id="editableText">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, velit cum error eaque
-            assumenda facilis, blanditiis, perferendis laboriosam voluptate consectetur quod quidem quas animi! Facilis
-            maiores esse corrupti libero nobis.
-          </h6>
+          <h6 id="editableText"><?= htmlspecialchars($deskripsi); ?></h6>
 
           <div class="harga">
-            <h3>Rincian Harga
-              <div id="rincianHarga">
-                <h6>Member > <strong>07:00 - 16:00</strong> (Pagi - Sore)
-                  <h6><strong>Rp. 90.000/Jam</strong></h6>
-                </h6>
-                <h6>Member > <strong>17:00 - 24:00</strong> (Sore - Malam)
-                  <h6><strong>Rp. 120.000/Jam</strong></h6>
-                </h6>
-                <h6>Non Member > <strong>07:00 - 16:00</strong> (Pagi - Sore)
-                  <h6><strong>Rp. 105.000/Jam</strong></h6>
-                </h6>
-                <h6>Non Member > <strong>17:00 - 24:00</strong> (Sore - Malam)
-                  <h6><strong>Rp. 135.000/Jam</strong></h6>
-                </h6>
-              </div>
-            </h3>
+            <h3>Rincian Harga</h3>
+            <div id="rincianHarga">
+              <h6>Harga Member
+                <h6><strong>Rp. <?= number_format($harga_member, 0, ',', '.'); ?></strong></h6>
+              </h6>
+              <h6>Harga Non-Member
+                <h6><strong>Rp. <?= number_format($harga, 0, ',', '.'); ?></strong></h6>
+              </h6>
+            </div>
           </div>
+
+
 
           <div class="fasilitas">
             <h3>Fasilitas Tempat</h3>
@@ -670,7 +730,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </div>
 
           <div class="pengelola">
-            <h3>Pengelola</h3>
+            <h1>Pengelola</h1>
             <div id="pengelolaTempat">
               <div class="pengelola-item">
                 <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt="">
@@ -701,15 +761,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <h3>Lokasi</h3>
             <div id="pengelolaTempat">
               <div class="pengelola-item">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3954.772089912621!2d111.91565287506188!3d-7.599764592415119!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e784bb1bfb7007b%3A0xf4b4b72690bfdd4d!2sBLESSING%20FUTSAL!5e0!3m2!1sid!2sid!4v1699786792132!5m2!1sid!2sid"
-                  width="440" height="350" style="border:0; margin-left: 20px; padding-top: 20px;" allowfullscreen=""
-                  loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <?php if ($latitude && $longitude): ?>
+                  <iframe
+                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAnmgFUsdMdCWQ6s3wcBr2Cd0Eolqu3Fqs&q=<?= htmlspecialchars($latitude); ?>,<?= htmlspecialchars($longitude); ?>&center=<?= htmlspecialchars($latitude); ?>,<?= htmlspecialchars($longitude); ?>&zoom=15"
+                    width="440" height="350" style="border:0; margin-left: 20px; padding-top: 20px;" allowfullscreen=""
+                    loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <?php else: ?>
+                  <p>Lokasi tidak tersedia.</p>
+                <?php endif; ?>
               </div>
             </div>
           </div>
 
-          <script src="script.js"></script>
+
+
+
         </div>
       </div>
     </section>
@@ -720,9 +786,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <div class="card shadow"
             style="color: white; background: linear-gradient(to right, #02406D, 50%, white); border: none;">
             <div class="card-body">
-              <h3>Blessing Futsal Activity</h3>
-              <h6 id="editableText" style="color: white;"><strong style="color: #A1FF9F;">Futsal</strong> oleh <strong
-                  style="color: #A1FF9F;">Mr. Robert</strong>
+              <h3>
+                <h2><?php echo $nama_venue; ?></h2> <!-- Menampilkan nama venue -->
+              </h3>
+              <h6 id="editableText" style="color: white;"><strong style="color: #A1FF9F;"><?php echo $sport ?></strong> oleh <strong
+                  style="color: #A1FF9F;"><?php echo $username ?></strong>
               </h6>
             </div>
           </div>
@@ -740,7 +808,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
           $q3 = mysqli_query($conn, $sql3);
           $count = 0; // Untuk menghitung jumlah kartu pada setiap baris
-          
+
           while ($row = mysqli_fetch_array($q3)) {
             // Membuka baris baru setiap kali 6 kartu telah ditampilkan
             if ($count % 4 == 0) {
@@ -785,9 +853,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="card shadow"
           style="color: white; background: linear-gradient(to right, #02406D, 50%, white); border: none;">
           <div class="card-body">
-            <h3>Blessing Futsal Membership</h3>
-            <h6 id="editableText" style="color: white;"><strong style="color: #A1FF9F;">Futsal</strong> oleh <strong
-                style="color: #A1FF9F;">Mr. Robert</strong>
+            <h3><?php echo $nama_venue ?></h3>
+            <h6 id="editableText" style="color: white;"><strong style="color: #A1FF9F;"><?php echo $sport ?></strong> oleh <strong
+                style="color: #A1FF9F;"><?php echo $username ?></strong>
             </h6>
           </div>
         </div>
@@ -848,14 +916,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <?php
       // Jika pengguna sudah login, tampilkan elemen-elemen berikut
       if ($isLoggedIn) {
-        ?>
+      ?>
         <div class="deskripsi" style="width: 100%; margin-left: -65px;">
           <div class="card shadow"
             style="color: white; background: linear-gradient(to right, #02406D, 50%, white); border: none;">
             <div class="card-body">
-              <h3>Blessing Futsal Gallery</h3>
-              <h6 id="editableText" style="color: white;"><strong style="color: #A1FF9F;">Futsal</strong> oleh <strong
-                  style="color: #A1FF9F;">Mr. Robert</strong>
+              <h3><?php echo $nama_venue?></h3>
+              <h6 id="editableText" style="color: white;"><strong style="color: #A1FF9F;"><?php echo $sport ?></strong> oleh <strong
+                  style="color: #A1FF9F;"><?php echo $username ?></strong>
               </h6>
             </div>
           </div>
@@ -867,7 +935,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               $imageId = $image['id_galery'];
               $imageFilename = $image['photo'];
               $imagePath = "/ArenaFinder/public/img/venue/" . $imageFilename;
-              ?>
+            ?>
               <div class="card" style="border: none;">
                 <img src="<?= $imagePath; ?>" alt="Gambar" style="width: 250px; height: 250px; border-radius: 5px;">
 
@@ -879,7 +947,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     style="margin-bottom: 23px;">Hapus</button>
                 </form>
               </div>
-              <?php
+            <?php
             }
             ?>
           </div>
@@ -898,17 +966,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
 
 
-        <?php
+      <?php
       } else {
         // Jika pengguna belum login dan email tidak sesuai, tampilkan hanya data gambar
-        ?>
+      ?>
         <div class="deskripsi" style="width: 100%; margin-left: -65px;">
           <div class="card shadow"
             style="color: white; background: linear-gradient(to right, #02406D, 50%, white); border: none;">
             <div class="card-body">
-              <h3>Blessing Futsal Gallery</h3>
-              <h6 id="editableText" style="color: white;"><strong style="color: #A1FF9F;">Futsal</strong> oleh <strong
-                  style="color: #A1FF9F;">Mr. Robert</strong>
+              <h3><?php  echo $nama_venue?> Gallery</h3>
+              <h6 id="editableText" style="color: white;"><strong style="color: #A1FF9F;"><? echo $sport?></strong> oleh <strong
+                  style="color: #A1FF9F;"><?php echo $username  ?></strong>
               </h6>
             </div>
           </div>
@@ -916,19 +984,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="image-container">
           <?php
-          foreach ($imageData as $image) {
-            $imageId = $image['id_galery'];
-            $imageFilename = $image['photo'];
-            $imagePath = "/ArenaFinder/public/img/venue/" . $imageFilename;
-            ?>
-            <div class="card" style="border: none;">
-              <img src="<?= $imagePath; ?>" alt="Gambar" style="width: 250px; height: 250px; border-radius: 5px;">
-            </div>
-            <?php
+          if (!empty($imageData)) {
+            foreach ($imageData as $image) {
+              $imageId = $image['id_galery'];
+              $imageFilename = $image['photo'];
+              $imagePath = "/ArenaFinder/public/img/venue/" . $imageFilename;
+          ?>
+              <div class="card" style="border: none;">
+                <img src="<?= htmlspecialchars($imagePath); ?>" alt="Gambar" style="width: 250px; height: 250px; border-radius: 5px;">
+              </div>
+          <?php
+            }
+          } else {
+            echo "<p>Tidak ada gambar tersedia.</p>";
           }
           ?>
+
         </div>
-        <?php
+      <?php
       }
 
       ?>
@@ -945,9 +1018,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="card shadow"
           style="color: white; background: linear-gradient(to right, #02406D, 50%, white); border: none;">
           <div class="card-body">
-            <h3>Blessing Futsal Contact Person</h3>
-            <h6 id="editableText" style="color: white;"><strong style="color: #A1FF9F;">Futsal</strong> oleh <strong
-                style="color: #A1FF9F;">Mr. Robert</strong>
+            <h3><?php echo $nama_venue?> Contact Person</h3>
+            <h6 id="editableText" style="color: white;"><strong style="color: #A1FF9F;"><?php echo $sport?></strong> oleh <strong
+                style="color: #A1FF9F;"><?php echo $username?></strong>
             </h6>
           </div>
         </div>
@@ -969,7 +1042,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
   <script>
-    // Ambil semua tautan di dalam navigasi
     const navLinks = document.querySelectorAll(".link");
 
     // Tambahkan event listener untuk setiap tautan navigasi
@@ -998,7 +1070,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Tambahkan kelas "active" ke tautan yang diklik
         link.classList.add("active");
       });
-    });  </script>
+    });
+  </script>
 
   <div class="footer">
     <h1 style="font-size: 20px; color: white;">Arena</h1>
@@ -1030,7 +1103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
-
+  <script src="/ArenaFinder/js/script.js"></script>
 </body>
 
 </html>

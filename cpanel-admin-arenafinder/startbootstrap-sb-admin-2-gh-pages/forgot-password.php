@@ -18,7 +18,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link rel="icon" href="../img_asset/login.png">
+    <link rel="icon" href="/ArenaFinder/img_asset/login.png">
     <style>
         body {
             font-family: "Kanit", sans-serif;
@@ -65,7 +65,7 @@
                                         <h1 class="h2 text-gray-900 mb-2 ">Lupa Sandi?</h1>
                                         <p class="mb-4">Kami punya solusinya. Anda tinggal memasukkan email dan kami
                                             akan kirimkan sebuah link ke email anda untuk merubah sandi!</p>
-                                        <img src="/img_asset/login.png" alt=""
+                                        <img src="/ArenaFinder/img_asset/login.png" alt=""
                                             style="width: 200px; height: auto; margin-bottom: 20px" />
                                     </div>
 
@@ -112,11 +112,11 @@
 <?php
 if (isset($_POST["recover"])) {
     include('database.php');
-    $email = $_POST["email"];
+    $email = mysqli_real_escape_string($conn, $_POST["email"]);
 
     // Pengecekkan jika email belum diisi oleh user
     if (empty($email)) {
-        ?>
+?>
         <script>
             alert("Mohon isi kolom email untuk melakukan pemulihan sandi.");
         </script>
@@ -127,31 +127,32 @@ if (isset($_POST["recover"])) {
         $fetch = mysqli_fetch_assoc($sql);
 
         if (mysqli_num_rows($sql) <= 0) {
-            ?>
+        ?>
             <script>
                 alert("<?php echo "Maaf, email belum terdaftar " ?>");
             </script>
-            <?php
+        <?php
         } else if ($fetch["is_verified"] == 0) {
-            ?>
-                <script>
-                    alert("Maaf, akun anda harus diverifikasi terlebih dahulu sebelum mengganti sandi!");
-                    window.location.replace("index.php");
-                </script>
+        ?>
+            <script>
+                alert("Maaf, akun anda harus diverifikasi terlebih dahulu sebelum mengganti sandi!");
+                window.location.replace("index.php");
+            </script>
             <?php
         } else {
             // membuat token dari binaryhexa 
             $token = bin2hex(random_bytes(50));
 
-            // atur waktu kedaluwarsa token selama 15 menit
-            $expirationTime = time() + (15 * 60);
+            // atur waktu kedaluwarsa token selama 5 menit
+            $expirationTime = time() + (5 * 60);
 
             // menggabungkan token dan waktu kedaluwarsa 
             $tokenWithExpiration = $token . '.' . $expirationTime;
 
-            // session_start ();
-            $_SESSION['token'] = $tokenWithExpiration;
-            $_SESSION['email'] = $email;
+            // Simpan token dan waktu kedaluwarsa ke database
+            $updateQuery = "UPDATE users SET reset_token='$token', token_expiration='$expirationTime' WHERE email='$email'";
+            mysqli_query($conn, $updateQuery);
+
 
             require "Mail/phpmailer/PHPMailerAutoload.php";
             $mail = new PHPMailer;
@@ -163,8 +164,8 @@ if (isset($_POST["recover"])) {
             $mail->SMTPSecure = 'tls';
 
             // h-hotel account
-            $mail->Username = 'mahennekkers27@gmail.com';
-            $mail->Password = 'fxqa zwoq vuji mhlk';
+            $mail->Username = 'tengkufarkhan3@gmail.com';
+            $mail->Password = 'bynv cdfj izrp wiho';            
 
             // send by h-hotel email
             $mail->setFrom('arenafinder.app@gmail.com', 'Password Reset');
@@ -174,26 +175,36 @@ if (isset($_POST["recover"])) {
             // HTML body
             $mail->isHTML(true);
             $mail->Subject = "Ganti sandi akun";
+            // $mail->Body = "<b>Kepada Admin</b>
+            //             <h3>Kami menanggapi permintaan pergantian sandi akun anda.</h3>
+            //             <p>Dibawah ini adalah link untuk menuju ke halaman pergantian sandi, klik link untuk berpindah halaman!</p>
+            //             https://arenafinder.tifnganjuk.com/boots/reset_psw.php?token=$tokenWithExpiration
+            //             <br><br>
+            //             <p>Berikan pesan anda lewat email ini,</p>
+            //             <b>arenafinder.app@gmail.com</b>";
+
             $mail->Body = "<b>Kepada Admin</b>
-                        <h3>Kami menanggapi permintaan pergantian sandi akun anda.</h3>
-                        <p>Dibawah ini adalah link untuk menuju ke halaman pergantian sandi, klik link untuk berpindah halaman!</p>
-                        https://arenafinder.tifnganjuk.com/boots/reset_psw.php?token=$tokenWithExpiration
-                        <br><br>
-                        <p>Berikan pesan anda lewat email ini,</p>
-                        <b>arenafinder.app@gmail.com</b>";
+               <h3>Kami menanggapi permintaan pergantian sandi akun anda.</h3>
+               <p>Dibawah ini adalah link untuk menuju ke halaman pergantian sandi, klik link untuk berpindah halaman!</p>
+               http://192.168.75.63/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/reset_psw.php?token=$token
+               <br><br>
+               <p>Berikan pesan anda lewat email ini,</p>
+               <b>arenafinder.app@gmail.com</b>";
 
             if (!$mail->send()) {
-                ?>
-                    <script>
-                        alert("<?php echo "Email salah" ?>");
-                    </script>
-                <?php
+            ?>
+                <script>
+                    alert("<?php echo "Email salah" ?>");
+                </script>
+            <?php
             } else {
-                ?>
-                    <script>
-                        window.location.replace("notification.html");
-                    </script>
-                <?php
+            ?>
+                <script>
+                    window.location.replace("notification.html");
+                </script>
+
+<?php
+
             }
         }
     }
