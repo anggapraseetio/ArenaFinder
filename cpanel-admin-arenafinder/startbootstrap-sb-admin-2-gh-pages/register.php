@@ -5,6 +5,7 @@ include('database.php');
 if (isset($_POST["register"])) {
   $username = $_POST["username"];
   $email = $_POST["email"];
+  $phone = $_POST["phone"];
   $password = $_POST["password"];
   $level = $_POST["level"];
 
@@ -14,18 +15,22 @@ if (isset($_POST["register"])) {
   $rowCount = mysqli_num_rows($check_query);
 
   // Cek apakah salah satu atau semua input form tidak diisi
-  if (empty($username) && empty($email) && empty($password)) {
+  if (empty($username) && empty($email) && empty($password) && empty($phone)) {
     $message = "Harap isi semua kolom pada formulir pendaftaran.";
-  } elseif (empty($username) && empty($email)) {
-    $message = "Mohon isi nama pengguna dan email.";
+  } elseif (empty($username) && empty($email) && empty($phone)) {
+    $message = "Mohon isi nama pengguna, email, dan nomor telepon.";
   } elseif (empty($username) && empty($password)) {
     $message = "Mohon isi nama pengguna dan sandi.";
   } elseif (empty($email) && empty($password)) {
     $message = "Mohon isi email dan sandi.";
+  } elseif (empty($phone) && empty($email)) {
+    $message = "Mohon isi email dan nomor telepon.";
   } elseif (empty($username)) {
     $message = "Mohon isi nama pengguna.";
   } elseif (empty($email)) {
     $message = "Mohon isi email.";
+  } elseif (empty($phone)) {
+    $message = "Mohon isi nomor telepon.";
   } elseif (empty($password)) {
     $message = "Mohon isi sandi.";
   } else {
@@ -60,7 +65,7 @@ if (isset($_POST["register"])) {
 
         $password_hash = password_hash($password, PASSWORD_BCRYPT);
 
-        $result = mysqli_query($conn, "INSERT INTO users (username, email, password, is_verified, level) VALUES ('$username', '$email', '$password_hash', 0, '$level')");
+        $result = mysqli_query($conn, "INSERT INTO users (username, email, no_hp, password, is_verified, level) VALUES ('$username', '$email', '$phone', '$password_hash', 0, '$level')");
 
         // Eksekusi kode OTP jika data akun telah ditambahkan kedalam database
         if ($result) {
@@ -214,6 +219,12 @@ function isValidPassword($password)
                       <input type="email" class="form-control form-control-user" id="email-input" name="email"
                         aria-describedby="emailHelp" placeholder="Masukkan Alamat Email" />
                     </div>
+
+                    <div class="form-group">
+                      <input type="phone" class="form-control form-control-user" id="phone-input" name="phone"
+                        placeholder="Masukkan No HP" />
+                    </div>
+
 
                     <div class="form-group">
                       <input type="password" class="form-control form-control-user" id="passwordInput"
