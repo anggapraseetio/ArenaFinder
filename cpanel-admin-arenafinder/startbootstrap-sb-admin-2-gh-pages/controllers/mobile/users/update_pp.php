@@ -21,11 +21,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $photo = str_replace('data:image/png;base64,', '', $photo);
         $photo = str_replace(' ', '+', $photo);
         $data = base64_decode($photo);
-        $filename = uniqid() . '.png';
-        $file = '../../../public/img/user-photo/' . $filename;
-        file_put_contents($file, $data);
 
-        // get data user
+        // Tentukan direktori upload menggunakan DOCUMENT_ROOT
+        $upload_folder = $_SERVER['DOCUMENT_ROOT'] . '/ArenaFinder/public/img/venue/';
+        if (!is_dir($upload_folder)) {
+            mkdir($upload_folder, 0777, true); // Buat folder jika belum ada
+        }
+
+        $filename = uniqid() . '.png';
+        $file = $upload_folder . $filename;
+
+        if (file_put_contents($file, $data) === false) {
+            $response = array("status" => "error", "message" => "Gagal menyimpan file ke server.");
+            echo json_encode($response);
+            exit;
+        }
+
+        // update data user di database
         $sql = "UPDATE users SET user_photo = '$filename' WHERE email = '$email'";
         $result = $conn->query($sql);
 
@@ -36,21 +48,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $photo = $result->fetch_assoc();
 
             if ($result->num_rows == 1) {
-                $response = array("status" => "success", "message" => "photo profile berhasil diupdate", "data" => $photo);
+                $response = array("status" => "success", "message" => "Photo profile berhasil diupdate", "data" => $photo);
             } else {
-                $response = array("status" => "success", "message" => "photo profile berhasil diupdate");
+                $response = array("status" => "success", "message" => "Photo profile berhasil diupdate");
             }
         } else {
-            $response = array("status" => "error", "message" => "photo profile gagal diupdate");
+            $response = array("status" => "error", "message" => "Photo profile gagal diupdate");
         }
-    }else{
+    } else {
         $response = array("status"=> "error", "message"=> "Email tidak ditemukan");
     }
 
     // close koneksi
     $conn->close();
 } else {
-    $response = array("status" => "error", "message" => "method is not post");
+    $response = array("status" => "error", "message" => "Method is not POST");
 }
 
 // show response

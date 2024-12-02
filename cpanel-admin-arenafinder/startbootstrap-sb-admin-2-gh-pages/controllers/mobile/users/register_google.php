@@ -17,7 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $full_name = $_POST['full_name'];
     $password = $_POST['password'];
     $deviceToken = $_POST['device_token'];
-    // $user_photo = $_POST[''];
 
     $epassword = password_hash($password, PASSWORD_BCRYPT);
 
@@ -50,17 +49,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sql = "SELECT * FROM users WHERE username = '$username' LIMIT 1";
             if ($conn->query($sql)->num_rows == 1) {
                 $response = array("status" => "error", "message" => "Username tersebut sudah terdatar");
-            }
-            // saving data to database
-            else {
-                // get data user
-                $sql = "INSERT INTO users VALUES (null, '$username', '$email', '',  '$full_name', '',  '$epassword', 'END USER', 1, 'default.png', NOW())";
-                $result = $conn->query($sql);
+            } else {
+                // Menyiapkan query SQL dengan placeholders
+                $sql = "INSERT INTO users (username, password, email, full_name, level, is_verified, user_photo, created_at)
+                        VALUES (?, ?, ?, ?, 'END USER', 1, 'default.png', NOW())";
 
-                // jika data berhasil ditambahkan
-                if ($result === true) {
+                // Menyiapkan statement
+                $stmt = $conn->prepare($sql);
 
-                    // mendapatkan data
+                // Mengikat parameter untuk statement (jenis parameter: s = string, i = integer)
+                $stmt->bind_param("ssss", $username, $epassword, $email, $full_name);
+
+                // Menjalankan query
+                if ($stmt->execute()) {
+                    // Jika register berhasil, lanjutkan untuk menyimpan data login
                     $sql = "SELECT * FROM users WHERE email = '$email' LIMIT 1";
                     $result = $conn->query($sql);
 
@@ -71,19 +73,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $sql = "INSERT INTO session (`email`, `device`, `device_token`) 
                                     VALUES ('" . $user['email'] . "', 'Mobile', '$deviceToken'
                                 );";
-                        // cek 
                         if ($conn->query($sql)) {
                             $response = array("status" => "success", "message" => "Register Success", "data" => $user);
                         } else {
                             $response = array('status' => 'error', 'message' => 'Data login gagal disimpan');
                         }
-                        
                     } else {
                         $response = array("status" => "error", "message" => "Register berhasil tetapi data akun gagal didapatkan");
                     }
                 } else {
+                    // Menampilkan pesan gagal jika eksekusi INSERT gagal
                     $response = array("status" => "error", "message" => "Register Gagal");
                 }
+
+                // Menutup statement setelah selesai
+                $stmt->close();
             }
         }
     }
@@ -94,5 +98,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response = array("status" => "error", "message" => "not post method");
 }
 
-// show response
+// Tampilkan response dalam bentuk JSON
 echo json_encode($response);
