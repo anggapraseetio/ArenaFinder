@@ -7,7 +7,7 @@ session_start();
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db = "arenafinder";
+$db = "arenafinder1";
 
 $koneksi = mysqli_connect($host, $user, $pass, $db);
 if (!$koneksi) {

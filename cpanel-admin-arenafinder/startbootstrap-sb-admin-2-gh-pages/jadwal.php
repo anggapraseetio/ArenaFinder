@@ -30,7 +30,6 @@ $sukses = "";
 $error = "";
 $sukses2 = "";
 $error2 = "";
-$wa = "";
 
 if (isset($_GET['op'])) {
     $op = $_GET['op'];
@@ -69,7 +68,6 @@ if ($op == 'edit') {
         $waktu_mulai = $r1['start_hour'];
         $waktu_selesai = $r1['end_hour'];
         $harga = $r1['price'];
-        $wa = $r1['link_wa'];
         //$status = $r1['status_pemesanan'];
 
         if ($jenis_lap == '') {
@@ -90,7 +88,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
     $waktu_mulai = $_POST['waktu_mulai'];
     $waktu_selesai = $_POST['waktu_selesai'];
     $harga = $_POST['harga'];
-    $wa = $_POST['wa'];
 
 
     if (empty($tgl)) {
@@ -141,48 +138,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                             } else {
                                 // Proceed with updating or inserting the schedule
                                 if ($op == 'edit') {
-                                    // Cek apakah hanya link WA yang diubah
-                                    $isLinkWAUpdate = ($tgl === $r1['date'] &&
-                                        $waktu_mulai === $r1['start_hour'] &&
-                                        $waktu_selesai === $r1['end_hour'] &&
-                                        $harga === $r1['price'] &&
-                                        $anggota === $r1['membership']);
-
-                                    if ($isLinkWAUpdate) {
-                                        // Hanya update link WA
-                                        $sql1 = "UPDATE venue_price SET link_wa = '$wa' WHERE id_price = '$id'";
-                                        $q1 = mysqli_query($conn, $sql1);
-
-                                        if ($q1) {
-                                            $sukses = "Link WhatsApp berhasil diperbarui.";
-                                        } else {
-                                            $error = "Gagal memperbarui Link WhatsApp.";
-                                        }
+                                    // Update seluruh data kecuali link WhatsApp
+                                    $sql1 = "UPDATE venue_price SET 
+                                                id_venue = '$id_venue',
+                                                id_lapangan = '$id_lapangan',
+                                                membership = '$anggota',
+                                                date = '$tgl',
+                                                start_hour = '$waktu_mulai',
+                                                end_hour = '$waktu_selesai',
+                                                price = '$harga'
+                                             WHERE id_price = '$id'";
+                                    $q1 = mysqli_query($conn, $sql1);
+                                
+                                    if ($q1) {
+                                        $sukses = "Data jadwal berhasil diupdate.";
                                     } else {
-                                        // Update seluruh data termasuk jadwal
-                                        $sql1 = "UPDATE venue_price SET 
-                                                    id_venue = '$id_venue',
-                                                    id_lapangan = '$id_lapangan',
-                                                    membership = '$anggota',
-                                                    date = '$tgl',
-                                                    start_hour = '$waktu_mulai',
-                                                    end_hour = '$waktu_selesai',
-                                                    price = '$harga',
-                                                    link_wa = '$wa'
-                                                 WHERE id_price = '$id'";
-                                        $q1 = mysqli_query($conn, $sql1);
-
-                                        if ($q1) {
-                                            $sukses = "Data jadwal berhasil diupdate.";
-                                        } else {
-                                            $error = "Data jadwal gagal diupdate.";
-                                        }
-                       
-                                        }
+                                        $error = "Data jadwal gagal diupdate.";
+                                    }                                
                                 } else {
                                     // Tambahkan data jika ini adalah operasi insert
-                                    $sql1 = "INSERT INTO venue_price (id_venue, id_lapangan, membership, date, start_hour, end_hour, price, link_wa) 
-                                        VALUES ('$id_venue', '$id_lapangan', '$anggota', '$tgl', '$waktu_mulai', '$waktu_selesai', '$harga', '$wa')";
+                                    $sql1 = "INSERT INTO venue_price (id_venue, id_lapangan, membership, date, start_hour, end_hour, price) 
+                                        VALUES ('$id_venue', '$id_lapangan', '$anggota', '$tgl', '$waktu_mulai', '$waktu_selesai', '$harga')";
                                     $q1 = mysqli_query($conn, $sql1);
 
                                     if ($q1) {
@@ -556,17 +532,6 @@ if ($error || $sukses || $error2 || $sukses2) {
                                             </div>
                                         </div>
 
-                                        <div class="mb-3 row">
-                                            <label for="wa" class="col-sm-2 col-form-label">Link WhatsApp</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="wa" name="wa"
-                                                    value="<?php echo htmlspecialchars($wa); ?>">
-                                                <small class="form-text text-muted">
-                                                    Isi link WhatsApp Anda dengan format yang dihasilkan dari <a href="https://create.wa.link/" target="_blank">https://create.wa.link/</a>.
-                                                </small>
-                                            </div>
-                                        </div>
-
 
                                         <div class="row">
                                             <div class="col-xxl-8 col-12">
@@ -717,7 +682,7 @@ if ($error || $sukses || $error2 || $sukses2) {
                                             // Non-Member pricing
                                             if (startHour >= 7 && endHour <= 21) {
                                                 // Session from 7 AM to 4 PM
-                                                pricePerHour = 150000;
+                                                pricePerHour = 120000;
                                             } else {
                                                 // Invalid time range
                                                 hargaInput.value = "Input selisih waktu salah";

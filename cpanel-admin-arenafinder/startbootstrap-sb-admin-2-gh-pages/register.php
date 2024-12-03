@@ -9,106 +9,109 @@ if (isset($_POST["register"])) {
   $password = $_POST["password"];
   $level = $_POST["level"];
 
-
-  //Pengecekkan email yang sudah terdaftar dan tersimpan di tabel users
-  $check_query = mysqli_query($conn, "SELECT * FROM users where email ='$email' AND username = '$username'");
-  $rowCount = mysqli_num_rows($check_query);
-
-  // Cek apakah salah satu atau semua input form tidak diisi
-  if (empty($username) && empty($email) && empty($password) && empty($phone)) {
-    $message = "Harap isi semua kolom pada formulir pendaftaran.";
-  } elseif (empty($username) && empty($email) && empty($phone)) {
-    $message = "Mohon isi nama pengguna, email, dan nomor telepon.";
-  } elseif (empty($username) && empty($password)) {
-    $message = "Mohon isi nama pengguna dan sandi.";
-  } elseif (empty($email) && empty($password)) {
-    $message = "Mohon isi email dan sandi.";
-  } elseif (empty($phone) && empty($email)) {
-    $message = "Mohon isi email dan nomor telepon.";
-  } elseif (empty($username)) {
-    $message = "Mohon isi nama pengguna.";
-  } elseif (empty($email)) {
-    $message = "Mohon isi email.";
-  } elseif (empty($phone)) {
-    $message = "Mohon isi nomor telepon.";
-  } elseif (empty($password)) {
-    $message = "Mohon isi sandi.";
+  // Pengecekan format nomor telepon
+  if (strlen($phone) < 12 || strlen($phone) > 13 || !ctype_digit($phone)) {
+    $message = "Nomor telepon harus terdiri dari 12 atau 13 digit dan hanya mengandung angka.";
   } else {
-    // Cek validasi email
-    $rowCount = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM users WHERE email = '$email'"));
+    // Pengecekkan email yang sudah terdaftar dan tersimpan di tabel users
+    $check_query = mysqli_query($conn, "SELECT * FROM users where email ='$email' AND username = '$username'");
+    $rowCount = mysqli_num_rows($check_query);
 
-    if ($rowCount > 0) {
-?>
-      <script>
-        alert("Pengguna dengan email ini sudah terdaftar!");
-        window.location.replace('register.php');
-      </script>
-    <?php
-    } elseif (usernameExists($conn, $username)) {
-    ?>
-      <script>
-        alert("Nama pengguna sudah terdaftar. Mohon pilih nama pengguna lain.");
-        window.location.replace('register.php');
-      </script>
-      <?php
+    // Cek apakah salah satu atau semua input form tidak diisi
+    if (empty($username) && empty($email) && empty($password) && empty($phone)) {
+      $message = "Harap isi semua kolom pada formulir pendaftaran.";
+    } elseif (empty($username) && empty($email) && empty($phone)) {
+      $message = "Mohon isi nama pengguna, email, dan nomor telepon.";
+    } elseif (empty($username) && empty($password)) {
+      $message = "Mohon isi nama pengguna dan sandi.";
+    } elseif (empty($email) && empty($password)) {
+      $message = "Mohon isi email dan sandi.";
+    } elseif (empty($phone) && empty($email)) {
+      $message = "Mohon isi email dan nomor telepon.";
+    } elseif (empty($username)) {
+      $message = "Mohon isi nama pengguna.";
+    } elseif (empty($email)) {
+      $message = "Mohon isi email.";
+    } elseif (empty($phone)) {
+      $message = "Mohon isi nomor telepon.";
+    } elseif (empty($password)) {
+      $message = "Mohon isi sandi.";
     } else {
-      // Cek validasi sandi akun
-      if (!isValidPassword($password)) {
-        // Notifikasi peringatan jika sandi salah
-      ?>
+      // Cek validasi email
+      $rowCount = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM users WHERE email = '$email'"));
+
+      if ($rowCount > 0) {
+?>
         <script>
-          alert("Password harus memiliki 8 sampai 12 karakter, mengandung angka, huruf besar, huruf kecil, dan karakter khusus.");
+          alert("Pengguna dengan email ini sudah terdaftar!");
           window.location.replace('register.php');
         </script>
-        <?php
+      <?php
+      } elseif (usernameExists($conn, $username)) {
+      ?>
+        <script>
+          alert("Nama pengguna sudah terdaftar. Mohon pilih nama pengguna lain.");
+          window.location.replace('register.php');
+        </script>
+      <?php
       } else {
-
-        $password_hash = password_hash($password, PASSWORD_BCRYPT);
-
-        $result = mysqli_query($conn, "INSERT INTO users (username, email, no_hp, password, is_verified, level) VALUES ('$username', '$email', '$phone', '$password_hash', 0, '$level')");
-
-        // Eksekusi kode OTP jika data akun telah ditambahkan kedalam database
-        if ($result) {
-          $otp = rand(100000, 999999);
-          $_SESSION['otp'] = $otp;
-          $_SESSION['otp_expiration'] = time() + (5 * 60); // Set expiration time to 15 minutes
-          $_SESSION['mail'] = $email;
-
-          require "Mail/phpmailer/PHPMailerAutoload.php";
-          $mail = new PHPMailer;
-
-          $mail->isSMTP();
-          $mail->Host = 'smtp.gmail.com';
-          $mail->Port = 587;
-          $mail->SMTPAuth = true;
-          $mail->SMTPSecure = 'tls';
-
-          $mail->Username = 'tengkufarkhan3@gmail.com';
-          $mail->Password = 'bynv cdfj izrp wiho';
-
-          $mail->setFrom('arenafinder.app@gmail.com', 'OTP Verification');
-          $mail->addAddress($_POST["email"]);
-
-          $mail->isHTML(true);
-          $mail->Subject = "Kode verifikasi akun anda";
-          $mail->Body = "<p>Kepada admin, </p> <h3>Kode OTP anda adalah $otp <br></h3>
-              <br><br>
-              <p>Berikan pesan anda lewat email ini,</p>
-              <b>arenafinder.app@gmail.com</b>";
-
-          if (!$mail->send()) {
+        // Cek validasi sandi akun
+        if (!isValidPassword($password)) {
+        // Notifikasi peringatan jika sandi salah
         ?>
-            <script>
-              alert("<?php echo "Daftar akun gagal, email tidak valid" ?>");
-            </script>
-          <?php
-          } else {
+          <script>
+            alert("Password harus memiliki 8 sampai 12 karakter, mengandung angka, huruf besar, huruf kecil, dan karakter khusus.");
+            window.location.replace('register.php');
+          </script>
+        <?php
+        } else {
+          $password_hash = password_hash($password, PASSWORD_BCRYPT);
+
+          $result = mysqli_query($conn, "INSERT INTO users (username, email, no_hp, password, is_verified, level) VALUES ('$username', '$email', '$phone', '$password_hash', 0, '$level')");
+
+          // Eksekusi kode OTP jika data akun telah ditambahkan kedalam database
+          if ($result) {
+            $otp = rand(100000, 999999);
+            $_SESSION['otp'] = $otp;
+            $_SESSION['otp_expiration'] = time() + (5 * 60); // Set expiration time to 5 minutes
+            $_SESSION['mail'] = $email;
+
+            require "Mail/phpmailer/PHPMailerAutoload.php";
+            $mail = new PHPMailer; 
+
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->Port = 587;
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = 'tls';
+
+            $mail->Username = 'tengkufarkhan3@gmail.com';
+            $mail->Password = 'bynv cdfj izrp wiho';
+
+            $mail->setFrom('arenafinder.app@gmail.com', 'OTP Verification');
+            $mail->addAddress($_POST["email"]);
+
+            $mail->isHTML(true);
+            $mail->Subject = "Kode verifikasi akun anda";
+            $mail->Body = "<p>Kepada admin, </p> <h3>Kode OTP anda adalah $otp <br></h3>
+                <br><br>
+                <p>Berikan pesan anda lewat email ini,</p>
+                <b>arenafinder.app@gmail.com</b>";
+
+            if (!$mail->send()) {
           ?>
-            <script>
-              alert("<?php echo "Daftar akun sukses, kode OTP dikirim ke " . $email ?>");
-              window.location.replace('verification.php');
-            </script>
-  <?php
+              <script>
+                alert("<?php echo "Daftar akun gagal, email tidak valid" ?>");
+              </script>
+            <?php
+            } else {
+            ?>
+              <script>
+                alert("<?php echo "Daftar akun sukses, kode OTP dikirim ke " . $email ?>");
+                window.location.replace('verification.php');
+              </script>
+    <?php
+            }
           }
         }
       }
@@ -140,10 +143,25 @@ function isValidPassword($password)
   $pattern = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,12}$/";
   return preg_match($pattern, $password);
 }
-
-
 ?>
 
+<!-- HTML remains the same -->
+
+<script>
+  // JavaScript validation for phone number (client-side)
+  document.forms['register'].addEventListener('submit', function (e) {
+    var phoneInput = document.getElementById('phone-input').value;
+    
+    if (phoneInput.length < 12 || phoneInput.length > 13 || !/^\d+$/.test(phoneInput)) {
+      alert("Nomor telepon harus terdiri dari 12 atau 13 digit dan hanya mengandung angka.");
+      e.preventDefault(); // Prevent form submission
+    }
+  });
+</script>
+
+
+
+ 
 <!DOCTYPE html>
 <html lang="en">
 
