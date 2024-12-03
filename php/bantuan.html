@@ -6,7 +6,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Kanit&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap"
       rel="stylesheet"
     />
     <link
@@ -20,159 +20,189 @@
       html,
       body {
         height: 100%;
-      }
-
-      body {
-        background-color: #e7f5ff;
-        color: #02406d;
-        font-family: "Kanit";
         margin: 0;
+        font-family: "Kanit", sans-serif;
+        background-color: #02406d;
+        color: #02406d;
         display: flex;
         justify-content: center;
         align-items: center;
-        text-align: center;
         flex-direction: column;
       }
-
+  
+      body {
+        padding: 20px;
+      }
+  
       .main-con {
         position: relative;
+        width: 100%;
       }
-
+  
       .breadcrumb {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%; /* Menjadikan breadcrumb lebar 100% container */
-        padding: 10px; /* Optional: memberikan padding pada breadcrumb */
-        box-sizing: border-box; /* Memastikan padding tidak mempengaruhi lebar total */
+        background-color: #ffffff;
+        border-radius: 7px;
+        padding: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
+        display: inline-block;
       }
-
+  
+      .breadcrumb a {
+        text-decoration: none;
+        color: #02406d;
+        font-weight: 600;
+      }
+  
+      .breadcrumb a:hover {
+        color: #ffffff;
+        text-decoration: underline;
+      }
+  
       .container {
-        max-width: 950px;
-        margin: 0 auto;
-        margin-top: 40px;
-        padding: 20px;
-        background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 0 10px #02406d;
-      }
-
-      h1 {
+        max-width: 850px;
+        width: 100%;
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 4px 12px rgba(2, 64, 109, 0.15);
         text-align: center;
-        margin-bottom: 20px;
-        font-size: 25px;
-        font-weight: bold;
       }
-
+  
+      h1 {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 25px;
+      }
+  
       h3 {
-        font-size: 15px;
-        font-weight: 100;
+        font-size: 18px;
+        font-weight: 400;
         text-align: start;
+        line-height: 1.5;
+        color: #02406d;
       }
-
+  
       p {
         font-size: 18px;
-        margin-bottom: 10px;
-        display: block;
-        padding: 10px;
-        margin-top: 10px;
-        background-color: #e7f5ff;
+        font-weight: 400;
+        background-color: #acddff;
         color: #02406d;
-        text-decoration: none;
-        border-radius: 5px;
-        transition: background-color 0.3s;
+        padding: 12px 16px;
+        border-radius: 8px;
+        margin-bottom: 12px;
+        text-align: left;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
       }
-
+  
       p:hover {
         background-color: #02406d;
-        color: #e7f5ff;
-        cursor: pointer;
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(2, 64, 109, 0.15);
       }
-
+  
       .answer {
         display: none;
-        margin-left: 20px;
-        margin-top: 10px;
+        margin-top: 15px;
+        padding: 10px 15px;
+        border-left: 4px solid #02406d;
+        background-color: #f9fafb;
+        font-size: 16px;
+        border-radius: 5px;
       }
-
+  
       .answer.active {
         display: block;
       }
-
+  
       a {
         color: #02406d;
-        text-decoration: underline;
-        text-decoration-color: #a1ff9f;
+        font-weight: 500;
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        transition: all 0.3s ease-in-out;
       }
-
+  
       a:hover {
         background-color: #02406d;
-        color: #a1ff9f;
+        color: #ffffff;
         text-decoration: none;
-        border-radius: 10px;
       }
     </style>
   </head>
+  
   <body>
     <div class="main-con">
+      <!-- Breadcrumb -->
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/">Beranda</a></li>
+          <li class="breadcrumb-item"><a href="index.php">Beranda</a></li>
           <li class="breadcrumb-item active" aria-current="page">Bantuan</li>
         </ol>
       </nav>
+  
+      <!-- Main Content -->
       <div class="container">
         <h1>Bantuan</h1>
-
+  
+        <!-- Pertanyaan 1 -->
         <p class="question" onclick="toggleAnswer(1)">
           Apa saja layanan yang disediakan?
         </p>
         <div id="answer1" class="answer">
-          <h3>1. Layanan yang disediakan mencakup hal-hal seperti ...</h3>
+          <h3>
+            1. Layanan yang disediakan mencakup fitur-fitur seperti pemesanan
+            online, jadwal real-time, dan banyak lagi.
+          </h3>
         </div>
-
+  
+        <!-- Pertanyaan 2 -->
         <p class="question" onclick="toggleAnswer(2)">
           Siapa target penggunanya?
         </p>
         <div id="answer2" class="answer">
-          <h3>2. Target pengguna kami adalah ...</h3>
+          <h3>
+            2. Target pengguna kami adalah individu dan kelompok yang membutuhkan
+            kemudahan dalam manajemen fasilitas dan layanan.
+          </h3>
         </div>
-
+  
+        <!-- Pertanyaan 3 -->
         <p class="question" onclick="toggleAnswer(3)">
           Bagaimana sistem ini bekerja?
         </p>
         <div id="answer3" class="answer">
-          <h3>3. Sistem ini bekerja dengan cara ...</h3>
+          <h3>
+            3. Sistem bekerja secara otomatis dengan basis data yang diperbarui
+            secara berkala untuk memastikan akurasi.
+          </h3>
         </div>
-
+  
+        <!-- Pertanyaan 4 -->
         <p class="question" onclick="toggleAnswer(4)">
           Saat kapan pengguna dapat mengetahui pesanan?
         </p>
         <div id="answer4" class="answer">
           <h3>
-            4. Pengguna dapat mengetahui pesanan pada menu pesanan di panel
-            pengelola, berikut link untuk mengakses halamannya.
+            4. Pengguna dapat mengetahui pesanan melalui menu pesanan di panel
+            pengelola.
             <span>
-              <a href="/boots/pesanan.php"
-                >Klik di sini untuk menu pesanan</a
-              ></span
-            >
+              <a href="/boots/pesanan.php">Klik di sini untuk menu pesanan</a>
+            </span>
           </h3>
         </div>
       </div>
     </div>
-
+  
+    <!-- JavaScript -->
     <script>
       function toggleAnswer(questionNumber) {
-        var answer = document.getElementById("answer" + questionNumber);
+        const answer = document.getElementById("answer" + questionNumber);
         answer.classList.toggle("active");
       }
-
-      document
-        .getElementById("previousPage")
-        .addEventListener("click", function () {
-          history.back(); // Kembali ke halaman sebelumnya
-        });
     </script>
   </body>
-</html>
+  
