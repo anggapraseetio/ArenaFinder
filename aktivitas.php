@@ -332,9 +332,6 @@ if (!$koneksi) {
           <li class="nav-item">
             <a class="nav-link" href="referensi.php">Referensi</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="info_mitra.php">Info Mitra</a>
-          </li>
         </ul>
         <ul class="navbar-nav ml-auto"> <!-- Menggunakan 'ml-auto' untuk komponen di akhir navbar -->
           <?php

@@ -3,7 +3,7 @@
 $server = "localhost"; 
 $username = "root";
 $password = "";
-$database = "arenafinder1";
+$database = "arenafinder";
 
 // membuat koneksi ke databae
 $conn = new mysqli($server, $username, $password, $database);

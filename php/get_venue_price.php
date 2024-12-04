@@ -6,7 +6,7 @@
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db = "arenafinder1";
+$db = "arenafinder";
 
 $conn = mysqli_connect($host, $user, $pass, $db);
 

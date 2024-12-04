@@ -193,11 +193,11 @@ function fetchVenueContact($conn, $idVenue)
 
 function fetchVenuePhoto($conn, $idVenue)
 {
-    $sql = "SELECT CONCAT('venue/', venue_photo) AS photo FROM venues WHERE id_venue = $idVenue
+    $sql = "SELECT CONCAT( venue_photo) AS photo FROM venues WHERE id_venue = $idVenue
         UNION 
-            SELECT CONCAT('venue/', photo) AS photo  FROM venue_aktivitas WHERE id_venue = $idVenue
+            SELECT CONCAT( photo) AS photo  FROM venue_aktivitas WHERE id_venue = $idVenue
         UNION 
-            SELECT CONCAT('venue/', fasilitas_photo)  AS photo FROM venue_fasilitas WHERE id_venue = $idVenue
+            SELECT CONCAT( fasilitas_photo)  AS photo FROM venue_fasilitas WHERE id_venue = $idVenue
     ";
 
     $result = $conn->query($sql);
