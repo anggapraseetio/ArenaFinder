@@ -185,14 +185,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }    
 
-// if ($error || $sukses || $error2 || $sukses2) {
-//     // Set header sebelum mencetak pesan
-//     $refreshUrl = "add_referensi.php";
-//     if ($error2 || $sukses2) {
-//         $refreshUrl .= "#tabel-card";
-//     }
-//     header("refresh:2;url=$refreshUrl"); // 2 = detik
-// }
+if ($error || $sukses || $error2 || $sukses2) {
+    // Set header sebelum mencetak pesan
+    $refreshUrl = "add_referensi.php";
+    if ($error2 || $sukses2) {
+        $refreshUrl .= "#tabel-card";
+    }
+    header("refresh:1;url=$refreshUrl"); // 1 = detik
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -387,9 +387,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="referensi.php">Referensi</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="info_mitra.php">Info Mitra</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto"> <!-- Menggunakan 'ml-auto' untuk komponen di akhir navbar -->

@@ -51,7 +51,7 @@ if ($op == 'delete') {
 if ($op == 'edit') {
     $id = $_GET['id'];
 
-    // Ubah query untuk mendapatkan data yang sesuai dengan ID
+    // Ubah query untuk mendapatkan data tanpa kolom membership
     $sql1 = "SELECT vp.*, v.sport
             FROM venue_price vp
             JOIN venues v ON vp.id_venue = v.id_venue
@@ -62,7 +62,7 @@ if ($op == 'edit') {
     if ($q1) {
         $r1 = mysqli_fetch_array($q1);
 
-        $anggota = $r1['membership'];
+        // Hapus variabel terkait membership
         $jenis_lap = $r1['sport'];
         $tgl = $r1['date'];
         $waktu_mulai = $r1['start_hour'];
@@ -79,10 +79,8 @@ if ($op == 'edit') {
 }
 
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
-    // Get the user's email from the session
+if ($_SERVER["REQUEST_METHOD"] == "POST") { 
     $email = $_SESSION['email'];
-    $anggota = $_POST['keanggotaan'];
     $jenis_lap = $_POST['jenis_lap'];
     $tgl = $_POST['tanggal'];
     $waktu_mulai = $_POST['waktu_mulai'];
@@ -103,64 +101,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
             $venueRow = mysqli_fetch_assoc($fetchVenueIdResult);
             $id_venue = $venueRow['id_venue'];
             $id_lapangan = $venueRow['id_lapangan'];
-
-            // Additional validation checks
-            if ($harga !== "Input selisih waktu salah" && $harga !== "Durasi waktu istirahat" && $harga !== "Harga tidak diketahui") {
+        
+            if (is_numeric($harga) && $harga > 0) {
                 if ($waktu_mulai && $waktu_selesai) {
                     $startHour = (int) explode(":", $waktu_mulai)[0];
                     $endHour = (int) explode(":", $waktu_selesai)[0];
-
-                    // Check if the start time is during the break (16:00 - 17:00)
+        
                     if ($startHour >= 16 && $startHour < 17) {
                         $error = "Durasi waktu istirahat";
                     } else {
-                        // Check for an existing schedule with the same date and overlapping time
                         $checkScheduleQuery = "SELECT COUNT(*) AS count_schedule
-                       FROM venue_price
-                       WHERE id_venue = '$id_venue'
-                       AND date = '$tgl'
-                       AND ((start_hour <= '$waktu_mulai' AND end_hour >= '$waktu_mulai')
-                            OR (start_hour <= '$waktu_selesai' AND end_hour >= '$waktu_selesai')
-                            OR (start_hour >= '$waktu_mulai' AND end_hour <= '$waktu_selesai'))
-                       AND membership = '$anggota'
-                       AND id_price != '$id'";
-
-
+                            FROM venue_price
+                            WHERE id_venue = '$id_venue'
+                            AND date = '$tgl'
+                            AND ((start_hour <= '$waktu_mulai' AND end_hour >= '$waktu_mulai')
+                                 OR (start_hour <= '$waktu_selesai' AND end_hour >= '$waktu_selesai')
+                                 OR (start_hour >= '$waktu_mulai' AND end_hour <= '$waktu_selesai'))
+                            AND id_price != '$id'";
+        
                         $checkScheduleResult = $conn->query($checkScheduleQuery);
-
+        
                         if ($checkScheduleResult) {
                             $row = $checkScheduleResult->fetch_assoc();
-                            $countSchedule = $row['count_schedule'];
-
-                            if ($countSchedule > 0) {
-                                // There is an existing schedule with the same date, overlapping time, and membership
-                                $error = "Jadwal dengan tanggal, waktu, dan keanggotaan yang sama sudah ada.";
+                            if ($row['count_schedule'] > 0) {
+                                $error = "Jadwal dengan tanggal dan waktu yang sama sudah ada.";
                             } else {
-                                // Proceed with updating or inserting the schedule
                                 if ($op == 'edit') {
-                                    // Update seluruh data kecuali link WhatsApp
                                     $sql1 = "UPDATE venue_price SET 
                                                 id_venue = '$id_venue',
                                                 id_lapangan = '$id_lapangan',
-                                                membership = '$anggota',
                                                 date = '$tgl',
                                                 start_hour = '$waktu_mulai',
                                                 end_hour = '$waktu_selesai',
                                                 price = '$harga'
                                              WHERE id_price = '$id'";
                                     $q1 = mysqli_query($conn, $sql1);
-                                
+        
                                     if ($q1) {
                                         $sukses = "Data jadwal berhasil diupdate.";
                                     } else {
                                         $error = "Data jadwal gagal diupdate.";
-                                    }                                
+                                    }
                                 } else {
-                                    // Tambahkan data jika ini adalah operasi insert
-                                    $sql1 = "INSERT INTO venue_price (id_venue, id_lapangan, membership, date, start_hour, end_hour, price) 
-                                        VALUES ('$id_venue', '$id_lapangan', '$anggota', '$tgl', '$waktu_mulai', '$waktu_selesai', '$harga')";
+                                    $sql1 = "INSERT INTO venue_price (id_venue, id_lapangan, date, start_hour, end_hour, price) 
+                                        VALUES ('$id_venue', '$id_lapangan', '$tgl', '$waktu_mulai', '$waktu_selesai', '$harga')";
                                     $q1 = mysqli_query($conn, $sql1);
-
+        
                                     if ($q1) {
                                         $sukses = "Data jadwal berhasil ditambahkan";
                                     } else {
@@ -169,30 +155,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //untuk create data
                                 }
                             }
                         } else {
-                            // Error executing query
-                            $error = "Gagal melakukan pengecekan jadwal.";
+                            $error = "Gagal melakukan pengecekan jadwal: " . mysqli_error($conn);
                         }
                     }
                 } else {
                     $error = "Input waktu mulai dan waktu selesai harus diisi";
                 }
             } else {
-                $error = "Terdapat kesalahan input harga";
+                $error = "Harga tidak valid";
             }
         } else {
-            $error = "Tempat atau jenis olahraga tidak sesuai untuk email ini";
+            $error = $fetchVenueIdResult 
+                ? "Data venue tidak ditemukan."
+                : "Query gagal: " . mysqli_error($conn);
         }
     }
+
 }
-
-
 if ($error || $sukses || $error2 || $sukses2) {
     // Set header sebelum mencetak pesan
     $refreshUrl = "jadwal.php";
     if ($error2 || $sukses2) {
         $refreshUrl .= "#tabel-card";
     }
-    header("refresh:2;url=$refreshUrl"); // 2 = detik
+    header("refresh:1;url=$refreshUrl"); // 2 = detik
 }
 
 ?>
@@ -308,13 +294,6 @@ if ($error || $sukses || $error2 || $sukses2) {
                 <a class="nav-link" href="aktivitas.php">
                     <i class="fa-solid fa-fire"></i>
                     <span>Aktivitas</span></a>
-            </li>
-
-            <!-- Nav Item - Keanggotaan -->
-            <li class="nav-item ">
-                <a class="nav-link" href="keanggotaan.php">
-                    <i class="fa-solid fa-users"></i>
-                    <span>Keanggotaan</span></a>
             </li>
 
             <!-- Divider -->
@@ -442,336 +421,184 @@ if ($error || $sukses || $error2 || $sukses2) {
                             if ($level != 'SUPER ADMIN') {
                                 // Tampilkan form hanya jika level bukan 'SUPER ADMIN'
                             ?>
-                                <div class="card shadow mb-4 overflow-hidden" id="form-jadwal">
-                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
-                                        style="background-color: #02406d; color: white">
-                                        <h6 class="m-0 font-weight-bold">Tambah/Edit <span
-                                                style="color: #a1ff9f;">Jadwal</span></h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="table-responsive overflow-hidden">
-                                            <?php if ($error || $sukses): ?>
-                                                <div class="alert <?php echo $error ? 'alert-danger' : 'alert-success'; ?>"
-                                                    role="alert">
-                                                    <?php echo $error ? $error : $sukses; ?>
-                                                </div>
-                                            <?php endif; ?>
-                                            <form action="" method="POST" autocomplete="off"
-                                                onsubmit="return validasiForm()" name="jadwal-form">
+                               <div class="card shadow mb-4 overflow-hidden" id="form-jadwal">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+        style="background-color: #02406d; color: white">
+        <h6 class="m-0 font-weight-bold">Tambah/Edit <span
+                style="color: #a1ff9f;">Jadwal</span></h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive overflow-hidden">
+            <?php if ($error || $sukses): ?>
+                <div class="alert <?php echo $error ? 'alert-danger' : 'alert-success'; ?>"
+                    role="alert">
+                    <?php echo $error ? $error : $sukses; ?>
+                </div>
+            <?php endif; ?>
+            <form action="" method="POST" autocomplete="off"
+                onsubmit="return validasiForm()" name="jadwal-form">
 
-                                                <div class="mb-3 row">
-                                                    <label for="jenis_lap" class="col-sm-2 col-form-label">
-                                                        Keanggotaan</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="radio" id="member" name="keanggotaan" value="1" <?php echo ($anggota == "1") ? "checked" : ""; ?> required>
-                                                        <label for="member">Member</label>
-
-                                                        <input type="radio" id="nonmember" name="keanggotaan" value="0"
-                                                            style="margin-left: 20px;" <?php echo ($anggota == "0") ? "checked" : ""; ?> required>
-                                                        <label for="nonmember">Non Member</label>
-                                                    </div>
-                                                </div>
-
-                                                <div class="mb-3 row">
-                                                    <label for="jenis_lap" class="col-sm-2 col-form-label">Jenis
-                                                        Olahraga</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="jenis_lap"
-                                                            name="jenis_lap" value="<?php echo $sportFromDB; ?>" readonly>
-                                                    </div>
-                                                </div>
-
-                                                <div class="mb-3 row">
-                                                    <label for="alamat" class="col-sm-2 col-form-label">Tanggal Main</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" placeholder="-Pilih Tanggal-"
-                                                            class="form-control" id="tanggal" name="tanggal"
-                                                            value="<?php echo $tgl; ?>" required>
-                                                    </div>
-                                                </div>
-
-                                        </div>
-
-                                        <script>
-                                            document.addEventListener('DOMContentLoaded', function() {
-                                                flatpickr("#tanggal", {
-                                                    enableTime: false, // Enable time selection
-                                                    minDate: "today", // Set the minimum date to today
-                                                    dateFormat: "Y-m-d", // Specify the date format
-                                                });
-                                            });
-                                        </script>
-
-                                        <div class="mb-3 row">
-                                            <label for="waktu-mulai" class="col-sm-2 col-form-label">Waktu
-                                                Mulai</label>
-                                            <div class="col-sm-10">
-                                                <input type="time" placeholder="-Pilih Waktu Mulai-" class="form-control"
-                                                    id="waktu-mulai" name="waktu_mulai" value="<?php echo $waktu_mulai ?>"
-                                                    required>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-3 row">
-                                            <label for="waktu-selesai" class="col-sm-2 col-form-label">Waktu
-                                                Selesai</label>
-                                            <div class="col-sm-10">
-                                                <input type="time" placeholder="-Pilih Waktu Selesai-" class="form-control"
-                                                    id="waktu-selesai" name="waktu_selesai"
-                                                    value="<?php echo $waktu_selesai ?>" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-3 row">
-                                            <label for="harga" class="col-sm-2 col-form-label">Harga</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="harga" name="harga"
-                                                    value="<?php echo $harga ?>" readonly>
-                                                <input type="text" class="form-control" id="status" name="status" readonly
-                                                    hidden value="Belum Dipesan">
-                                            </div>
-                                        </div>
-
-
-                                        <div class="row">
-                                            <div class="col-xxl-8 col-12">
-                                                <input type="submit" name="simpan" value="Simpan Data"
-                                                    class="btn w-100 mt-5" id="save-btn">
-                                            </div>
-                                        </div>
-                                        </form>
-                                    </div>
-                                </div>
-                        </div>
+                <div class="mb-3 row">
+                    <label for="jenis_lap" class="col-sm-2 col-form-label">Jenis
+                        Olahraga</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="jenis_lap"
+                            name="jenis_lap" value="<?php echo $sportFromDB; ?>" readonly>
                     </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="alamat" class="col-sm-2 col-form-label">Tanggal Main</label>
+                    <div class="col-sm-10">
+                        <input type="text" placeholder="-Pilih Tanggal-"
+                            class="form-control" id="tanggal" name="tanggal"
+                            value="<?php echo $tgl; ?>" required>
+                    </div>
+                </div>
+
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                flatpickr("#tanggal", {
+                    enableTime: false, // Enable time selection
+                    minDate: "today", // Set the minimum date to today
+                    dateFormat: "Y-m-d", // Specify the date format
+                });
+            });
+        </script>
+
+        <div class="mb-3 row">
+            <label for="waktu-mulai" class="col-sm-2 col-form-label">Waktu
+                Mulai</label>
+            <div class="col-sm-10">
+                <input type="time" placeholder="-Pilih Waktu Mulai-" class="form-control"
+                    id="waktu-mulai" name="waktu_mulai" value="<?php echo $waktu_mulai ?>"
+                    required>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="waktu-selesai" class="col-sm-2 col-form-label">Waktu
+                Selesai</label>
+            <div class="col-sm-10">
+                <input type="time" placeholder="-Pilih Waktu Selesai-" class="form-control"
+                    id="waktu-selesai" name="waktu_selesai"
+                    value="<?php echo $waktu_selesai ?>" required>
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="harga" class="col-sm-2 col-form-label">Harga</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="harga" name="harga"
+                    value="<?php echo $harga ?>" readonly>
+                <input type="text" class="form-control" id="status" name="status" readonly
+                    hidden value="Belum Dipesan">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xxl-8 col-12">
+                <input type="submit" name="simpan" value="Simpan Data"
+                    class="btn w-100 mt-5" id="save-btn">
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+
                 <?php } ?>
 
 
                 <script>
-                    const waktuMulaiInput = document.getElementById("waktu-mulai");
-                    const waktuAkhirInput = document.getElementById("waktu-selesai");
-                    const hargaInput = document.getElementById("harga");
-                    const jenisLapanganSelect = document.getElementById("jenis_lap");
-                    const keanggotaanMember = document.getElementById("member");
-                    const keanggotaanNonMember = document.getElementById("nonmember");
+    const waktuMulaiInput = document.getElementById("waktu-mulai");
+    const waktuAkhirInput = document.getElementById("waktu-selesai");
+    const hargaInput = document.getElementById("harga");
+    const jenisLapanganSelect = document.getElementById("jenis_lap");
 
-                    waktuMulaiInput.addEventListener("input", calculatePrice);
-                    waktuAkhirInput.addEventListener("input", calculatePrice);
-                    jenisLapanganSelect.addEventListener("change", calculatePrice);
-                    keanggotaanMember.addEventListener("change", calculatePrice);
-                    keanggotaanNonMember.addEventListener("change", calculatePrice);
+    waktuMulaiInput.addEventListener("input", calculatePrice);
+    waktuAkhirInput.addEventListener("input", calculatePrice);
+    jenisLapanganSelect.addEventListener("change", calculatePrice);
 
-                    function calculatePrice() {
-                        const waktuMulai = waktuMulaiInput.value;
-                        const waktuAkhir = waktuAkhirInput.value;
-                        const selectedLapangan = jenisLapanganSelect.value;
-                        const isMember = keanggotaanMember.checked;
-                        const isNonMember = keanggotaanNonMember.checked;
+    function calculatePrice() {
+        const waktuMulai = waktuMulaiInput.value;
+        const waktuAkhir = waktuAkhirInput.value;
+        const selectedLapangan = jenisLapanganSelect.value;
 
-                        if (waktuMulai && waktuAkhir) {
-                            const [startHour, startMinute] = waktuMulai.split(":").map(Number);
-                            const [endHour, endMinute] = waktuAkhir.split(":").map(Number);
+        if (waktuMulai && waktuAkhir) {
+            const [startHour, startMinute] = waktuMulai.split(":").map(Number);
+            const [endHour, endMinute] = waktuAkhir.split(":").map(Number);
 
-                            const startMinutes = startHour * 60 + startMinute;
-                            const endMinutes = endHour * 60 + endMinute;
+            const startMinutes = startHour * 60 + startMinute;
+            const endMinutes = endHour * 60 + endMinute;
 
-                            if (startMinutes < endMinutes) {
-                                const durationHours = (endMinutes - startMinutes) / 60;
-                                let pricePerHour = 0;
+            if (startMinutes < endMinutes) {
+                const durationHours = (endMinutes - startMinutes) / 60;
+                let pricePerHour = 0;
 
-                                if (startHour === 16 && endHour === 17) {
-                                    // Check if waktuMulai is between 16:00 and 17:00 (break time)
-                                    hargaInput.value = "Durasi waktu istirahat";
-                                    hargaInput.style.color = "red";
-                                    return; // Stop further processing
-                                }
+                if (startHour === 16 && endHour === 17) {
+                    // Check if waktuMulai is between 16:00 and 17:00 (break time)
+                    hargaInput.value = "Durasi waktu istirahat";
+                    hargaInput.style.color = "red";
+                    return; // Stop further processing
+                }
 
-                                switch (selectedLapangan) {
-                                    case "Renang":
-                                        pricePerHour = 10000;
-                                        break
-                                    case "Bola Basket":
-                                        if (isMember) {
-                                            // Member pricing
-                                            if (startHour >= 7 && endHour <= 21) {
-                                                // Session from 7 AM to 4 PM
-                                                pricePerHour = 80000;
-                                            } else {
-                                                // Invalid time range
-                                                hargaInput.value = "Input selisih waktu salah";
-                                                hargaInput.style.color = "red";
-                                                return;
-                                            }
-                                        } else if (isNonMember) {
-                                            // Non-Member pricing
-                                            if (startHour >= 7 && endHour <= 21) {
-                                                // Session from 7 AM to 4 PM
-                                                pricePerHour = 90000;
-                                            } else {
-                                                // Invalid time range
-                                                hargaInput.value = "Input selisih waktu salah";
-                                                hargaInput.style.color = "red";
-                                                return;
-                                            }
-                                        }
-                                        break
-                                    case "Sepak Bola":
-                                        pricePerHour = 500000;
-                                        if (isMember) {
-                                            // Member pricing
-                                            if (startHour >= 7 && endHour <= 16) {
-                                                // Session from 7 AM to 4 PM
-                                                pricePerHour = 490000;
-                                            } else {
-                                                // Invalid time range
-                                                hargaInput.value = "Input selisih waktu salah";
-                                                hargaInput.style.color = "red";
-                                                return;
-                                            }
-                                        } else if (isNonMember) {
-                                            // Non-Member pricing
-                                            if (startHour >= 7 && endHour <= 16) {
-                                                // Session from 7 AM to 4 PM
-                                                pricePerHour = 500000;
-                                            } else {
-                                                // Invalid time range
-                                                hargaInput.value = "Input selisih waktu salah";
-                                                hargaInput.style.color = "red";
-                                                return;
-                                            }
-                                        }
-                                        break
-                                    case "Bola Voli":
-                                        if (isMember) {
-                                            // Member pricing
-                                            if (startHour >= 7 && endHour <= 21) {
-                                                // Session from 7 AM to 4 PM
-                                                pricePerHour = 100000;
-                                            } else {
-                                                // Invalid time range
-                                                hargaInput.value = "Input selisih waktu salah";
-                                                hargaInput.style.color = "red";
-                                                return;
-                                            }
-                                        } else if (isNonMember) {
-                                            // Non-Member pricing
-                                            if (startHour >= 7 && endHour <= 21) {
-                                                // Session from 7 AM to 4 PM
-                                                pricePerHour = 110000;
-                                            } else {
-                                                // Invalid time range
-                                                hargaInput.value = "Input selisih waktu salah";
-                                                hargaInput.style.color = "red";
-                                                return;
-                                            }
-                                        }
-                                        break
-                                    case "Tenis Lapangan":
-                                        if (isMember) {
-                                            // Member pricing
-                                            if (startHour >= 7 && endHour <= 21) {
-                                                // Session from 7 AM to 4 PM
-                                                pricePerHour = 100000;
-                                            } else {
-                                                // Invalid time range
-                                                hargaInput.value = "Input selisih waktu salah";
-                                                hargaInput.style.color = "red";
-                                                return;
-                                            }
-                                        } else if (isNonMember) {
-                                            // Non-Member pricing
-                                            if (startHour >= 7 && endHour <= 21) {
-                                                // Session from 7 AM to 4 PM
-                                                pricePerHour = 120000;
-                                            } else {
-                                                // Invalid time range
-                                                hargaInput.value = "Input selisih waktu salah";
-                                                hargaInput.style.color = "red";
-                                                return;
-                                            }
-                                        }
-                                        break
-
-                                    case "Badminton":
-                                        if (isMember) {
-                                            // Member pricing
-                                            if (startHour >= 7 && endHour <= 21) {
-                                                // Session from 7 AM to 4 PM
-                                                pricePerHour = 20000;
-                                            } else {
-                                                // Invalid time range
-                                                hargaInput.value = "Input selisih waktu salah";
-                                                hargaInput.style.color = "red";
-                                                return;
-                                            }
-                                        } else if (isNonMember) {
-                                            // Non-Member pricing
-                                            if (startHour >= 7 && endHour <= 21) {
-                                                // Session from 7 AM to 4 PM
-                                                pricePerHour = 30000;
-                                            } else {
-                                                // Invalid time range
-                                                hargaInput.value = "Input selisih waktu salah";
-                                                hargaInput.style.color = "red";
-                                                return;
-                                            }
-                                        }
-                                        break
-                                    case "Futsal":
-                                        if (isMember) {
-                                            // Member pricing
-                                            if (startHour >= 7 && endHour <= 16) {
-                                                // Session from 7 AM to 4 PM
-                                                pricePerHour = 90000;
-                                            } else if (startHour >= 17 && endHour <= 24) {
-                                                // Session from 5 PM to 12 AM
-                                                pricePerHour = 120000;
-                                            } else {
-                                                // Invalid time range
-                                                hargaInput.value = "Input selisih waktu salah";
-                                                hargaInput.style.color = "red";
-                                                return;
-                                            }
-                                        } else if (isNonMember) {
-                                            // Non-Member pricing
-                                            if (startHour >= 7 && endHour <= 16) {
-                                                // Session from 7 AM to 4 PM
-                                                pricePerHour = 105000;
-                                            } else if (startHour >= 17 && endHour <= 24) {
-                                                // Session from 5 PM to 12 AM
-                                                pricePerHour = 135000;
-                                            } else {
-                                                // Invalid time range
-                                                hargaInput.value = "Input selisih waktu salah";
-                                                hargaInput.style.color = "red";
-                                                return;
-                                            }
-                                        }
-                                        break
-                                    default:
-                                        // Default case, cabor not recognized
-                                        hargaInput.value = "Harga tidak diketahui";
-                                        hargaInput.style.color = "black";
-                                        return;
-                                }
-
-                                const totalPrice = durationHours * pricePerHour;
-                                hargaInput.value = totalPrice;
-
-                                // Remove any previous warning
-                                hargaInput.style.color = "black";
-                            } else {
-                                // Invalid time range, display a warning
-                                hargaInput.value = "Input selisih waktu salah";
-                                hargaInput.style.color = "red";
-                            }
+                switch (selectedLapangan) {
+                    case "Renang":
+                        pricePerHour = 10000;
+                        break;
+                    case "Bola Basket":
+                        pricePerHour = 90000;
+                        break;
+                    case "Sepak Bola":
+                        pricePerHour = 500000;
+                        break;
+                    case "Bola Voli":
+                        pricePerHour = 110000;
+                        break;
+                    case "Tenis Lapangan":
+                        pricePerHour = 120000;
+                        break;
+                    case "Badminton":
+                        pricePerHour = 30000;
+                        break;
+                    case "Futsal":
+                        if (startHour >= 7 && endHour <= 16) {
+                            pricePerHour = 105000;
+                        } else if (startHour >= 17 && endHour <= 24) {
+                            pricePerHour = 135000;
                         } else {
-                            // One or both input fields are empty, clear the harga field
-                            hargaInput.value = "";
-                            hargaInput.style.color = "black";
+                            hargaInput.value = "Input selisih waktu salah";
+                            hargaInput.style.color = "red";
+                            return;
                         }
-                    }
-                </script>
+                        break;
+                    default:
+                        // Default case, cabang olahraga not recognized
+                        hargaInput.value = "Harga tidak diketahui";
+                        hargaInput.style.color = "black";
+                        return;
+                }
+
+                const totalPrice = durationHours * pricePerHour;
+                hargaInput.value = totalPrice;
+
+                // Remove any previous warning
+                hargaInput.style.color = "black";
+            } else {
+                // Invalid time range, display a warning
+                hargaInput.value = "Input selisih waktu salah";
+                hargaInput.style.color = "red";
+            }
+        } else {
+            // One or both input fields are empty, clear the harga field
+            hargaInput.value = "";
+            hargaInput.style.color = "black";
+        }
+    }
+</script>
+
 
 
                 <!-- DataTales Example -->
@@ -868,7 +695,6 @@ if ($error || $sukses || $error2 || $sukses2) {
                                                 Nama Tempat
                                             </th>
                                         <?php endif; ?>
-                                        <th scope="col">Keanggotaan</th>
                                         <th scope="col">Jenis Olahraga</th>
                                         <th scope="col">Tanggal</th>
                                         <th scope="col">Waktu Mulai</th>
@@ -947,14 +773,11 @@ if ($error || $sukses || $error2 || $sukses2) {
                                         $id = $r2['id_price'];
                                         $email = $r2['email'];
                                         $venueName = $r2['venue_name'];
-                                        $anggota = $r2['membership'];
                                         $sport = $r2['sport'];
                                         $tgl = $r2['date'];
                                         $w_mulai = $r2['start_hour'];
                                         $w_selesai = $r2['end_hour'];
                                         $harga = $r2['price'];
-                                        // Konversi nilai $anggota ke teks
-                                        $status_anggota = ($anggota == 0) ? "Non Member" : "Member";
                                     ?>
                                         <tr>
                                             <th scope="row">
@@ -970,9 +793,6 @@ if ($error || $sukses || $error2 || $sukses2) {
                                                     <?php echo $venueName ?>
                                                 </td>
                                             <?php endif; ?>
-                                            <td scope="row">
-                                                <?php echo $status_anggota ?>
-                                            </td>
                                             <td scope="row">
                                                 <?php echo $sport ?>
                                             </td>
@@ -1063,7 +883,7 @@ if ($error || $sukses || $error2 || $sukses2) {
     </div>
     <!-- End of Page Wrapper -->
 
-    <!-- Scroll to Top Button-->
+    <!-- Scroll to Top Button--> 
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
@@ -1098,6 +918,8 @@ if ($error || $sukses || $error2 || $sukses2) {
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>

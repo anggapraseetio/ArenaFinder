@@ -488,9 +488,9 @@ if (!$koneksi) {
           <li class="nav-item">
             <a class="nav-link active" href="">Referensi</a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" href="info_mitra.php">Info Mitra</a>
-          </li>
+          </li> -->
         </ul>
         <ul class="navbar-nav ml-auto"> <!-- Menggunakan 'ml-auto' untuk komponen di akhir navbar -->
           <?php
@@ -540,7 +540,7 @@ if (!$koneksi) {
     <div class="con-type">
       <form method="post" action="" id="sportForm">
         <div style="display: flex;">
-          <button class="semua" type="submit" name="all" value="Semua">All</button>
+          <button class="semua" type="submit" name="all" value="semua">All</button>
           <?php
           // Query to get unique sports from the venues table
           $sportsQuery = mysqli_query($koneksi, "SELECT DISTINCT sport FROM venues");
@@ -785,15 +785,15 @@ if (!$koneksi) {
                 <a href="index.php" style="margin-top: 10px;">Beranda</a>
                 <a href="aktivitas.php">Aktivitas</a>
                 <a href="referensi.php">Referensi</a>
-                <a href="info_mitra.php">Info Mitra</a>
+                <!-- <a href="info_mitra.php">Info Mitra</a> -->
             </p>
             <p style="font-size: 20px; color: white; margin-left: 150px;">Bantuan
                 <a href="bantuan.html" style="margin-top: 10px;">Apa saja layanan yang disediakan?</a>
                 <a href="bantuan.html">Siapa target penggunanya?</a>
                 <a href="bantuan.html">Bagaimana sistem ini bekerja?</a>
-                <a href="bantuan.html">Saat kapan pengguna dapat mengetahui pesanan?</a>
-                <a href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php">Masuk aplikasi??</a>
-                <a href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php">Daftar aplikasi??</a>
+                <a href="bantuan.html">Bagaimana cara daftar lapangan?</a>
+                <a href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php">Masuk aplikasi?</a>
+                <a href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php">Daftar aplikasi?</a>
             </p>
             <p style="font-size: 20px; color: white; margin-left: 100px;">Narahubung
                 <a href="https://wa.me/6285785488403">https://wa.me/087860616270</a>

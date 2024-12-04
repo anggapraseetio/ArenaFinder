@@ -15,18 +15,6 @@ $id_venue = $_SESSION['id_venue'];
 $userName = $_SESSION['username'];
 $sportFromDB = $_SESSION['sport'];
 
-// Query SQL untuk menghitung jumlah member di tabel keanggotaan
-$sql = "SELECT COUNT(*) as total_member FROM venue_membership WHERE email = '$email'";
-$q2 = mysqli_query($conn, $sql);
-
-if ($q2->num_rows > 0) {
-    // Ambil hasil query`
-    $row = $q2->fetch_assoc();
-    $totalMember = $row["total_member"];
-} else {
-    echo "Tidak ada data keanggotaan.";
-}
-
 // Query SQL untuk menghitung jumlah jadwal yang sudah dipesan di tabel venue_booking
 $sql = "SELECT COUNT(*) as jadwal_dipesan FROM venue_booking WHERE id_venue = '$id_venue'";
 $q2 = mysqli_query($conn, $sql);
@@ -157,13 +145,6 @@ $conn->close();
                     <span>Aktivitas</span></a>
             </li>
 
-            <!-- Nav Item - Keanggotaan -->
-            <li class="nav-item ">
-                <a class="nav-link" href="keanggotaan.php">
-                    <i class="fa-solid fa-users"></i>
-                    <span>Keanggotaan</span></a>
-            </li>
-
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -275,7 +256,7 @@ $conn->close();
                     <div class="row">
 
                         <!-- Schedule On Card -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-xl-4 col-md-6 mb-4">
                             <div class="card shadow h-100 py-2" id="kartu"
                                 style="border-left-color: #a1ff9f; border-left-width: 5px; background-color: #02406d;">
                                 <div class="card-body">
@@ -283,16 +264,16 @@ $conn->close();
                                         <div class="col mr-2">
                                             <a href="jadwal.php">
                                                 <div class="text-xs font-weight-bold text-uppercase mb-1"
-                                                    style="color: white;">
+                                                    style="color: white; font-size: 19px;">
                                                     Jadwal <span style="color: #a1ff9f;">Dipesan</span></div>
-                                                <div class="h5 mb-0 font-weight-bold text-white">
+                                                <div class="h2 mb-0 font-weight-bold text-white">
                                                     <?php echo $totalPesan; ?>
                                                 </div>
                                             </a>
 
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fa-regular fa-calendar-xmark fa-2x text-white"></i>
+                                            <i class="fa-regular fa-calendar-xmark fa-5x text-white"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -300,7 +281,7 @@ $conn->close();
                         </div>
 
                         <!-- Schedule Off Card -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-xl-4 col-md-6 mb-4">
                             <div class="card shadow h-100 py-2" id="kartu"
                                 style="border-left-color: #a1ff9f; border-left-width: 5px; background-color: #02406d;">
                                 <div class="card-body">
@@ -308,16 +289,16 @@ $conn->close();
                                         <div class="col mr-2">
                                             <a href="jadwal.php">
                                                 <div class="text-xs font-weight-bold text-uppercase mb-1"
-                                                    style="color: white;">
+                                                    style="color: white; font-size: 19px;">
                                                     Jadwal <span style="color: #a1ff9f;">Kosong</span></div>
-                                                <div class="h5 mb-0 font-weight-bold text-white">
+                                                <div class="h2 mb-0 font-weight-bold text-white">
                                                     <?php echo $totalBelumDipesan; ?>
                                                 </div>
                                             </a>
 
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fa-solid fa-calendar-check fa-2x text-white"></i>
+                                            <i class="fa-solid fa-calendar-check fa-5x text-white"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -325,39 +306,14 @@ $conn->close();
                         </div>
 
                         <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card shadow h-100 py-2" id="kartu"
-                                style="border-left-color: #a1ff9f; border-left-width: 5px; background-color: #02406d;">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <a href="keanggotaan.php">
-                                                <div class="text-xs font-weight-bold text-uppercase mb-1"
-                                                    style="color: white;">
-                                                    Jumlah <span style="color: #a1ff9f;">Member</span></div>
-                                                <div class="h5 mb-0 font-weight-bold text-white">
-                                                    <?php echo $totalMember; ?>
-                                                </div>
-                                            </a>
-
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fa-solid fa-users fa-2x text-white"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-xl-4 col-md-6 mb-4">
                             <div class="card shadow h-100 py-2" id="kartu"
                                 style="border-left-color: #a1ff9f; border-left-width: 5px; background-color: #02406d;">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <a href="pesanan.php">
-                                                <div class="text-xs font-weight-bold text-uppercase mb-1 text-white">
+                                                <div class="text-xs font-weight-bold text-uppercase mb-1 text-white" style="color: white; font-size: 19px;">
                                                     Kuota
                                                     <span style="color: #a1ff9f;">Pesanan</span>
                                                 </div>
@@ -403,7 +359,7 @@ $conn->close();
 
                                                         // Menampilkan hasil persentase ke dalam elemen sebelumnya
                                                         echo '<div class="col-auto">';
-                                                        echo '    <div class="h5 mb-0 mr-3 font-weight-bold text-white">' . number_format($persentasePending, 2) . '%</div>';
+                                                        echo '    <div class="h2 mb-0 mr-3 font-weight-bold text-white">' . number_format($persentasePending, 2) . '%</div>';
                                                         echo '</div>';
                                                         echo '<div class="col">';
                                                         echo '    <div class="progress progress-sm mr-2">';
@@ -422,7 +378,7 @@ $conn->close();
                                             </div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-white"></i>
+                                            <i class="fas fa-clipboard-list fa-5x text-white"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -447,7 +403,7 @@ $conn->close();
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; ArenaFinder 2023</span>
+                        <span>Copyright &copy; ArenaFinder 2024</span>
                     </div>
                 </div>
             </footer>
