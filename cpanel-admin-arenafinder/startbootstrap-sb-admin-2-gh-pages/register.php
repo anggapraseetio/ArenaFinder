@@ -218,7 +218,7 @@ function isValidPassword($password)
     <!-- Outer Row -->
     <div class="row justify-content-center">
       <div class="col-sm-10 col-md-5 ">
-        <div class="card o-hidden border-0 shadow-lg my-4" style="height: 700px;">
+        <div class="card o-hidden border-0 shadow-lg my-4" style="height: 770px;">
           <div class="card-body p-10" id="card-email">
             <!-- Nested Row within Card Body -->
             <div class="row">
