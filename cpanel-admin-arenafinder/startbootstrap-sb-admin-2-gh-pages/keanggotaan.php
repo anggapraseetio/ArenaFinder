@@ -772,12 +772,12 @@ if ($error || $sukses || $error2 || $sukses2) {
                                             <thead>
                                                 <tr>
                                                     <th scope="col">No.</th>
-                                                    <?php if ($_SESSION['email'] === 'tengkufarkhan3@gmail.com'): ?>
+                                                    <?php if ($_SESSION['email'] === 'arenafinder101@gmail.com'): ?>
                                                         <th scope="col">
                                                             Email Pengelola
                                                         </th>
                                                     <?php endif; ?>
-                                                    <?php if ($_SESSION['email'] === 'tengkufarkhan3@gmail.com'): ?>
+                                                    <?php if ($_SESSION['email'] === 'arenafinder101@gmail.com'): ?>
                                                         <th scope="col">
                                                             Nama Tempat
                                                         </th>
@@ -820,7 +820,7 @@ if ($error || $sukses || $error2 || $sukses2) {
                                                 if (isset($_GET['search'])) {
                                                     $searchTerm = $conn->real_escape_string($_GET['search']);
 
-                                                    if ($_SESSION['email'] === 'tengkufarkhan3@gmail.com') {
+                                                    if ($_SESSION['email'] === 'arenafinder101@gmail.com') {
                                                         // Jika pengguna adalah SUPER ADMIN, ambil semua data
                                                         $sql = "SELECT vm.*, v.location
                                                                 FROM venue_membership vm
@@ -840,7 +840,7 @@ if ($error || $sukses || $error2 || $sukses2) {
                                                     }
                                                 } else {
                                                     // Jika tidak ada pencarian, gunakan logika yang sama
-                                                    if ($_SESSION['email'] === 'tengkufarkhan3@gmail.com') {
+                                                    if ($_SESSION['email'] === 'arenafinder101@gmail.com') {
                                                         // Jika pengguna adalah SUPER ADMIN, ambil semua data
                                                         $sql = "SELECT vm.*, v.location, v.venue_name
                                                                 FROM venue_membership vm
@@ -879,13 +879,13 @@ if ($error || $sukses || $error2 || $sukses2) {
                                                         <th scope="row">
                                                             <?php echo $urut++ ?>
                                                         </th>
-                                                        <?php if ($_SESSION['email'] === 'tengkufarkhan3@gmail.com'): ?>
+                                                        <?php if ($_SESSION['email'] === 'arenafinder101@gmail.com'): ?>
                                                             <td scope="row"
                                                                 style="overflow: hidden; word-wrap: break-word; white-space: normal;">
                                                                 <?php echo $email ?>
                                                             </td>
                                                         <?php endif; ?>
-                                                        <?php if ($_SESSION['email'] === 'tengkufarkhan3@gmail.com'): ?>
+                                                        <?php if ($_SESSION['email'] === 'arenafinder101@gmail.com'): ?>
                                                             <td scope="row"
                                                                 style="overflow: hidden; word-wrap: break-word; white-space: normal;">
                                                                 <?php echo $venueName ?>
@@ -934,7 +934,7 @@ if ($error || $sukses || $error2 || $sukses2) {
                                                             <?php
                                                             if (
                                                                 isset($_SESSION['email']) && $_SESSION['email'] ===
-                                                                'tengkufarkhan3@gmail.com'
+                                                                'arenafinder101@gmail.com'
                                                             ) {
                                                             } else {
                                                                 // User is not logged in or has a different email, show the Edit button

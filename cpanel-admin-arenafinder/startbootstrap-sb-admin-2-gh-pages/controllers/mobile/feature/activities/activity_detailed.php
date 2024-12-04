@@ -7,7 +7,7 @@ header("Content-Type: application/json");
 function fetchActivityData($conn, $idAktivitas)
 {
     $sql = "SELECT v.nama_aktivitas, v.desc_aktivitas, ve.venue_name, v.sport, v.date, v.jam_main,
-        v.membership, v.price, ve.location, ve.coordinate, v.photo, v.id_venue
+        v.price, ve.location, ve.coordinate, v.photo, v.id_venue
         FROM venue_aktivitas AS v 
         JOIN venues AS ve
         ON v.id_venue = ve.id_venue 

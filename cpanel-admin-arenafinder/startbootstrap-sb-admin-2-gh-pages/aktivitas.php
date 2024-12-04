@@ -81,7 +81,6 @@ if ($op == 'edit') {
     }
 }
 
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nama = $_POST['nama'];
     $desc = $_POST['desc_aktivitas'];
@@ -90,90 +89,79 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $jam = $_POST['jam_main'];
     $harga = $_POST['harga'];
     $email = $_SESSION['email'];
+    $nama_file = ""; // Default untuk foto
 
-    if (empty($tanggal)) {
-        $error = "Tanggal main harus diisi";
+    // Validasi data wajib
+    if (empty($nama) || empty($tanggal) || empty($harga)) {
+        $error = "Nama aktivitas, tanggal, dan harga wajib diisi.";
     } else {
-        $fetchVenueIdQuery = "SELECT id_venue, sport FROM venues WHERE email = '$email'";
-        $fetchVenueIdResult = mysqli_query($conn, $fetchVenueIdQuery);
+        // Validasi panjang nama
+        if (ctype_digit($nama)) {
+            $error = "Nama aktivitas tidak boleh hanya berisi angka.";
+        } elseif (strlen($nama) < 5 || strlen($nama) > 30) {
+            $error = "Nama aktivitas harus memiliki panjang antara 5 sampai 30 karakter.";
+        }
 
-        if ($fetchVenueIdResult && mysqli_num_rows($fetchVenueIdResult) > 0) {
-            $venueRow = mysqli_fetch_assoc($fetchVenueIdResult);
-            $id_venue = $venueRow['id_venue'];
-            $sportFromDB = $venueRow['sport'];
+        // Jika tidak ada error validasi, lanjutkan
+        if (empty($error)) {
+            // Validasi jika ada file yang diunggah
+            if (!empty($_FILES['foto']['name'])) {
+                $nama_file = $_FILES['foto']['name'];
+                $tmp = $_FILES['foto']['tmp_name'];
+                $file_type = mime_content_type($tmp);
+                $upload_folder = $_SERVER['DOCUMENT_ROOT'] . '/ArenaFinder/public/img/venue/';
+                $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
 
-            if ($jenis == $sportFromDB) {
-
-                if (ctype_digit($nama)) {
-                    $error .= "Nama aktivitas tidak dapat hanya berisi angka. ";
-                } elseif (strlen($nama) < 5 || strlen($nama) > 30) {
-                    $error .= "Nama aktivitas harus memiliki panjang antara 5 sampai 30 karakter. ";
-                } elseif (ctype_punct($nama)) {
-                    $error .= "Nama aktivitas tidak dapat hanya berisi simbol. ";
-                }
-
-                if (empty($error)) {
-                    if (!empty($_FILES['foto']['name'])) {
-                        $nama_file = $_FILES['foto']['name'];
-                        $tmp = $_FILES['foto']['tmp_name'];
-                        $file_type = mime_content_type($tmp);
-
-                        // Tentukan folder tempat menyimpan gambar
-                        $upload_folder = $_SERVER['DOCUMENT_ROOT'] . '/ArenaFinder/public/img/venue/';
-
-                        // Validasi tipe file gambar
-                        $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
-                        if (in_array($file_type, $allowed_types)) {
-                            // Pindahkan file gambar ke folder tujuan
-                            if (move_uploaded_file($tmp, $upload_folder . $nama_file)) {
-                                // Jika pengunggahan berhasil, lanjutkan dengan query SQL
-                                if ($op == 'edit') {
-                                    // Perbarui data jika ini adalah operasi edit
-                                    $sql1 = "UPDATE venue_aktivitas SET 
-                                        nama_aktivitas = '$nama',
-                                        desc_aktivitas = '$desc',
-                                        sport = '$jenis',
-                                        date = '$tanggal',
-                                        jam_main = '$jam',
-                                        price = '$harga',
-                                        photo = '$nama_file',
-                                        id_venue = '$id_venue'
-                                    WHERE id_aktivitas = '$id'";
-                                    $q1 = mysqli_query($conn, $sql1);
-
-                                    if ($q1) {
-                                        $sukses = "Data aktivitas berhasil diupdate";
-                                    } else {
-                                        $error = "Data aktivitas gagal diupdate";
-                                    }
-                                } else {
-                                    // Tambahkan data jika ini adalah operasi insert
-                                    $sql1 = "INSERT INTO venue_aktivitas (nama_aktivitas, desc_aktivitas, sport, date, jam_main, price, photo, id_venue) 
-                                    VALUES ('$nama', '$desc', '$jenis', '$tanggal', '$jam', '$harga', '$nama_file', '$id_venue')";
-                                    $q1 = mysqli_query($conn, $sql1);
-
-                                    if ($q1) {
-                                        $sukses = "Data aktivitas berhasil ditambahkan";
-                                    } else {
-                                        $error = "Data aktivitas gagal ditambahkan";
-                                    }
-                                }
-                            } else {
-                                $error = "Gagal mengunggah file gambar.";
-                            }
-                        } else {
-                            $error = "Hanya file gambar (JPEG, PNG, GIF) yang diperbolehkan.";
-                        }
-                    } else {
-                        $error = "Harap pilih gambar yang akan diunggah.";
+                // Validasi tipe file
+                if (in_array($file_type, $allowed_types)) {
+                    if (!move_uploaded_file($tmp, $upload_folder . $nama_file)) {
+                        $error = "Gagal mengunggah file gambar.";
                     }
                 } else {
-                    $error = "Terdapat kesalahan validasi pada kolom nama aktivitas.";
+                    $error = "Hanya file gambar (JPEG, PNG, GIF) yang diperbolehkan.";
+                }
+            }
+
+            if (empty($error)) {
+                // Query Update
+                if ($op == 'edit') {
+                    $sql1 = "UPDATE venue_aktivitas SET 
+                        nama_aktivitas = '$nama',
+                        desc_aktivitas = '$desc',
+                        sport = '$jenis',
+                        date = '$tanggal',
+                        jam_main = '$jam',
+                        price = '$harga',
+                        photo = IF('$nama_file' = '', photo, '$nama_file'),
+                        id_venue = (SELECT id_venue FROM venues WHERE email = '$email')
+                    WHERE id_aktivitas = '$id'";
+                    $q1 = mysqli_query($conn, $sql1);
+
+                    if ($q1) {
+                        $sukses = "Data aktivitas berhasil diupdate.";
+                    } else {
+                        $error = "Gagal mengupdate data aktivitas: " . mysqli_error($conn);
+                    }
+                } else {
+                    // Query Insert
+                    $sql1 = "INSERT INTO venue_aktivitas 
+                        (nama_aktivitas, desc_aktivitas, sport, date, jam_main, price, photo, id_venue) 
+                        VALUES ('$nama', '$desc', '$jenis', '$tanggal', '$jam', '$harga', '$nama_file', 
+                        (SELECT id_venue FROM venues WHERE email = '$email'))";
+                    $q1 = mysqli_query($conn, $sql1);
+
+                    if ($q1) {
+                        $sukses = "Data aktivitas berhasil ditambahkan.";
+                    } else {
+                        $error = "Gagal menambahkan data aktivitas: " . mysqli_error($conn);
+                    }
                 }
             }
         }
     }
 }
+
+
 if ($error || $sukses || $error2 || $sukses2) {
     // Set header sebelum mencetak pesan
     $refreshUrl = "aktivitas.php";
@@ -572,10 +560,11 @@ if ($error || $sukses || $error2 || $sukses2) {
                                         <div class="mb-3 row">
                                             <label for="gambar" class="col-sm-2 col-form-label">Gambar</label>
                                             <div class="col-sm-10">
-                                                <input class="col-xxl-8 col-12" type="file" id="foto" name="foto"
-                                                    required="required" style="margin-left: -10px;" />
+                                                <input class="col-xxl-8 col-12" type="file" id="foto" name="foto" style="margin-left: -10px;"
+                                                    <?php if ($op != 'edit') echo 'required="required"'; ?> />
                                             </div>
                                         </div>
+
 
                                         <div class="mb-3 row">
                                             <label class="col-sm-2 col-form-label">Tampilan</label>
@@ -583,7 +572,7 @@ if ($error || $sukses || $error2 || $sukses2) {
                                                 <?php
                                                 // Tampilkan gambar jika ada
                                                 if (!empty($nama_file)) {
-                                                    echo "<img src='/ArenaFinder/$nama_file' alt='Gambar' style='width: 100px; height: auto;'>";
+                                                    echo "<img src='/ArenaFinder/public/img/venue/$nama_file' alt='Gambar' style='width: 100px; height: auto;'>";
                                                 }
                                                 ?>
                                             </div>
@@ -605,61 +594,62 @@ if ($error || $sukses || $error2 || $sukses2) {
                 <?php } ?>
 
                 <script>
-    const jamMainSelect = document.getElementById("jam_main");
-    const hargaInput = document.getElementById("harga");
-    const jenisLapanganSelect = document.getElementById("jenis_olga");
+                    const jamMainSelect = document.getElementById("jam_main");
+                    const hargaInput = document.getElementById("harga");
+                    const jenisLapanganSelect = document.getElementById("jenis_olga");
 
-    // Listen for changes on the relevant fields
-    jamMainSelect.addEventListener("input", calculatePrice);
-    jenisLapanganSelect.addEventListener("change", calculatePrice);
+                    // Listen for changes on the relevant fields
+                    jamMainSelect.addEventListener("input", calculatePrice);
+                    jenisLapanganSelect.addEventListener("change", calculatePrice);
 
-    function calculatePrice() {
-        const selectedJamMain = jamMainSelect.value;
-        const selectedLapangan = jenisLapanganSelect.value;
+                    function calculatePrice() {
+                        const selectedJamMain = jamMainSelect.value;
+                        const selectedLapangan = jenisLapanganSelect.value;
 
-        // Default duration per hour, assuming 1 hour duration
-        const durationHours = 1;
-        let basePricePerHour = 0;
+                        // Default duration per hour, assuming 1 hour duration
+                        const durationHours = 1;
+                        let basePricePerHour = 0;
 
-        switch (selectedLapangan) {
-            case "Sepak Bola":
-                basePricePerHour = 500000;
-                break;
-            case "Bola Voli":
-                basePricePerHour = 110000;
-                break;
-            case "Bola Basket":
-                basePricePerHour = 90000;
-                break;
-            case "Tenis Lapangan":
-                basePricePerHour = 120000;
-                break;
-            case "Badminton":
-                basePricePerHour = 30000;
-                break;
-            case "Renang":
-                basePricePerHour = 10000;
-                break;
-            case "Futsal":
-                basePricePerHour = 105000; 
-                break;
-            default:
-                // If no sport is selected, show error
-                hargaInput.value = "Harga tidak diketahui";
-                hargaInput.style.color = "red";
-                return;
-        }
+                        switch (selectedLapangan) {
+                            case "Sepak Bola":
+                                basePricePerHour = 500000;
+                                break;
+                            case "Bola Voli":
+                                basePricePerHour = 110000;
+                                break;
+                            case "Bola Basket":
+                                basePricePerHour = 90000;
+                                break;
+                            case "Tenis Lapangan":
+                                basePricePerHour = 120000;
+                                break;
+                            case "Badminton":
+                                basePricePerHour = 30000;
+                                break;
+                            case "Renang":
+                                basePricePerHour = 10000;
+                                break;
+                            case "Futsal":
+                                basePricePerHour = 105000;
+                                break;
+                            default:
+                                // If no sport is selected, show error
+                                hargaInput.value = "Harga tidak diketahui";
+                                hargaInput.style.color = "red";
+                                return;
+                        }
 
-        // Calculate total price
-        const totalPrice = durationHours * basePricePerHour * selectedJamMain;
+                        // Calculate total price
+                        const totalPrice = durationHours * basePricePerHour * selectedJamMain;
 
-        // Display the calculated price in the input field
-        hargaInput.value = totalPrice;
+                        // Display the calculated price in the input field
+                        hargaInput.value = totalPrice;
 
-        // Reset the input color to black (no error)
-        hargaInput.style.color = "black";
-    }
-</script>
+                        // Reset the input color to black (no error)
+                        hargaInput.style.color = "black";
+                    }
+                </script>
+
 
 
                 <!-- DataTales Example -->
@@ -745,12 +735,12 @@ if ($error || $sukses || $error2 || $sukses2) {
                                 <thead>
                                     <tr>
                                         <th scope="col">No.</th>
-                                        <?php if ($_SESSION['email'] === 'tengkufarkhan3@gmail.com'): ?>
+                                        <?php if ($_SESSION['email'] === 'arenafinder101@gmail.com'): ?>
                                             <th scope="col">
                                                 Email Pengelola
                                             </th>
                                         <?php endif; ?>
-                                        <?php if ($_SESSION['email'] === 'tengkufarkhan3@gmail.com'): ?>
+                                        <?php if ($_SESSION['email'] === 'arenafinder101@gmail.com'): ?>
                                             <th scope="col">
                                                 Nama Tempat
                                             </th>
@@ -792,7 +782,7 @@ if ($error || $sukses || $error2 || $sukses2) {
 
                                     $email = $_SESSION['email'];
 
-                                    if ($email === 'tengkufarkhan3@gmail.com') {
+                                    if ($email === 'arenafinder101@gmail.com') {
                                         // Jika email adalah arenafinder.app@gmail.com, tampilkan semua data
                                         if (isset($_GET['search'])) {
                                             $searchTerm = $conn->real_escape_string($_GET['search']);
@@ -849,12 +839,12 @@ if ($error || $sukses || $error2 || $sukses2) {
                                             <th scope="row">
                                                 <?php echo $urut++ ?>
                                             </th>
-                                            <?php if ($_SESSION['email'] === 'tengkufarkhan3@gmail.com'): ?>
+                                            <?php if ($_SESSION['email'] === 'arenafinder101@gmail.com'): ?>
                                                 <td scope="row">
                                                     <?php echo $email ?>
                                                 </td>
                                             <?php endif; ?>
-                                            <?php if ($_SESSION['email'] === 'tengkufarkhan3@gmail.com'): ?>
+                                            <?php if ($_SESSION['email'] === 'arenafinder101@gmail.com'): ?>
                                                 <td scope="row">
                                                     <?php echo $venueName ?>
                                                 </td>
@@ -894,7 +884,7 @@ if ($error || $sukses || $error2 || $sukses2) {
                                                 <?php
                                                 if (
                                                     isset($_SESSION['email']) && $_SESSION['email'] ===
-                                                    'tengkufarkhan3@gmail.com'
+                                                    'arenafinder101@gmail.com'
                                                 ) {
                                                 } else {
                                                     // User is not logged in or has a different email, show the Edit button

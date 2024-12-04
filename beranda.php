@@ -3,7 +3,7 @@ session_start();
 $servername = "localhost";
 $username_db = "root";
 $password_db = "";
-$dbname = "arenafinder1"; 
+$dbname = "arenafinder"; 
 
 // Membuat koneksi
 $conn = new mysqli($servername, $username_db, $password_db, $dbname);

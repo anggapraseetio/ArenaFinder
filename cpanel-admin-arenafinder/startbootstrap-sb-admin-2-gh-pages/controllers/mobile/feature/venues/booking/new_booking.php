@@ -9,19 +9,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $totalPrice = $_POST['total_price'];
 
     // Check if email exists in the users table
-    // $emailCheckStmt = $conn->prepare("SELECT email FROM users WHERE email = ?");
-//     $emailCheckStmt->bind_param("s", $email);
-//     $emailCheckStmt->execute();
-//     $emailCheckStmt->store_result();
+    $emailCheckStmt = $conn->prepare("SELECT email FROM users WHERE email = ?");
+    $emailCheckStmt->bind_param("s", $email);
+    $emailCheckStmt->execute();
+    $emailCheckStmt->store_result();
 
-//     if ($emailCheckStmt->num_rows === 0) {
-//         // Email not found in users table
-//         $response = ["status" => "error", "message" => "Email not found in users table"];
-//         echo json_encode($response);
-//         exit;
-//     }
-
-//     $emailCheckStmt->close();
+    if ($emailCheckStmt->num_rows === 0) {
+        // Email not found in users table
+        $response = ["status" => "error", "message" => "Email not found in users table"];
+        echo json_encode($response);
+        exit;
+    }
+    $emailCheckStmt->close();
 
     // Prepare and execute the insert query
     $stmt = $conn->prepare("INSERT INTO venue_booking (id_venue, email, total_price, created_at) VALUES (?, ?, ?, NOW())");

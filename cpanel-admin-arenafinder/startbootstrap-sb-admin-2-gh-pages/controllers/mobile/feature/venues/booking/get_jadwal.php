@@ -8,7 +8,7 @@ function fetchPrice($conn, $idVenue, $idLapangan, $date)
 {
     $sql = "SELECT id_price, SUBSTRING(start_hour, 1, 5) AS start_hour, SUBSTRING(end_hour, 1, 5) AS end_hour, price
         FROM venue_price 
-        WHERE id_venue = $idVenue AND membership = 0 
+        WHERE id_venue = $idVenue 
         AND id_lapangan = $idLapangan AND date = '$date' 
     ;";
 

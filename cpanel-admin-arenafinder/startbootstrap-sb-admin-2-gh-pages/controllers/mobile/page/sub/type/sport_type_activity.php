@@ -50,7 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $vSport["data"] = [];
     }
 
-    $img = "https://arenafinder.tifnganjuk.com/public/img/types/";
+    // $img = "https://arenafinder.tifnganjuk.com/public/img/types/";
+    $img = "";
 
     switch ($sport) {
         case "Futsal":
