@@ -238,13 +238,6 @@ $userName = $_SESSION['username'];
                             <span>Aktivitas</span></a>
                     </li>
 
-                    <!-- Nav Item - Keanggotaan -->
-                    <li class="nav-item ">
-                        <a class="nav-link" href="keanggotaan.php" id="anggota-link">
-                            <i class="fa-solid fa-users"></i>
-                            <span>Keanggotaan</span></a>
-                    </li>
-
                     <!-- Divider -->
                     <hr class="sidebar-divider">
 
@@ -652,11 +645,12 @@ $userName = $_SESSION['username'];
                     <!-- Footer -->
                     <footer class="sticky-footer bg-white">
                         <div class="container my-auto">
-                            <div class="copyright text-center my-auto">
-                                <span>Copyright &copy; ArenaFinder 2023</span>
+                            <div class="copyright text-center my-auto" style="margin-right: -220px;">
+                                <span>Copyright &copy; ArenaFinder 2024</span>
                             </div>
                         </div>
                     </footer>
+
                     <!-- End of Footer -->
 
                 </div>

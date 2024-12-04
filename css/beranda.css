@@ -109,12 +109,14 @@
   border: 1px solid #e7f5ff;
   background-color: white;
   color: #02406d;
+  margin-top: 50px;
 }
 
 .button:hover {
   background-color: #02406d;
   color: white;
 }
+
 .persegi {
   width: 88.5rem; /* Lebar persegi dalam piksel */
   height: 20rem; /* Tinggi persegi dalam piksel */
@@ -146,7 +148,7 @@
   margin-left: 15.5rem;
   font-weight: 600;
   position: relative;
-  top: -60rem;
+  top: -85.3rem;
   border-bottom-left-radius: 150px;
   box-shadow: 2px 2px 5px rgba(0, 2, 4, 0, 6, D);
   padding-bottom: 0px;
@@ -172,7 +174,7 @@
   margin-left: 2.2rem;
   font-weight: 600;
   position: relative;
-  top: -66.3rem;
+  top:-85.3rem;
   border-radius: 5.5px;
   box-shadow: 2px 2px 5px rgba(0, 2, 4, 0, 6, D);
 }

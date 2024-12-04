@@ -351,6 +351,10 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
             /* Perubahan posisi teks ke atas saat dihover */
         }
 
+        /* .btn{
+            margin-top: -50px;
+        } */
+
         .input-jenis-lapangan {
             position: relative;
             top: -62.5rem;
@@ -919,7 +923,7 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
         .container-rekomendasi {
             margin-top: 50px;
         }
-
+       
 
         @media (max-width: 900px) {
             .persegi3 {
@@ -1324,9 +1328,9 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
                     <li class="nav-item">
                         <a class="nav-link" href="referensi.php">Referensi</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="info_mitra.php">Info Mitra</a>
-                    </li>
+                    </li> -->
                 </ul>
                 <ul class="navbar-nav ml-auto"> <!-- Menggunakan 'ml-auto' untuk komponen di akhir navbar -->
                     <?php
@@ -1374,7 +1378,7 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
                 </select>
                 <input type="datetime-local" placeholder="Pilih Tanggal" class="form-control" id="staticEmail"
                     name="tanggal" required>
-                <button class="button" type="submit">Temukan</button>
+                <button class="button" type="submit" style="top: -72rem;">Temukan</button>
             </form>
         </div>
         <script>
@@ -1393,12 +1397,12 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
         <div class="persegi"></div>
         <div class="btn-sub-menu">
             <a href="alur-pesan.php">
-                <button class="btn" type="button" style="font-weight: 100;" id="alur-btn">Alur Pemesanan
+                <button class="btn" type="button" style="font-weight: 100; top: -66.3rem;">Alur Pemesanan
                     <img src="/ArenaFinder/img_asset/geocaching_40px (1).png" alt="">
                 </button>
             </a>
             <a href="aktivitas.php">
-                <button class="btn-1" type="button" style="font-weight: 100;">Aktivitas Komunitas 
+                <button class="btn-1" type="button" style="font-weight: 100; top: -59.8rem;">Aktivitas Komunitas 
                     <img src="/ArenaFinder/img_asset/people_48px (1).png" alt="" id="aktiv-btn">
                 </button>
             </a>
@@ -1417,26 +1421,39 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
         </div>
     </div>
 
-    <div class="main-container-body">
-        <div class="container-type-sport">
-            <div class="persegi2"></div>
-            <div id="button-type">
-                <button class="btn-4" type="button">
-                    <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt=""><span>Futsal</span></button>
-                <button class="btn-5" type="button">
-                    <img src="/ArenaFinder/img_asset/bulu tangkis.jpg" alt=""><span>Bulu Tangkis</span></button>
-                <button class="btn-6" type="button">
-                    <img src="/ArenaFinder/img_asset/voli.jpg" alt=""><span>Bola Voli </span></button>
-                <button class="btn-7" type="button">
-                    <img src="/ArenaFinder/img_asset/basket.jpg" alt=""><span>Bola Basket</span></button>
-                <button class="btn-8" type="button">
-                    <img src="/ArenaFinder/img_asset/sepak bola.jpg" alt=""><span>Sepak Bola</span></button>
-                <button class="btn-8" type="button">
-                    <img src="/ArenaFinder/img_asset/sepak bola.jpg" alt=""><span>Sepak Bola</span></button>
-                <button class="btn-8" type="button">
-                    <img src="/ArenaFinder/img_asset/sepak bola.jpg" alt=""><span>Sepak Bola</span></button>
-            </div>
-        </div>
+    <div class="container-type-sport">
+    <div class="persegi2"></div>
+    <div id="button-type" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+        <!-- Baris pertama (4 tombol) -->
+        <button class="btn-4" type="button">
+            <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt=""><span>Futsal</span>
+        </button>
+        <button class="btn-4" type="button">
+            <img src="/ArenaFinder/img_asset/bulu tangkis.jpg" alt=""><span>Bulu Tangkis</span>
+        </button>
+        <button class="btn-4" type="button">
+            <img src="/ArenaFinder/img_asset/voli.jpg" alt=""><span>Bola Voli</span>
+        </button>
+        <button class="btn-4" type="button">
+            <img src="/ArenaFinder/img_asset/basket.jpg" alt=""><span>Bola Basket</span>
+        </button>
+
+        <!-- Baris kedua (3 tombol dengan kolom kosong di akhir) -->
+        <button class="btn-4" type="button">
+            <img src="/ArenaFinder/img_asset/sepak bola.jpg" alt=""><span>Sepak Bola</span>
+        </button>
+        <button class="btn-4" type="button">
+            <img src="/ArenaFinder/img_asset/tenis_lapangan.jpg" alt=""><span>Tenis Lapangan</span>
+        </button>
+        <button class="btn-4" type="button">
+            <img src="/ArenaFinder/img_asset/renang.jpg" alt=""><span>Renang</span>
+        </button>
+        <!-- Tambahkan elemen kosong untuk menjaga alignment -->
+        <div></div>
+    </div>
+</div>
+
+
 
         <div class="container-rekomendasi">
             <div class="community"> Rekomendasi Komunitas </div>
@@ -1886,15 +1903,15 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
                 <a href="index.php" style="margin-top: 10px;">Beranda</a>
                 <a href="aktivitas.php">Aktivitas</a>
                 <a href="referensi.php">Referensi</a>
-                <a href="info_mitra.php">Info Mitra</a>
+                <!-- <a href="info_mitra.php">Info Mitra</a> -->
             </p>
             <p style="font-size: 20px; color: white; margin-left: 150px;">Bantuan
                 <a href="bantuan.html" style="margin-top: 10px;">Apa saja layanan yang disediakan?</a>
                 <a href="bantuan.html">Siapa target penggunanya?</a>
                 <a href="bantuan.html">Bagaimana sistem ini bekerja?</a>
-                <a href="bantuan.html">Saat kapan pengguna dapat mengetahui pesanan?</a>
-                <a href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php">Masuk aplikasi??</a>
-                <a href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php">Daftar aplikasi??</a>
+                <a href="bantuan.html">Bagaimana cara daftar lapangan?</a>
+                <a href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php">Masuk aplikasi?</a>
+                <a href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php">Daftar aplikasi?</a>
             </p>
             <p style="font-size: 20px; color: white; margin-left: 100px;">Narahubung
                 <a href="https://wa.me/6285785488403">https://wa.me/087860616270</a>

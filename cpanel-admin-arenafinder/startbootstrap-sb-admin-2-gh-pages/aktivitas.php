@@ -72,7 +72,6 @@ if ($op == 'edit') {
     $desc = $r1['desc_aktivitas'];
     $jenis = $r1['sport'];
     $tanggal = $r1['date'];
-    $anggota = $r1['membership'];
     $jam = $r1['jam_main'];
     $harga = $r1['price'];
     $nama_file = $r1['photo'];
@@ -88,7 +87,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $desc = $_POST['desc_aktivitas'];
     $jenis = $_POST['jenis_olga'];
     $tanggal = $_POST['tanggal'];
-    $anggota = $_POST['keanggotaan'];
     $jam = $_POST['jam_main'];
     $harga = $_POST['harga'];
     $email = $_SESSION['email'];
@@ -98,7 +96,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $fetchVenueIdQuery = "SELECT id_venue, sport FROM venues WHERE email = '$email'";
         $fetchVenueIdResult = mysqli_query($conn, $fetchVenueIdQuery);
-
 
         if ($fetchVenueIdResult && mysqli_num_rows($fetchVenueIdResult) > 0) {
             $venueRow = mysqli_fetch_assoc($fetchVenueIdResult);
@@ -121,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $tmp = $_FILES['foto']['tmp_name'];
                         $file_type = mime_content_type($tmp);
 
-                        // Tentukan folder tempat menyimpan gambar (ganti dengan folder Anda)
+                        // Tentukan folder tempat menyimpan gambar
                         $upload_folder = $_SERVER['DOCUMENT_ROOT'] . '/ArenaFinder/public/img/venue/';
 
                         // Validasi tipe file gambar
@@ -133,16 +130,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 if ($op == 'edit') {
                                     // Perbarui data jika ini adalah operasi edit
                                     $sql1 = "UPDATE venue_aktivitas SET 
-                        nama_aktivitas = '$nama',
-                        desc_aktivitas = '$desc',
-                        sport = '$jenis',
-                        date = '$tanggal',
-                        membership = '$anggota',
-                        jam_main = '$jam',
-                        price = '$harga',
-                        photo = '$nama_file',
-                        id_venue = '$id_venue'
-                    WHERE id_aktivitas = '$id'";
+                                        nama_aktivitas = '$nama',
+                                        desc_aktivitas = '$desc',
+                                        sport = '$jenis',
+                                        date = '$tanggal',
+                                        jam_main = '$jam',
+                                        price = '$harga',
+                                        photo = '$nama_file',
+                                        id_venue = '$id_venue'
+                                    WHERE id_aktivitas = '$id'";
                                     $q1 = mysqli_query($conn, $sql1);
 
                                     if ($q1) {
@@ -152,8 +148,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     }
                                 } else {
                                     // Tambahkan data jika ini adalah operasi insert
-                                    $sql1 = "INSERT INTO venue_aktivitas (nama_aktivitas, desc_aktivitas, sport, date, membership, jam_main, price, photo, id_venue, max_member) 
-                    VALUES ('$nama', '$desc', '$jenis', '$tanggal', '$anggota', '$jam', '$harga', '$nama_file', '$id_venue', 999)";
+                                    $sql1 = "INSERT INTO venue_aktivitas (nama_aktivitas, desc_aktivitas, sport, date, jam_main, price, photo, id_venue) 
+                                    VALUES ('$nama', '$desc', '$jenis', '$tanggal', '$jam', '$harga', '$nama_file', '$id_venue')";
                                     $q1 = mysqli_query($conn, $sql1);
 
                                     if ($q1) {
@@ -177,6 +173,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
     }
+}
+if ($error || $sukses || $error2 || $sukses2) {
+    // Set header sebelum mencetak pesan
+    $refreshUrl = "aktivitas.php";
+    if ($error2 || $sukses2) {
+        $refreshUrl .= "#tabel-card";
+    }
+    header("refresh:1;url=$refreshUrl"); // 2 = detik
 }
 
 
@@ -294,13 +298,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <a class="nav-link" href="">
                     <i class="fa-solid fa-fire"></i>
                     <span>Aktivitas</span></a>
-            </li>
-
-            <!-- Nav Item - Keanggotaan -->
-            <li class="nav-item ">
-                <a class="nav-link" href="keanggotaan.php">
-                    <i class="fa-solid fa-users"></i>
-                    <span>Keanggotaan</span></a>
             </li>
 
             <!-- Divider -->
@@ -540,18 +537,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         </script>
 
                                         <div class="mb-3 row">
-                                            <label for="keanggotaan" class="col-sm-2 col-form-label">Keanggotaan</label>
-                                            <div class="col-sm-10">
-                                                <input type="radio" id="member" name="keanggotaan" value="Member" <?php echo ($anggota == "Member") ? 'checked' : ''; ?> <?php echo ($sportFromVenues == "Renang") ? 'disabled' : ''; ?> required>
-                                                <label for="member">Member</label>
-
-                                                <input type="radio" id="nonmember" name="keanggotaan" value="Non Member"
-                                                    style="margin-left: 20px;" <?php echo ($anggota == "Non Member") ? 'checked' : ''; ?> <?php echo ($sportFromVenues == "Renang") ? 'disabled' : ''; ?> required>
-                                                <label for="nonmember">Non Member</label>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-3 row">
                                             <label for="jam main" class="col-sm-2 col-form-label"
                                                 style="cursor: pointer">Jam Main</label>
                                             <div class="col-sm-10">
@@ -620,76 +605,61 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php } ?>
 
                 <script>
-                    const jamMainSelect = document.getElementById("jam_main");
-                    const hargaInput = document.getElementById("harga");
-                    const jenisLapanganSelect = document.getElementById("jenis_olga");
-                    const keanggotaanMember = document.getElementById("member");
-                    const keanggotaanNonMember = document.getElementById("nonmember");
+    const jamMainSelect = document.getElementById("jam_main");
+    const hargaInput = document.getElementById("harga");
+    const jenisLapanganSelect = document.getElementById("jenis_olga");
 
-                    jamMainSelect.addEventListener("input", calculatePrice);
-                    jenisLapanganSelect.addEventListener("change", calculatePrice);
-                    keanggotaanMember.addEventListener("change", calculatePrice);
-                    keanggotaanNonMember.addEventListener("change", calculatePrice);
+    // Listen for changes on the relevant fields
+    jamMainSelect.addEventListener("input", calculatePrice);
+    jenisLapanganSelect.addEventListener("change", calculatePrice);
 
-                    function calculatePrice() {
-                        const selectedJamMain = jamMainSelect.value;
-                        const selectedLapangan = jenisLapanganSelect.value;
-                        const isMember = keanggotaanMember.checked;
-                        const isNonMember = keanggotaanNonMember.checked;
+    function calculatePrice() {
+        const selectedJamMain = jamMainSelect.value;
+        const selectedLapangan = jenisLapanganSelect.value;
 
-                        // Assuming the duration is 1 hour for simplicity, you can modify this based on your actual input
-                        const durationHours = 1;
-                        let basePricePerHour = 0;
+        // Default duration per hour, assuming 1 hour duration
+        const durationHours = 1;
+        let basePricePerHour = 0;
 
-                        switch (selectedLapangan) {
-                            case "Sepak bola":
-                                basePricePerHour = 50000;
-                                break;
-                            case "Bola Voli":
-                                basePricePerHour = 50000;
-                                break;
-                            case "Bola Basket":
-                                basePricePerHour = 50000;
-                                break;
-                            case "Tenis Lapangan":
-                                basePricePerHour = 18000;
-                                break;
-                            case "Bulu tangkis":
-                                basePricePerHour = 18000;
-                                break;
-                            case "Renang":
-                                basePricePerHour = 10000;
-                                break;
-                            case "Futsal":
-                                if (isMember) {
-                                    // Member pricing
-                                    basePricePerHour = 90000;
-                                } else if (isNonMember) {
-                                    // Non-Member pricing
-                                    basePricePerHour = 105000;
-                                } else {
-                                    // Neither is selected, set a default value or handle accordingly
-                                    hargaInput.value = "Pilih keanggotaan terlebih dahulu";
-                                    hargaInput.style.color = "red";
-                                    return;
-                                }
-                                break;
-                            default:
-                                // Default case, cabor not recognized
-                                hargaInput.value = "Harga tidak diketahui";
-                                hargaInput.style.color = "black";
-                                return;
-                        }
+        switch (selectedLapangan) {
+            case "Sepak Bola":
+                basePricePerHour = 500000;
+                break;
+            case "Bola Voli":
+                basePricePerHour = 110000;
+                break;
+            case "Bola Basket":
+                basePricePerHour = 90000;
+                break;
+            case "Tenis Lapangan":
+                basePricePerHour = 120000;
+                break;
+            case "Badminton":
+                basePricePerHour = 30000;
+                break;
+            case "Renang":
+                basePricePerHour = 10000;
+                break;
+            case "Futsal":
+                basePricePerHour = 105000; 
+                break;
+            default:
+                // If no sport is selected, show error
+                hargaInput.value = "Harga tidak diketahui";
+                hargaInput.style.color = "red";
+                return;
+        }
 
-                        // Calculate total price
-                        const totalPrice = durationHours * basePricePerHour * selectedJamMain;
+        // Calculate total price
+        const totalPrice = durationHours * basePricePerHour * selectedJamMain;
 
-                        hargaInput.value = totalPrice;
+        // Display the calculated price in the input field
+        hargaInput.value = totalPrice;
 
-                        // Remove any previous warning
-                        hargaInput.style.color = "black";
-                    }
-                </script>
+        // Reset the input color to black (no error)
+        hargaInput.style.color = "black";
+    }
+</script>
 
 
                 <!-- DataTales Example -->
@@ -790,7 +760,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <th scope="col">Jenis Olahraga</th>
                                         <th scope="col">Lokasi</th>
                                         <th scope="col">Tanggal Main</th>
-                                        <th scope="col">Keanggotaan</th>
                                         <th scope="col">Jam Main</th>
                                         <th scope="col">Harga</th>
                                         <th scope="col">Foto</th>
@@ -872,7 +841,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         $jenis = $r2['sport'];
                                         $lokasi = $r2['location']; // Ambil data dari kolom location di tabel venues
                                         $tanggal = $r2['date'];
-                                        $anggota = $r2['membership'];
                                         $jam = $r2['jam_main'];
                                         $harga = $r2['price'];
                                         $foto = $r2['photo'];
@@ -909,9 +877,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <td scope="row">
                                                 <?php echo $tanggal ?>
                                             </td>
-                                            <td scope="row">
-                                                <?php echo $anggota ?>
-                                            </td>
+
                                             <td scope="row">
                                                 <?php echo $jam ?>
                                                 Jam
