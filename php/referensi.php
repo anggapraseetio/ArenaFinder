@@ -616,7 +616,7 @@ if (!$koneksi) {
             $userEmail = $_SESSION['email'];
 
             // Tampilkan tombol "Tambah Referensi" hanya jika level pengguna adalah "superadmin"
-            if ($userEmail == 'tengkufarkhan3@gmail.com') {
+            if ($userEmail == 'arenafinder101@gmail.com') {
               echo '<a id="ref-btn" href="add_referensi.php">Tambah Referensi +</a>';
             } else {
               echo '<a id="ref-btn" href="add_referensi.php" style="display: none;">Tambah Referensi +</a>';
