@@ -496,15 +496,20 @@ if ($error || $sukses || $error2 || $sukses2) {
                                                     });
                                                 </script>
                                                 <div class="mb-3 row">
-                                                    <label for="jenis_lap" class="col-sm-2 col-form-label">Jenis
-                                                        Olahraga</label>
+                                                    <label for="jenis_lap" class="col-sm-2 col-form-label">Jenis Olahraga</label>
                                                     <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="jenis_olga"
-                                                            name="jenis_olga" value="<?php echo $sportFromVenues; ?>"
-                                                            readonly>
+                                                        <?php if (empty($sportFromVenues)): ?>
+                                                            <input type="text" class="form-control" id="jenis_olga"
+                                                                name="jenis_olga" value="Belum memiliki lapangan"
+                                                                style="color: red;" readonly>
+                                                        <?php else: ?>
+                                                            <input type="text" class="form-control" id="jenis_olga"
+                                                                name="jenis_olga" value="<?php echo $sportFromVenues; ?>"
+                                                                readonly>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>
-                                        </div>
+
 
                                         <div class="mb-3 row">
                                             <label for="alamat" class="col-sm-2 col-form-label">Tanggal Main</label>

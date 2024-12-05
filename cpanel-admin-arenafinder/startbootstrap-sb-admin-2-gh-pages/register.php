@@ -88,7 +88,7 @@ if (isset($_POST["register"])) {
             $mail->Username = 'tengkufarkhan3@gmail.com';
             $mail->Password = 'bynv cdfj izrp wiho';
 
-            $mail->setFrom('arenafinder.app@gmail.com', 'OTP Verification');
+            $mail->setFrom('arenafinder101@gmail.com', 'OTP Verification');
             $mail->addAddress($_POST["email"]);
 
             $mail->isHTML(true);
@@ -96,7 +96,7 @@ if (isset($_POST["register"])) {
             $mail->Body = "<p>Kepada admin, </p> <h3>Kode OTP anda adalah $otp <br></h3>
                 <br><br>
                 <p>Berikan pesan anda lewat email ini,</p>
-                <b>arenafinder.app@gmail.com</b>";
+                <b>arenafinder101@gmail.com</b>";
 
             if (!$mail->send()) {
           ?>

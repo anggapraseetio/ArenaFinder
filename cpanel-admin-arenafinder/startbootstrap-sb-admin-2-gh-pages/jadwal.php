@@ -7,9 +7,9 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 
-// $sportFromDB = ""; 
-if (isset($_SESSION['sport'])) {
-    // Assign the value to $sportFromDB
+// Pastikan $sportFromDB memiliki nilai default jika $_SESSION['sport'] tidak diatur
+$sportFromDB = "Belum memiliki lapangan"; // Default jika sesi tidak memiliki sport
+if (isset($_SESSION['sport']) && !empty($_SESSION['sport'])) {
     $sportFromDB = $_SESSION['sport'];
 }
 
@@ -178,7 +178,7 @@ if ($error || $sukses || $error2 || $sukses2) {
     if ($error2 || $sukses2) {
         $refreshUrl .= "#tabel-card";
     }
-    header("refresh:1;url=$refreshUrl"); // 2 = detik
+    header("refresh:1;url=$refreshUrl"); // 1 = detik
 }
 
 ?>
@@ -439,13 +439,18 @@ if ($error || $sukses || $error2 || $sukses2) {
                 onsubmit="return validasiForm()" name="jadwal-form">
 
                 <div class="mb-3 row">
-                    <label for="jenis_lap" class="col-sm-2 col-form-label">Jenis
-                        Olahraga</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="jenis_lap"
-                            name="jenis_lap" value="<?php echo $sportFromDB; ?>" readonly>
-                    </div>
-                </div>
+    <label for="jenis_lap" class="col-sm-2 col-form-label">Jenis Olahraga</label>
+    <div class="col-sm-10">
+        <?php if ($sportFromDB == "Belum memiliki lapangan"): ?>
+            <input type="text" class="form-control" id="jenis_lap" 
+                   name="jenis_lap" value="<?php echo $sportFromDB; ?>" 
+                   style="color: red;" readonly>
+        <?php else: ?>
+            <input type="text" class="form-control" id="jenis_lap" 
+                   name="jenis_lap" value="<?php echo $sportFromDB; ?>" readonly>
+        <?php endif; ?>
+    </div>
+</div>
 
                 <div class="mb-3 row">
                     <label for="alamat" class="col-sm-2 col-form-label">Tanggal Main</label>
