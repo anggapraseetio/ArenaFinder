@@ -116,27 +116,27 @@ if (isset($_GET['membershipId'])) {
         }
     }
 
-// Perform the deletion using prepared statements to avoid SQL injection
-$query = "UPDATE venue_membership SET nama = ? WHERE id_membership = ?";
-$stmt = $conn->prepare($query);
+    // Perform the deletion using prepared statements to avoid SQL injection
+    $query = "UPDATE venue_membership SET nama = ? WHERE id_membership = ?";
+    $stmt = $conn->prepare($query);
 
-// Bind the parameters
-$nama = 'Awokawokawok';
-$stmt->bind_param("si", $nama, $membershipId); // 'si' berarti string untuk nama dan integer untuk id_membership
+    // Bind the parameters
+    $nama = 'Awokawokawok';
+    $stmt->bind_param("si", $nama, $membershipId); // 'si' berarti string untuk nama dan integer untuk id_membership
 
-// Execute the statement
-$result = $stmt->execute();
+    // Execute the statement
+    $result = $stmt->execute();
 
-if ($result) {
-    // Redirect back to the original page after deletion
-    header("Location: pesanan.php");
-    exit();
-} else {
-    echo "Error deleting membership: " . $stmt->error;
-}
+    if ($result) {
+        // Redirect back to the original page after deletion
+        header("Location: pesanan.php");
+        exit();
+    } else {
+        echo "Error deleting membership: " . $stmt->error;
+    }
 
-// Close the statement
-$stmt->close();
+    // Close the statement
+    $stmt->close();
 }
 
 // Check if the form is submitted with the Batalkan button

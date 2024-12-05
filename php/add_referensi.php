@@ -108,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($harga_sewa)) {
         $harga_sewa = 0;
     }
-    
+
     // Check if the email already exists, excluding the current entity if in edit mode
     if ($op === 'edit') {
         $checkEmailQuery = "SELECT COUNT(*) as count FROM venues WHERE email = '$email' AND id_venue != '$id'";
@@ -117,9 +117,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $checkEmailResult = mysqli_query($koneksi, $checkEmailQuery);
     $emailCount = mysqli_fetch_assoc($checkEmailResult)['count'];
-    
+
     $pattern = '/^-?\d+(\.\d+)?,\s?-?\d+(\.\d+)?$/';
-    
+
     // Validation
     if ($emailCount > 0) {
         $error = "Alamat email sudah digunakan untuk tempat lain.";
@@ -137,7 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $nama_file = $_FILES['foto']['name'];
             $tmp = $_FILES['foto']['tmp_name'];
             $upload_folder = $_SERVER['DOCUMENT_ROOT'] . '/ArenaFinder/public/img/venue/';
-    
+
             if (move_uploaded_file($tmp, $upload_folder . $nama_file)) {
                 // Database Operation
                 if ($op == 'edit') {
@@ -145,25 +145,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 } else {
                     $sql1 = "INSERT INTO venues (email, venue_name, location, sport, total_lapangan, status, price, price_membership, sport_status, venue_photo, coordinate, desc_venue) VALUES ('$email', '$nama', '$lokasi', '$type_sport', '$jumlah_lap', '$status', '$harga_sewa', '$harga_sewa', '$tipe_lap', '$nama_file', '$coordinate', '$deskripsi')";
                 }
-    
+
                 $q1 = mysqli_query($koneksi, $sql1);
-    
+
                 if ($op != 'edit') {
                     // Additional operations after insert
                     $idVenue = mysqli_insert_id($koneksi);
-    
+
                     $days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
                     foreach ($days as $day) {
                         $sql = "INSERT INTO venue_operasional (`id_venue`, `day_name`, `opened`, `closed`) VALUES ($idVenue, '$day', '07:00:00', '23:00:00')";
                         mysqli_query($koneksi, $sql);
                     }
-    
+
                     for ($i = 1; $i <= $jumlah_lap; $i++) {
                         $sql = "INSERT INTO `venue_lapangan` (`id_venue`, `nama_lapangan`, `photo`) VALUES ($idVenue, 'Lapangan $i', '$nama_file')";
                         mysqli_query($koneksi, $sql);
                     }
                 }
-    
+
                 if ($q1) {
                     $sukses = "Data referensi berhasil diupdate/ditambahkan.";
                 } else {
@@ -176,14 +176,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $error = "Harap pilih gambar yang akan diunggah.";
         }
     }
-    
+
     // Display error or success message
     if (!empty($error)) {
         echo "<div class='error'>$error</div>";
     } elseif (!empty($sukses)) {
         echo "<div class='success'>$sukses</div>";
     }
-}    
+}
 
 if ($error || $sukses || $error2 || $sukses2) {
     // Set header sebelum mencetak pesan

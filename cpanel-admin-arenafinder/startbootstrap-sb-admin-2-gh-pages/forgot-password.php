@@ -165,7 +165,7 @@ if (isset($_POST["recover"])) {
 
             // h-hotel account
             $mail->Username = 'tengkufarkhan3@gmail.com';
-            $mail->Password = 'bynv cdfj izrp wiho';            
+            $mail->Password = 'bynv cdfj izrp wiho';
 
             // send by h-hotel email
             $mail->setFrom('arenafinder.app@gmail.com', 'Password Reset');

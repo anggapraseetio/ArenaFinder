@@ -86,17 +86,17 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
         }
 
         .footer {
-            
-      height: 300px;
-      width: 88.5rem;
-      margin-left: 0px;
-      margin-top: 620px;
-      background-color: #02406d;
-      font-family: "Kanit", sans-serif;
-      color: white;
-      padding: 20px;
-      display: flex;
-    }
+
+            height: 300px;
+            width: 88.5rem;
+            margin-left: 0px;
+            margin-top: 620px;
+            background-color: #02406d;
+            font-family: "Kanit", sans-serif;
+            color: white;
+            padding: 20px;
+            display: flex;
+        }
 
         .footer .hierarki {
             display: flex;
@@ -923,7 +923,7 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
         .container-rekomendasi {
             margin-top: 50px;
         }
-       
+
 
         @media (max-width: 900px) {
             .persegi3 {
@@ -1402,7 +1402,7 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
                 </button>
             </a>
             <a href="aktivitas.php">
-                <button class="btn-1" type="button" style="font-weight: 100; top: -59.8rem;">Aktivitas Komunitas 
+                <button class="btn-1" type="button" style="font-weight: 100; top: -59.8rem;">Aktivitas Komunitas
                     <img src="/ArenaFinder/img_asset/people_48px (1).png" alt="" id="aktiv-btn">
                 </button>
             </a>
@@ -1422,420 +1422,420 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
     </div>
 
     <div class="container-type-sport">
-    <div class="persegi2"></div>
-    <div id="button-type" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
-        <!-- Baris pertama (4 tombol) -->
-        <button class="btn-4" type="button">
-            <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt=""><span>Futsal</span>
-        </button>
-        <button class="btn-4" type="button">
-            <img src="/ArenaFinder/img_asset/bulu tangkis.jpg" alt=""><span>Bulu Tangkis</span>
-        </button>
-        <button class="btn-4" type="button">
-            <img src="/ArenaFinder/img_asset/voli.jpg" alt=""><span>Bola Voli</span>
-        </button>
-        <button class="btn-4" type="button">
-            <img src="/ArenaFinder/img_asset/basket.jpg" alt=""><span>Bola Basket</span>
-        </button>
+        <div class="persegi2"></div>
+        <div id="button-type" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+            <!-- Baris pertama (4 tombol) -->
+            <button class="btn-4" type="button">
+                <img src="/ArenaFinder/img_asset/alex-_AOL4_fDQ3M-unsplash.jpg" alt=""><span>Futsal</span>
+            </button>
+            <button class="btn-4" type="button">
+                <img src="/ArenaFinder/img_asset/bulu tangkis.jpg" alt=""><span>Bulu Tangkis</span>
+            </button>
+            <button class="btn-4" type="button">
+                <img src="/ArenaFinder/img_asset/voli.jpg" alt=""><span>Bola Voli</span>
+            </button>
+            <button class="btn-4" type="button">
+                <img src="/ArenaFinder/img_asset/basket.jpg" alt=""><span>Bola Basket</span>
+            </button>
 
-        <!-- Baris kedua (3 tombol dengan kolom kosong di akhir) -->
-        <button class="btn-4" type="button">
-            <img src="/ArenaFinder/img_asset/sepak bola.jpg" alt=""><span>Sepak Bola</span>
-        </button>
-        <button class="btn-4" type="button">
-            <img src="/ArenaFinder/img_asset/tenis_lapangan.jpg" alt=""><span>Tenis Lapangan</span>
-        </button>
-        <button class="btn-4" type="button">
-            <img src="/ArenaFinder/img_asset/renang.jpg" alt=""><span>Renang</span>
-        </button>
-        <!-- Tambahkan elemen kosong untuk menjaga alignment -->
-        <div></div>
+            <!-- Baris kedua (3 tombol dengan kolom kosong di akhir) -->
+            <button class="btn-4" type="button">
+                <img src="/ArenaFinder/img_asset/sepak bola.jpg" alt=""><span>Sepak Bola</span>
+            </button>
+            <button class="btn-4" type="button">
+                <img src="/ArenaFinder/img_asset/tenis_lapangan.jpg" alt=""><span>Tenis Lapangan</span>
+            </button>
+            <button class="btn-4" type="button">
+                <img src="/ArenaFinder/img_asset/renang.jpg" alt=""><span>Renang</span>
+            </button>
+            <!-- Tambahkan elemen kosong untuk menjaga alignment -->
+            <div></div>
+        </div>
     </div>
-</div>
 
 
 
-        <div class="container-rekomendasi">
-            <div class="community"> Rekomendasi Komunitas </div>
-            <div class="persegi3">
-                <div id="carouselExampleIndicators" class="carousel slide">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                            class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                            aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                            aria-label="Slide 3"></button>
-                    </div>
-                    <div class="carousel-inner mx-3 my-1">
-                        <div class="carousel-item active">
-                            <img src="/ArenaFinder/img_asset/connor-coyne-OgqWLzWRSaI-unsplash.jpg" class="d-block w-100" alt="..."
-                                style="height: 500px;">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="/ArenaFinder/img_asset/badmin_community.jpg" class="d-block w-100" alt="..."
-                                style="height: 500px;">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="/ArenaFinder/img_asset/bg-member.png" class="d-block w-100" alt="..." style="height: 500px;">
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+    <div class="container-rekomendasi">
+        <div class="community"> Rekomendasi Komunitas </div>
+        <div class="persegi3">
+            <div id="carouselExampleIndicators" class="carousel slide">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                        class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
                 </div>
+                <div class="carousel-inner mx-3 my-1">
+                    <div class="carousel-item active">
+                        <img src="/ArenaFinder/img_asset/connor-coyne-OgqWLzWRSaI-unsplash.jpg" class="d-block w-100" alt="..."
+                            style="height: 500px;">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/ArenaFinder/img_asset/badmin_community.jpg" class="d-block w-100" alt="..."
+                            style="height: 500px;">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/ArenaFinder/img_asset/bg-member.png" class="d-block w-100" alt="..." style="height: 500px;">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
         </div>
+    </div>
 
-        <div class="container" id="container-swiper-activity">
-            <div class="community" id="r-a" style="margin-top: 150px; margin-left: -100px;">Rekomendasi Aktivitas</div>
-            <section class="swiper mySwiper" id="swiper-activity">
-                <div class="swiper-wrapper" id="swiper-activity-wrapper">
-                    <?php
-                    // Pengambilan data dari tabel venue_aktivitas 
-                    $sql = "SELECT va.*, v.location, v.sport
+    <div class="container" id="container-swiper-activity">
+        <div class="community" id="r-a" style="margin-top: 150px; margin-left: -100px;">Rekomendasi Aktivitas</div>
+        <section class="swiper mySwiper" id="swiper-activity">
+            <div class="swiper-wrapper" id="swiper-activity-wrapper">
+                <?php
+                // Pengambilan data dari tabel venue_aktivitas 
+                $sql = "SELECT va.*, v.location, v.sport
                             FROM venue_aktivitas va
                             JOIN venues v ON va.id_venue = v.id_venue";
-                    $result = $conn->query($sql);
+                $result = $conn->query($sql);
 
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            $namaGambar = $row['photo']; // Assuming the 'photo' column contains the image filename
-                            $gambarURL = "/ArenaFinder/public/img/venue/" . $namaGambar;
-                    ?>
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        $namaGambar = $row['photo']; // Assuming the 'photo' column contains the image filename
+                        $gambarURL = "/ArenaFinder/public/img/venue/" . $namaGambar;
+                ?>
 
-                            <div class="swiper-slide" style="width: 400px;"> <!-- Sesuaikan lebar card -->
-                                <div class="card" style="height: 450px; padding: 0px;">
-                                    <!-- Use the data from the database to populate the card -->
-                                    <img src="<?php echo $gambarURL; ?>" class="card-img-top" alt="..."
-                                        style="height: 200px; object-fit: cover; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px;">
-                                    <div class="card__content">
-                                        <span class="card__title" style="margin-top: 10px;">
-                                            <?php echo $row['nama_aktivitas']; ?>
-                                        </span>
-                                        <span class="card__text">Lokasi :
-                                            <?php echo $row['location']; ?>
-                                        </span>
-                                        <button class="tombol-aktivitas" data-nama="<?php echo $row['nama_aktivitas']; ?>"
-                                            data-lokasi="<?php echo $row['location']; ?>"
-                                            data-tanggal="<?php echo $row['date']; ?>"
-                                            data-jam="<?php echo $row['jam_main']; ?>" data-harga="<?php echo $row['price']; ?>"
-                                            data-foto="<?php echo $row['photo']; ?>"
-                                            data-sport="<?php echo $row['sport']; ?>">Lihat
-                                            Aktivitas</button>
+                        <div class="swiper-slide" style="width: 400px;"> <!-- Sesuaikan lebar card -->
+                            <div class="card" style="height: 450px; padding: 0px;">
+                                <!-- Use the data from the database to populate the card -->
+                                <img src="<?php echo $gambarURL; ?>" class="card-img-top" alt="..."
+                                    style="height: 200px; object-fit: cover; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px;">
+                                <div class="card__content">
+                                    <span class="card__title" style="margin-top: 10px;">
+                                        <?php echo $row['nama_aktivitas']; ?>
+                                    </span>
+                                    <span class="card__text">Lokasi :
+                                        <?php echo $row['location']; ?>
+                                    </span>
+                                    <button class="tombol-aktivitas" data-nama="<?php echo $row['nama_aktivitas']; ?>"
+                                        data-lokasi="<?php echo $row['location']; ?>"
+                                        data-tanggal="<?php echo $row['date']; ?>"
+                                        data-jam="<?php echo $row['jam_main']; ?>" data-harga="<?php echo $row['price']; ?>"
+                                        data-foto="<?php echo $row['photo']; ?>"
+                                        data-sport="<?php echo $row['sport']; ?>">Lihat
+                                        Aktivitas</button>
 
-                                    </div>
                                 </div>
                             </div>
+                        </div>
 
-                    <?php
-                        }
-                    } else {
-                        echo "0 results";
+                <?php
                     }
+                } else {
+                    echo "0 results";
+                }
 
-                    // Close the database connection
-                    $conn->close();
-                    ?>
+                // Close the database connection
+                $conn->close();
+                ?>
+            </div>
+        </section>
+
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalAktivitas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="judulModal">Judul Aktivitas</h4>
                 </div>
-            </section>
-
-        </div>
-
-
-        <!-- Modal -->
-        <div class="modal fade" id="modalAktivitas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="judulModal">Judul Aktivitas</h4>
-                    </div>
-                    <div class="modal-body">
-                        <img id="fotoModal" class="img-fluid mx-auto" alt="Foto Aktivitas"
-                            style="width: 100%; height: auto;">
-                        <p id="lokasiModal" style="margin-top: 10px;"></p>
-                        <p id="tanggalModal"></p>
-                        <p id="jamModal"></p>
-                        <p id="hargaModal"></p>
-                        <p id="sportModal"></p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="tombol-aktivitas mx-auto" id="tutupModal">Tutup</button>
-                    </div>
+                <div class="modal-body">
+                    <img id="fotoModal" class="img-fluid mx-auto" alt="Foto Aktivitas"
+                        style="width: 100%; height: auto;">
+                    <p id="lokasiModal" style="margin-top: 10px;"></p>
+                    <p id="tanggalModal"></p>
+                    <p id="jamModal"></p>
+                    <p id="hargaModal"></p>
+                    <p id="sportModal"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="tombol-aktivitas mx-auto" id="tutupModal">Tutup</button>
                 </div>
             </div>
         </div>
+    </div>
 
 
-        <!-- Script JavaScript untuk menutup modal -->
-        <script>
-            document.getElementById('tutupModal').addEventListener('click', function() {
-                $('#modalAktivitas').modal('hide'); // Sesuaikan dengan ID modal Anda
+    <!-- Script JavaScript untuk menutup modal -->
+    <script>
+        document.getElementById('tutupModal').addEventListener('click', function() {
+            $('#modalAktivitas').modal('hide'); // Sesuaikan dengan ID modal Anda
+        });
+    </script>
+
+    <!-- Include jQuery library (you can download and host it locally if needed) -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Script untuk menangani pembukaan modal -->
+    <script>
+        $(document).ready(function() {
+            // Menangani klik pada tombol dengan kelas "tombol-aktivitas"
+            $('.tombol-aktivitas').click(function() {
+                // Mendapatkan data dari atribut data pada tombol
+                var namaAktivitas = $(this).data('nama');
+                var lokasi = $(this).data('lokasi');
+                var tanggal = $(this).data('tanggal');
+                var jam = $(this).data('jam');
+                var harga = $(this).data('harga');
+                var sport = $(this).data('sport');
+                var foto = 'http://localhost/ArenaFinder/public/img/venue/' + $(this).data('foto'); // Ganti dengan path sesuai struktur folder Anda
+
+                // Memasukkan data ke dalam modal
+                $('#judulModal').text(namaAktivitas);
+                $('#fotoModal').attr('src', foto);
+                $('#lokasiModal').text('Lokasi: ' + lokasi);
+                $('#tanggalModal').text('Hari/Tanggal: ' + tanggal);
+                $('#jamModal').text('Jam: ' + jam);
+                $('#hargaModal').text('Harga: ' + harga);
+                $('#sportModal').text(sport);
+
+                // Membuka modal
+                $('#modalAktivitas').modal('show');
             });
-        </script>
+        });
+    </script>
 
-        <!-- Include jQuery library (you can download and host it locally if needed) -->
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <div class="con-swiper">
+        <div class="community" id="developer_group">Tim Pengembang</div>
+        <section class="swiper mySwiper">
+            <div class="swiper-wrapper">
 
-        <!-- Script untuk menangani pembukaan modal -->
-        <script>
-            $(document).ready(function() {
-                // Menangani klik pada tombol dengan kelas "tombol-aktivitas"
-                $('.tombol-aktivitas').click(function() {
-                    // Mendapatkan data dari atribut data pada tombol
-                    var namaAktivitas = $(this).data('nama');
-                    var lokasi = $(this).data('lokasi');
-                    var tanggal = $(this).data('tanggal');
-                    var jam = $(this).data('jam');
-                    var harga = $(this).data('harga');
-                    var sport = $(this).data('sport');
-                    var foto = 'http://localhost/ArenaFinder/public/img/venue/' + $(this).data('foto'); // Ganti dengan path sesuai struktur folder Anda
-
-                    // Memasukkan data ke dalam modal
-                    $('#judulModal').text(namaAktivitas);
-                    $('#fotoModal').attr('src', foto);
-                    $('#lokasiModal').text('Lokasi: ' + lokasi);
-                    $('#tanggalModal').text('Hari/Tanggal: ' + tanggal);
-                    $('#jamModal').text('Jam: ' + jam);
-                    $('#hargaModal').text('Harga: ' + harga);
-                    $('#sportModal').text(sport);
-
-                    // Membuka modal
-                    $('#modalAktivitas').modal('show');
-                });
-            });
-        </script>
-
-        <div class="con-swiper">
-            <div class="community" id="developer_group">Tim Pengembang</div>
-            <section class="swiper mySwiper">
-                <div class="swiper-wrapper">
-
-                    <div class="card swiper-slide">
-                        <div class="card__image">
-                            <img src="/ArenaFinder/public/img/venue/profile1.png" alt="card image" />
-                        </div>
-
-                        <div class="card__content">
-                            <span class="card__title">Tengku Farkhan Arsyad S</span>
-                            <span class="card__name">Web Developer</span>
-                            <div class="social-buttons">
-                                <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
-                                    class="social-button facebook"><i class="fab fa-facebook"></i></a>
-                                <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
-                                <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
-                                    class="social-button instagram"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="card swiper-slide">
-                        <div class="card__image">
-                            <img src="/ArenaFinder/public/img/venue/profile1.png" alt="card image" />
-                        </div>
-
-                        <div class="card__content">
-                            <span class="card__title">La Ode Willy Syahban</span>
-                            <span class="card__name">Mobile Developer</span>
-                            <div class="social-buttons">
-                                <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
-                                    class="social-button facebook"><i class="fab fa-facebook"></i></a>
-                                <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
-                                <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
-                                    class="social-button instagram"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card swiper-slide">
-                        <div class="card__image">
-                            <img src="/ArenaFinder/public/img/venue/profile1.png" alt="card image" />                        
-                        </div>
-
-                        <div class="card__content">
-                            <span class="card__title">Ayu Pramudita</span>
-                            <span class="card__name">Tester</span>
-                            <div class="social-buttons">
-                                <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
-                                    class="social-button facebook"><i class="fab fa-facebook"></i></a>
-                                <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
-                                <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
-                                    class="social-button instagram"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card swiper-slide">
-                        <div class="card__image">
-                            <img src="/ArenaFinder/public/img/venue/profile1.png" alt="card image" />
-                        </div>
-
-                        <div class="card__content">
-                            <span class="card__title">Angga Prasetio</span>
-                            <span class="card__name">Project Manager</span>
-                            <div class="social-buttons">
-                                <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
-                                    class="social-button facebook"><i class="fab fa-facebook"></i></a>
-                                <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
-                                <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
-                                    class="social-button instagram"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card swiper-slide">
-                        <div class="card__image">
-                            <img src="/ArenaFinder/public/img/venue/profile1.png" alt="card image" />
-                        </div>
-
-                        <div class="card__content">
-                            <span class="card__title">Rika Handayani</span>
-                            <span class="card__name">SQA</span>
-                            <div class="social-buttons">
-                                <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
-                                    class="social-button facebook"><i class="fab fa-facebook"></i></a>
-                                <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
-                                <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
-                                    class="social-button instagram"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card swiper-slide">
-                        <div class="card__image">
-                            <img src="/ArenaFinder/public/img/venue/profile1.png" alt="card image" />
-                        </div>
-
-                        <div class="card__content">
-                            <span class="card__title">Shava Selvia Ramadhani S</span>
-                            <span class="card__name">Test Administrator</span>
-                            <div class="social-buttons">
-                                <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
-                                    class="social-button facebook"><i class="fab fa-facebook"></i></a>
-                                <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
-                                <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
-                                    class="social-button instagram"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card swiper-slide">
-                        <div class="card__image">
-                            <img src="/ArenaFinder/public/img/venue/profile1.png" alt="card image" />
-                        </div>
-
-                        <div class="card__content">
-                            <span class="card__title">Rafli Ulya Armadhan</span>
-                            <span class="card__name">Test Administrator</span>
-                            <div class="social-buttons">
-                                <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
-                                    class="social-button facebook"><i class="fab fa-facebook"></i></a>
-                                <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
-                                <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
-                                    class="social-button instagram"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card swiper-slide">
-                        <div class="card__image">
+                <div class="card swiper-slide">
+                    <div class="card__image">
                         <img src="/ArenaFinder/public/img/venue/profile1.png" alt="card image" />
-                        </div>
-
-                        <div class="card__content">
-                            <span class="card__title">Achmad Baihaqi</span>
-                            <span class="card__name">Mobile Developer</span>
-                            <div class="social-buttons">
-                                <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
-                                    class="social-button facebook"><i class="fab fa-facebook"></i></a>
-                                <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
-                                <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
-                                    class="social-button instagram"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
                     </div>
 
-                    <div class="card swiper-slide">
-                        <div class="card__image">
-                        <img src="/ArenaFinder/public/img/venue/profile1.png" alt="card image" />
-                        </div>
-
-                        <div class="card__content">
-                            <span class="card__title">Ninik Yuniarsih</span>
-                            <span class="card__name">Tester</span>
-                            <div class="social-buttons">
-                                <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
-                                    class="social-button facebook"><i class="fab fa-facebook"></i></a>
-                                <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
-                                <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
-                                    class="social-button instagram"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card swiper-slide">
-                        <div class="card__image">
-                        <img src="/ArenaFinder/public/img/venue/profile1.png" alt="card image" />
-                        </div>
-
-                        <div class="card__content">
-                            <span class="card__title">Afrizal Wahyu A.</span>
-                            <span class="card__name">Project Manager</span>
-                            <div class="social-buttons">
-                                <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
-                                    class="social-button facebook"><i class="fab fa-facebook"></i></a>
-                                <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
-                                <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
-                                    class="social-button instagram"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card swiper-slide">
-                        <div class="card__image">
-                        <img src="/ArenaFinder/public/img/venue/profile1.png" alt="card image" />
-                        </div>
-
-                        <div class="card__content">
-                            <span class="card__title">Syafrizal Wd M.</span>
-                            <span class="card__name">Web Developer</span>
-                            <div class="social-buttons">
-                                <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
-                                    class="social-button facebook"><i class="fab fa-facebook"></i></a>
-                                <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
-                                <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
-                                    class="social-button instagram"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card swiper-slide">
-                        <div class="card__image">
-                        <img src="/ArenaFinder/public/img/venue/profile1.png" alt="card image" />
-                        </div>
-
-                        <div class="card__content">
-                            <span class="card__title">Widyasari Raisya S.</span>
-                            <span class="card__name">SQA</span>
-                            <div class="social-buttons">
-                                <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
-                                    class="social-button facebook"><i class="fab fa-facebook"></i></a>
-                                <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
-                                <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
-                                    class="social-button instagram"><i class="fab fa-instagram"></i></a>
-                            </div>
+                    <div class="card__content">
+                        <span class="card__title">Tengku Farkhan Arsyad S</span>
+                        <span class="card__name">Web Developer</span>
+                        <div class="social-buttons">
+                            <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
+                                class="social-button facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
+                                class="social-button instagram"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
+
+                <div class="card swiper-slide">
+                    <div class="card__image">
+                        <img src="/ArenaFinder/public/img/venue/profile1.png" alt="card image" />
+                    </div>
+
+                    <div class="card__content">
+                        <span class="card__title">La Ode Willy Syahban</span>
+                        <span class="card__name">Mobile Developer</span>
+                        <div class="social-buttons">
+                            <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
+                                class="social-button facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
+                                class="social-button instagram"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card swiper-slide">
+                    <div class="card__image">
+                        <img src="/ArenaFinder/public/img/venue/profile1.png" alt="card image" />
+                    </div>
+
+                    <div class="card__content">
+                        <span class="card__title">Ayu Pramudita</span>
+                        <span class="card__name">Tester</span>
+                        <div class="social-buttons">
+                            <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
+                                class="social-button facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
+                                class="social-button instagram"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card swiper-slide">
+                    <div class="card__image">
+                        <img src="/ArenaFinder/public/img/venue/profile1.png" alt="card image" />
+                    </div>
+
+                    <div class="card__content">
+                        <span class="card__title">Angga Prasetio</span>
+                        <span class="card__name">Project Manager</span>
+                        <div class="social-buttons">
+                            <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
+                                class="social-button facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
+                                class="social-button instagram"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card swiper-slide">
+                    <div class="card__image">
+                        <img src="/ArenaFinder/public/img/venue/profile1.png" alt="card image" />
+                    </div>
+
+                    <div class="card__content">
+                        <span class="card__title">Rika Handayani</span>
+                        <span class="card__name">SQA</span>
+                        <div class="social-buttons">
+                            <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
+                                class="social-button facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
+                                class="social-button instagram"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card swiper-slide">
+                    <div class="card__image">
+                        <img src="/ArenaFinder/public/img/venue/profile1.png" alt="card image" />
+                    </div>
+
+                    <div class="card__content">
+                        <span class="card__title">Shava Selvia Ramadhani S</span>
+                        <span class="card__name">Test Administrator</span>
+                        <div class="social-buttons">
+                            <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
+                                class="social-button facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
+                                class="social-button instagram"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card swiper-slide">
+                    <div class="card__image">
+                        <img src="/ArenaFinder/public/img/venue/profile1.png" alt="card image" />
+                    </div>
+
+                    <div class="card__content">
+                        <span class="card__title">Rafli Ulya Armadhan</span>
+                        <span class="card__name">Test Administrator</span>
+                        <div class="social-buttons">
+                            <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
+                                class="social-button facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
+                                class="social-button instagram"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card swiper-slide">
+                    <div class="card__image">
+                        <img src="/ArenaFinder/public/img/venue/profile1.png" alt="card image" />
+                    </div>
+
+                    <div class="card__content">
+                        <span class="card__title">Achmad Baihaqi</span>
+                        <span class="card__name">Mobile Developer</span>
+                        <div class="social-buttons">
+                            <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
+                                class="social-button facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
+                                class="social-button instagram"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card swiper-slide">
+                    <div class="card__image">
+                        <img src="/ArenaFinder/public/img/venue/profile1.png" alt="card image" />
+                    </div>
+
+                    <div class="card__content">
+                        <span class="card__title">Ninik Yuniarsih</span>
+                        <span class="card__name">Tester</span>
+                        <div class="social-buttons">
+                            <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
+                                class="social-button facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
+                                class="social-button instagram"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card swiper-slide">
+                    <div class="card__image">
+                        <img src="/ArenaFinder/public/img/venue/profile1.png" alt="card image" />
+                    </div>
+
+                    <div class="card__content">
+                        <span class="card__title">Afrizal Wahyu A.</span>
+                        <span class="card__name">Project Manager</span>
+                        <div class="social-buttons">
+                            <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
+                                class="social-button facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
+                                class="social-button instagram"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card swiper-slide">
+                    <div class="card__image">
+                        <img src="/ArenaFinder/public/img/venue/profile1.png" alt="card image" />
+                    </div>
+
+                    <div class="card__content">
+                        <span class="card__title">Syafrizal Wd M.</span>
+                        <span class="card__name">Web Developer</span>
+                        <div class="social-buttons">
+                            <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
+                                class="social-button facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
+                                class="social-button instagram"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card swiper-slide">
+                    <div class="card__image">
+                        <img src="/ArenaFinder/public/img/venue/profile1.png" alt="card image" />
+                    </div>
+
+                    <div class="card__content">
+                        <span class="card__title">Widyasari Raisya S.</span>
+                        <span class="card__name">SQA</span>
+                        <div class="social-buttons">
+                            <a href="https://web.facebook.com/pages/Blessing-Futsal-Nganjuk/1438586789529016"
+                                class="social-button facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="social-button twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="https://instagram.com/blessing.futsal?igshid=NGVhN2U2NjQOYg=="
+                                class="social-button instagram"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
     </div>
 
     <!-- Back to Top Button -->
@@ -1895,11 +1895,11 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
 
 
 
-<div class="footer">
-<h1 style="font-size: 20px; color: white;">Arena</h1>
-    <h1 style="font-size: 20px; color: #A1FF9F;">Finder</h1>
+    <div class="footer">
+        <h1 style="font-size: 20px; color: white;">Arena</h1>
+        <h1 style="font-size: 20px; color: #A1FF9F;">Finder</h1>
         <div class="hierarki">
-            <p style="font-size: 20px; color: white; margin-left: 55px;">Hierarki 
+            <p style="font-size: 20px; color: white; margin-left: 55px;">Hierarki
                 <a href="index.php" style="margin-top: 10px;">Beranda</a>
                 <a href="aktivitas.php">Aktivitas</a>
                 <a href="referensi.php">Referensi</a>
@@ -1921,7 +1921,7 @@ if (checkUserLogin() && isset($_POST["status_lap_button"])) {
             </p>
         </div>
 
-</div>
+    </div>
 
 
 

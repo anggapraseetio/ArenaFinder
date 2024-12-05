@@ -1,4 +1,5 @@
 <?php
+
 use Google\Service\CloudTrace\Span;
 
 session_start();
@@ -265,10 +266,10 @@ $userName = $_SESSION['username'];
 
                     <!-- Your Badge Script with AJAX -->
                     <script>
-                        setInterval(function () {
+                        setInterval(function() {
                             function loadDoc() {
                                 var xhttp = new XMLHttpRequest();
-                                xhttp.onreadystatechange = function () {
+                                xhttp.onreadystatechange = function() {
                                     if (this.readyState == 4 && this.status == 200) {
                                         console.log("Response from check_data.php:", this.responseText); // Log the response
                                         document.getElementById("pesanan-link").innerHTML = this.responseText;
@@ -294,8 +295,8 @@ $userName = $_SESSION['username'];
 
                     <!-- Your jQuery script for handling sidebar toggle -->
                     <script>
-                        $(document).ready(function () {
-                            $("#sidebarToggle").on("click", function () {
+                        $(document).ready(function() {
+                            $("#sidebarToggle").on("click", function() {
                                 // Toggle the "toggled" class on the topbar
                                 $(".topbar").toggleClass("toggled");
                                 $(".container-fluid").toggleClass("toggled");
@@ -344,8 +345,8 @@ $userName = $_SESSION['username'];
 
                                 <!-- Your jQuery script for handling sidebar toggle -->
                                 <script>
-                                    $(document).ready(function () {
-                                        $("#sidebarToggleTop").on("click", function () {
+                                    $(document).ready(function() {
+                                        $("#sidebarToggleTop").on("click", function() {
                                             // Toggle the "toggled" class on the topbar
                                             $(".topbar").toggleClass("toggled");
                                             $(".container-fluid").toggleClass("toggled");
@@ -458,7 +459,7 @@ $userName = $_SESSION['username'];
                                     // FROM venue_membership vm
                                     // JOIN venues v ON vm.id_venue = v.id_venue
                                     // ORDER BY vm.created_at DESC";
-                                    
+
                                     $id_venue = $_SESSION['id_venue'];
                                     $sport = $_SESSION['sport'];
                                     $sql = "SELECT v.id_booking AS id_membership, v.total_price as harga, v.created_at, 
@@ -480,7 +481,7 @@ $userName = $_SESSION['username'];
                                     $result = $conn->query($sql);
 
                                     // $data = $result->fetch_assoc();
-                                    
+
                                     // Check if there are any results before generating HTML
                                     if ($result->num_rows > 0) {
                                         // Initialize $html variable
@@ -534,7 +535,6 @@ $userName = $_SESSION['username'];
                                             });
                                             
                                         </script>';
-
                                         }
                                     } else {
                                         // Output a message or handle the case when there are no results
@@ -555,7 +555,7 @@ $userName = $_SESSION['username'];
                                     var confirmationReceived = false;
 
                                     // Event handler for Confirm button
-                                    $(".confirm-button").on("click", function () {
+                                    $(".confirm-button").on("click", function() {
                                         var membershipId = $(this).data("membership-id");
 
                                         // Check if confirmation has been received
@@ -570,8 +570,11 @@ $userName = $_SESSION['username'];
                                                 $.ajax({
                                                     type: "POST",
                                                     url: "confirm_booking.php",
-                                                    data: { membershipId: membershipId, action: "confirm" },
-                                                    success: function (response) {
+                                                    data: {
+                                                        membershipId: membershipId,
+                                                        action: "confirm"
+                                                    },
+                                                    success: function(response) {
                                                         // Handle success (if needed)
                                                         console.log(response);
                                                         // Remove the card from the DOM or update UI as necessary
@@ -581,7 +584,7 @@ $userName = $_SESSION['username'];
                                                         // Redirect to check_data.php
                                                         window.location.href = "confirm_booking.php?membershipId=" + membershipId;
                                                     },
-                                                    error: function (error) {
+                                                    error: function(error) {
                                                         // Handle error (if needed)
                                                         console.error(error);
                                                     }
@@ -591,7 +594,7 @@ $userName = $_SESSION['username'];
                                     });
 
                                     // Event handler for Cancel button
-                                    $(".cancel-button").on("click", function () {
+                                    $(".cancel-button").on("click", function() {
                                         var membershipId = $(this).data("membership-id");
 
                                         // Check if confirmation has been received
@@ -606,8 +609,11 @@ $userName = $_SESSION['username'];
                                                 $.ajax({
                                                     type: "POST",
                                                     url: "check_data.php",
-                                                    data: { membershipId: membershipId, action: "cancel" },
-                                                    success: function (response) {
+                                                    data: {
+                                                        membershipId: membershipId,
+                                                        action: "cancel"
+                                                    },
+                                                    success: function(response) {
                                                         // Handle success (if needed)
                                                         console.log(response);
                                                         // Remove the card from the DOM or update UI as necessary
@@ -617,7 +623,7 @@ $userName = $_SESSION['username'];
                                                         // Redirect to check_data.php
                                                         window.location.href = "check_data.php?membershipId=" + membershipId;
                                                     },
-                                                    error: function (error) {
+                                                    error: function(error) {
                                                         // Handle error (if needed)
                                                         console.error(error);
                                                     }
@@ -630,9 +636,6 @@ $userName = $_SESSION['username'];
                                         // Update the badge count in the DOM
                                         $("#pesanan-link").text(count);
                                     }
-
-
-
                                 </script>
                             </div>
 

@@ -548,37 +548,37 @@ if (!$koneksi) {
   </div>
 
 
-<div class="footer">
-<h1 style="font-size: 20px; color: white;">Arena</h1>
+  <div class="footer">
+    <h1 style="font-size: 20px; color: white;">Arena</h1>
     <h1 style="font-size: 20px; color: #A1FF9F;">Finder</h1>
-        <div class="hierarki">
-            <p style="font-size: 20px; color: white; margin-left: 55px;">Hierarki 
-                <a href="index.php" style="margin-top: 10px;">Beranda</a>
-                <a href="aktivitas.php">Aktivitas</a>
-                <a href="referensi.php">Referensi</a>
-                <!-- <a href="info_mitra.php">Info Mitra</a> -->
-            </p>
-            <p style="font-size: 20px; color: white; margin-left: 150px;">Bantuan
-                <a href="bantuan.html" style="margin-top: 10px;">Apa saja layanan yang disediakan?</a>
-                <a href="bantuan.html">Siapa target penggunanya?</a>
-                <a href="bantuan.html">Bagaimana sistem ini bekerja?</a>
-                <a href="bantuan.html">Bagaimana cara daftar lapangan?</a>
-                <a href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php">Masuk aplikasi?</a>
-                <a href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php">Daftar aplikasi?</a>
-            </p>
-            <p style="font-size: 20px; color: white; margin-left: 100px;">Narahubung
-                <a href="https://wa.me/6285785488403">https://wa.me/087860616270</a>
-            </p>
-            <p style="font-size: 20px; color: white; margin-left: 100px;">Aplikasi Mobile
-                <a href="https://wa.me/62895807400305">Download Aplikasi?</a>
-            </p>
-        </div>
-</div>
+    <div class="hierarki">
+      <p style="font-size: 20px; color: white; margin-left: 55px;">Hierarki
+        <a href="index.php" style="margin-top: 10px;">Beranda</a>
+        <a href="aktivitas.php">Aktivitas</a>
+        <a href="referensi.php">Referensi</a>
+        <!-- <a href="info_mitra.php">Info Mitra</a> -->
+      </p>
+      <p style="font-size: 20px; color: white; margin-left: 150px;">Bantuan
+        <a href="bantuan.html" style="margin-top: 10px;">Apa saja layanan yang disediakan?</a>
+        <a href="bantuan.html">Siapa target penggunanya?</a>
+        <a href="bantuan.html">Bagaimana sistem ini bekerja?</a>
+        <a href="bantuan.html">Bagaimana cara daftar lapangan?</a>
+        <a href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php">Masuk aplikasi?</a>
+        <a href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php">Daftar aplikasi?</a>
+      </p>
+      <p style="font-size: 20px; color: white; margin-left: 100px;">Narahubung
+        <a href="https://wa.me/6285785488403">https://wa.me/087860616270</a>
+      </p>
+      <p style="font-size: 20px; color: white; margin-left: 100px;">Aplikasi Mobile
+        <a href="https://wa.me/62895807400305">Download Aplikasi?</a>
+      </p>
+    </div>
+  </div>
 
-    <!-- Include Bootstrap JS and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Include Bootstrap JS and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 

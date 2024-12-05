@@ -79,7 +79,7 @@ if ($op == 'edit') {
 }
 
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") { 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_SESSION['email'];
     $jenis_lap = $_POST['jenis_lap'];
     $tgl = $_POST['tanggal'];
@@ -101,12 +101,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $venueRow = mysqli_fetch_assoc($fetchVenueIdResult);
             $id_venue = $venueRow['id_venue'];
             $id_lapangan = $venueRow['id_lapangan'];
-        
+
             if (is_numeric($harga) && $harga > 0) {
                 if ($waktu_mulai && $waktu_selesai) {
                     $startHour = (int) explode(":", $waktu_mulai)[0];
                     $endHour = (int) explode(":", $waktu_selesai)[0];
-        
+
                     if ($startHour >= 16 && $startHour < 17) {
                         $error = "Durasi waktu istirahat";
                     } else {
@@ -118,9 +118,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                  OR (start_hour <= '$waktu_selesai' AND end_hour >= '$waktu_selesai')
                                  OR (start_hour >= '$waktu_mulai' AND end_hour <= '$waktu_selesai'))
                             AND id_price != '$id'";
-        
+
                         $checkScheduleResult = $conn->query($checkScheduleQuery);
-        
+
                         if ($checkScheduleResult) {
                             $row = $checkScheduleResult->fetch_assoc();
                             if ($row['count_schedule'] > 0) {
@@ -136,7 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                 price = '$harga'
                                              WHERE id_price = '$id'";
                                     $q1 = mysqli_query($conn, $sql1);
-        
+
                                     if ($q1) {
                                         $sukses = "Data jadwal berhasil diupdate.";
                                     } else {
@@ -146,7 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     $sql1 = "INSERT INTO venue_price (id_venue, id_lapangan, date, start_hour, end_hour, price) 
                                         VALUES ('$id_venue', '$id_lapangan', '$tgl', '$waktu_mulai', '$waktu_selesai', '$harga')";
                                     $q1 = mysqli_query($conn, $sql1);
-        
+
                                     if ($q1) {
                                         $sukses = "Data jadwal berhasil ditambahkan";
                                     } else {
@@ -165,12 +165,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $error = "Harga tidak valid";
             }
         } else {
-            $error = $fetchVenueIdResult 
+            $error = $fetchVenueIdResult
                 ? "Data venue tidak ditemukan."
                 : "Query gagal: " . mysqli_error($conn);
         }
     }
-
 }
 if ($error || $sukses || $error2 || $sukses2) {
     // Set header sebelum mencetak pesan
@@ -421,460 +420,460 @@ if ($error || $sukses || $error2 || $sukses2) {
                             if ($level != 'SUPER ADMIN') {
                                 // Tampilkan form hanya jika level bukan 'SUPER ADMIN'
                             ?>
-                               <div class="card shadow mb-4 overflow-hidden" id="form-jadwal">
-    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
-        style="background-color: #02406d; color: white">
-        <h6 class="m-0 font-weight-bold">Tambah/Edit <span
-                style="color: #a1ff9f;">Jadwal</span></h6>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive overflow-hidden">
-            <?php if ($error || $sukses): ?>
-                <div class="alert <?php echo $error ? 'alert-danger' : 'alert-success'; ?>"
-                    role="alert">
-                    <?php echo $error ? $error : $sukses; ?>
-                </div>
-            <?php endif; ?>
-            <form action="" method="POST" autocomplete="off"
-                onsubmit="return validasiForm()" name="jadwal-form">
+                                <div class="card shadow mb-4 overflow-hidden" id="form-jadwal">
+                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                                        style="background-color: #02406d; color: white">
+                                        <h6 class="m-0 font-weight-bold">Tambah/Edit <span
+                                                style="color: #a1ff9f;">Jadwal</span></h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive overflow-hidden">
+                                            <?php if ($error || $sukses): ?>
+                                                <div class="alert <?php echo $error ? 'alert-danger' : 'alert-success'; ?>"
+                                                    role="alert">
+                                                    <?php echo $error ? $error : $sukses; ?>
+                                                </div>
+                                            <?php endif; ?>
+                                            <form action="" method="POST" autocomplete="off"
+                                                onsubmit="return validasiForm()" name="jadwal-form">
 
-                <div class="mb-3 row">
-    <label for="jenis_lap" class="col-sm-2 col-form-label">Jenis Olahraga</label>
-    <div class="col-sm-10">
-        <?php if ($sportFromDB == "Belum memiliki lapangan"): ?>
-            <input type="text" class="form-control" id="jenis_lap" 
-                   name="jenis_lap" value="<?php echo $sportFromDB; ?>" 
-                   style="color: red;" readonly>
-        <?php else: ?>
-            <input type="text" class="form-control" id="jenis_lap" 
-                   name="jenis_lap" value="<?php echo $sportFromDB; ?>" readonly>
-        <?php endif; ?>
-    </div>
-</div>
+                                                <div class="mb-3 row">
+                                                    <label for="jenis_lap" class="col-sm-2 col-form-label">Jenis Olahraga</label>
+                                                    <div class="col-sm-10">
+                                                        <?php if ($sportFromDB == "Belum memiliki lapangan"): ?>
+                                                            <input type="text" class="form-control" id="jenis_lap"
+                                                                name="jenis_lap" value="<?php echo $sportFromDB; ?>"
+                                                                style="color: red;" readonly>
+                                                        <?php else: ?>
+                                                            <input type="text" class="form-control" id="jenis_lap"
+                                                                name="jenis_lap" value="<?php echo $sportFromDB; ?>" readonly>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div>
 
-                <div class="mb-3 row">
-                    <label for="alamat" class="col-sm-2 col-form-label">Tanggal Main</label>
-                    <div class="col-sm-10">
-                        <input type="text" placeholder="-Pilih Tanggal-"
-                            class="form-control" id="tanggal" name="tanggal"
-                            value="<?php echo $tgl; ?>" required>
-                    </div>
-                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="alamat" class="col-sm-2 col-form-label">Tanggal Main</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" placeholder="-Pilih Tanggal-"
+                                                            class="form-control" id="tanggal" name="tanggal"
+                                                            value="<?php echo $tgl; ?>" required>
+                                                    </div>
+                                                </div>
 
-        </div>
+                                        </div>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                flatpickr("#tanggal", {
-                    enableTime: false, // Enable time selection
-                    minDate: "today", // Set the minimum date to today
-                    dateFormat: "Y-m-d", // Specify the date format
-                });
-            });
-        </script>
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                flatpickr("#tanggal", {
+                                                    enableTime: false, // Enable time selection
+                                                    minDate: "today", // Set the minimum date to today
+                                                    dateFormat: "Y-m-d", // Specify the date format
+                                                });
+                                            });
+                                        </script>
 
-        <div class="mb-3 row">
-            <label for="waktu-mulai" class="col-sm-2 col-form-label">Waktu
-                Mulai</label>
-            <div class="col-sm-10">
-                <input type="time" placeholder="-Pilih Waktu Mulai-" class="form-control"
-                    id="waktu-mulai" name="waktu_mulai" value="<?php echo $waktu_mulai ?>"
-                    required>
-            </div>
-        </div>
+                                        <div class="mb-3 row">
+                                            <label for="waktu-mulai" class="col-sm-2 col-form-label">Waktu
+                                                Mulai</label>
+                                            <div class="col-sm-10">
+                                                <input type="time" placeholder="-Pilih Waktu Mulai-" class="form-control"
+                                                    id="waktu-mulai" name="waktu_mulai" value="<?php echo $waktu_mulai ?>"
+                                                    required>
+                                            </div>
+                                        </div>
 
-        <div class="mb-3 row">
-            <label for="waktu-selesai" class="col-sm-2 col-form-label">Waktu
-                Selesai</label>
-            <div class="col-sm-10">
-                <input type="time" placeholder="-Pilih Waktu Selesai-" class="form-control"
-                    id="waktu-selesai" name="waktu_selesai"
-                    value="<?php echo $waktu_selesai ?>" required>
-            </div>
-        </div>
+                                        <div class="mb-3 row">
+                                            <label for="waktu-selesai" class="col-sm-2 col-form-label">Waktu
+                                                Selesai</label>
+                                            <div class="col-sm-10">
+                                                <input type="time" placeholder="-Pilih Waktu Selesai-" class="form-control"
+                                                    id="waktu-selesai" name="waktu_selesai"
+                                                    value="<?php echo $waktu_selesai ?>" required>
+                                            </div>
+                                        </div>
 
-        <div class="mb-3 row">
-            <label for="harga" class="col-sm-2 col-form-label">Harga</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="harga" name="harga"
-                    value="<?php echo $harga ?>" readonly>
-                <input type="text" class="form-control" id="status" name="status" readonly
-                    hidden value="Belum Dipesan">
-            </div>
-        </div>
+                                        <div class="mb-3 row">
+                                            <label for="harga" class="col-sm-2 col-form-label">Harga</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="harga" name="harga"
+                                                    value="<?php echo $harga ?>" readonly>
+                                                <input type="text" class="form-control" id="status" name="status" readonly
+                                                    hidden value="Belum Dipesan">
+                                            </div>
+                                        </div>
 
-        <div class="row">
-            <div class="col-xxl-8 col-12">
-                <input type="submit" name="simpan" value="Simpan Data"
-                    class="btn w-100 mt-5" id="save-btn">
-            </div>
-        </div>
-        </form>
-    </div>
-</div>
-
-                <?php } ?>
-
-
-                <script>
-    const waktuMulaiInput = document.getElementById("waktu-mulai");
-    const waktuAkhirInput = document.getElementById("waktu-selesai");
-    const hargaInput = document.getElementById("harga");
-    const jenisLapanganSelect = document.getElementById("jenis_lap");
-
-    waktuMulaiInput.addEventListener("input", calculatePrice);
-    waktuAkhirInput.addEventListener("input", calculatePrice);
-    jenisLapanganSelect.addEventListener("change", calculatePrice);
-
-    function calculatePrice() {
-        const waktuMulai = waktuMulaiInput.value;
-        const waktuAkhir = waktuAkhirInput.value;
-        const selectedLapangan = jenisLapanganSelect.value;
-
-        if (waktuMulai && waktuAkhir) {
-            const [startHour, startMinute] = waktuMulai.split(":").map(Number);
-            const [endHour, endMinute] = waktuAkhir.split(":").map(Number);
-
-            const startMinutes = startHour * 60 + startMinute;
-            const endMinutes = endHour * 60 + endMinute;
-
-            if (startMinutes < endMinutes) {
-                const durationHours = (endMinutes - startMinutes) / 60;
-                let pricePerHour = 0;
-
-                if (startHour === 16 && endHour === 17) {
-                    // Check if waktuMulai is between 16:00 and 17:00 (break time)
-                    hargaInput.value = "Durasi waktu istirahat";
-                    hargaInput.style.color = "red";
-                    return; // Stop further processing
-                }
-
-                switch (selectedLapangan) {
-                    case "Renang":
-                        pricePerHour = 10000;
-                        break;
-                    case "Bola Basket":
-                        pricePerHour = 90000;
-                        break;
-                    case "Sepak Bola":
-                        pricePerHour = 500000;
-                        break;
-                    case "Bola Voli":
-                        pricePerHour = 110000;
-                        break;
-                    case "Tenis Lapangan":
-                        pricePerHour = 120000;
-                        break;
-                    case "Badminton":
-                        pricePerHour = 30000;
-                        break;
-                    case "Futsal":
-                        if (startHour >= 7 && endHour <= 16) {
-                            pricePerHour = 105000;
-                        } else if (startHour >= 17 && endHour <= 24) {
-                            pricePerHour = 135000;
-                        } else {
-                            hargaInput.value = "Input selisih waktu salah";
-                            hargaInput.style.color = "red";
-                            return;
-                        }
-                        break;
-                    default:
-                        // Default case, cabang olahraga not recognized
-                        hargaInput.value = "Harga tidak diketahui";
-                        hargaInput.style.color = "black";
-                        return;
-                }
-
-                const totalPrice = durationHours * pricePerHour;
-                hargaInput.value = totalPrice;
-
-                // Remove any previous warning
-                hargaInput.style.color = "black";
-            } else {
-                // Invalid time range, display a warning
-                hargaInput.value = "Input selisih waktu salah";
-                hargaInput.style.color = "red";
-            }
-        } else {
-            // One or both input fields are empty, clear the harga field
-            hargaInput.value = "";
-            hargaInput.style.color = "black";
-        }
-    }
-</script>
-
-
-
-                <!-- DataTales Example -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
-                        style="color: white; background-color: #02406d;">
-                        <h6 class="m-0 font-weight-bold">Tabel <span style="color: #a1ff9f">Jadwal</span></h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <?php if ($error2 || $sukses2): ?>
-                                <div class="alert <?php echo $error2 ? 'alert-danger' : 'alert-success'; ?>"
-                                    role="alert">
-                                    <?php echo $error2 ? $error2 : $sukses2; ?>
+                                        <div class="row">
+                                            <div class="col-xxl-8 col-12">
+                                                <input type="submit" name="simpan" value="Simpan Data"
+                                                    class="btn w-100 mt-5" id="save-btn">
+                                            </div>
+                                        </div>
+                                        </form>
+                                    </div>
                                 </div>
-                            <?php endif; ?>
-                            <form action="jadwal.php" method="GET">
-                                <div class="form-group" style="display: flex; gap: 10px;">
-                                    <input type="text" name="search" id="searchInput" style="width: 30%;"
-                                        class="form-control" placeholder="Tekan / untuk Mencari Jadwal"
-                                        value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
 
-                                    <button type="submit" class="btn btn-info" id="searchButton">Cari</button>
-                                    <?php if (isset($_GET['search'])): ?>
-                                        <a href="jadwal.php" class="btn btn-secondary" id="resetSearch">Hapus
-                                            Pencarian</a>
-                                    <?php endif; ?>
-                                </div>
-                            </form>
+                            <?php } ?>
+
 
                             <script>
-                                document.getElementById('searchButton').addEventListener('click', function(event) {
-                                    var searchInput = document.getElementById('searchInput');
+                                const waktuMulaiInput = document.getElementById("waktu-mulai");
+                                const waktuAkhirInput = document.getElementById("waktu-selesai");
+                                const hargaInput = document.getElementById("harga");
+                                const jenisLapanganSelect = document.getElementById("jenis_lap");
 
-                                    if (searchInput.value === '') {
-                                        event.preventDefault(); // Prevent form submission if the search field is empty
-                                        searchInput.placeholder = 'Kolom pencarian tidak boleh kosong!';
-                                        searchInput.style.borderColor = 'red'; // Change border color to red
+                                waktuMulaiInput.addEventListener("input", calculatePrice);
+                                waktuAkhirInput.addEventListener("input", calculatePrice);
+                                jenisLapanganSelect.addEventListener("change", calculatePrice);
+
+                                function calculatePrice() {
+                                    const waktuMulai = waktuMulaiInput.value;
+                                    const waktuAkhir = waktuAkhirInput.value;
+                                    const selectedLapangan = jenisLapanganSelect.value;
+
+                                    if (waktuMulai && waktuAkhir) {
+                                        const [startHour, startMinute] = waktuMulai.split(":").map(Number);
+                                        const [endHour, endMinute] = waktuAkhir.split(":").map(Number);
+
+                                        const startMinutes = startHour * 60 + startMinute;
+                                        const endMinutes = endHour * 60 + endMinute;
+
+                                        if (startMinutes < endMinutes) {
+                                            const durationHours = (endMinutes - startMinutes) / 60;
+                                            let pricePerHour = 0;
+
+                                            if (startHour === 16 && endHour === 17) {
+                                                // Check if waktuMulai is between 16:00 and 17:00 (break time)
+                                                hargaInput.value = "Durasi waktu istirahat";
+                                                hargaInput.style.color = "red";
+                                                return; // Stop further processing
+                                            }
+
+                                            switch (selectedLapangan) {
+                                                case "Renang":
+                                                    pricePerHour = 10000;
+                                                    break;
+                                                case "Bola Basket":
+                                                    pricePerHour = 90000;
+                                                    break;
+                                                case "Sepak Bola":
+                                                    pricePerHour = 500000;
+                                                    break;
+                                                case "Bola Voli":
+                                                    pricePerHour = 110000;
+                                                    break;
+                                                case "Tenis Lapangan":
+                                                    pricePerHour = 120000;
+                                                    break;
+                                                case "Badminton":
+                                                    pricePerHour = 30000;
+                                                    break;
+                                                case "Futsal":
+                                                    if (startHour >= 7 && endHour <= 16) {
+                                                        pricePerHour = 105000;
+                                                    } else if (startHour >= 17 && endHour <= 24) {
+                                                        pricePerHour = 135000;
+                                                    } else {
+                                                        hargaInput.value = "Input selisih waktu salah";
+                                                        hargaInput.style.color = "red";
+                                                        return;
+                                                    }
+                                                    break;
+                                                default:
+                                                    // Default case, cabang olahraga not recognized
+                                                    hargaInput.value = "Harga tidak diketahui";
+                                                    hargaInput.style.color = "black";
+                                                    return;
+                                            }
+
+                                            const totalPrice = durationHours * pricePerHour;
+                                            hargaInput.value = totalPrice;
+
+                                            // Remove any previous warning
+                                            hargaInput.style.color = "black";
+                                        } else {
+                                            // Invalid time range, display a warning
+                                            hargaInput.value = "Input selisih waktu salah";
+                                            hargaInput.style.color = "red";
+                                        }
                                     } else {
-                                        // Perform AJAX request to check if the value exists in the database
-                                        var xhr = new XMLHttpRequest();
-                                        xhr.open('GET', 'aktivitas.php?checkValue=' + encodeURIComponent(searchInput.value), true);
+                                        // One or both input fields are empty, clear the harga field
+                                        hargaInput.value = "";
+                                        hargaInput.style.color = "black";
+                                    }
+                                }
+                            </script>
 
-                                        xhr.onload = function() {
-                                            if (xhr.status === 200) {
-                                                console.log(xhr.responseText);
-                                                var response = JSON.parse(xhr.responseText);
-                                                if (response.count === 0) {
-                                                    // Value not found in the database
-                                                    event.preventDefault();
-                                                    searchInput.placeholder = 'Pencarian tidak ditemukan!';
-                                                    searchInput.style.borderColor = 'red';
+
+
+                            <!-- DataTales Example -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                                    style="color: white; background-color: #02406d;">
+                                    <h6 class="m-0 font-weight-bold">Tabel <span style="color: #a1ff9f">Jadwal</span></h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <?php if ($error2 || $sukses2): ?>
+                                            <div class="alert <?php echo $error2 ? 'alert-danger' : 'alert-success'; ?>"
+                                                role="alert">
+                                                <?php echo $error2 ? $error2 : $sukses2; ?>
+                                            </div>
+                                        <?php endif; ?>
+                                        <form action="jadwal.php" method="GET">
+                                            <div class="form-group" style="display: flex; gap: 10px;">
+                                                <input type="text" name="search" id="searchInput" style="width: 30%;"
+                                                    class="form-control" placeholder="Tekan / untuk Mencari Jadwal"
+                                                    value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
+
+                                                <button type="submit" class="btn btn-info" id="searchButton">Cari</button>
+                                                <?php if (isset($_GET['search'])): ?>
+                                                    <a href="jadwal.php" class="btn btn-secondary" id="resetSearch">Hapus
+                                                        Pencarian</a>
+                                                <?php endif; ?>
+                                            </div>
+                                        </form>
+
+                                        <script>
+                                            document.getElementById('searchButton').addEventListener('click', function(event) {
+                                                var searchInput = document.getElementById('searchInput');
+
+                                                if (searchInput.value === '') {
+                                                    event.preventDefault(); // Prevent form submission if the search field is empty
+                                                    searchInput.placeholder = 'Kolom pencarian tidak boleh kosong!';
+                                                    searchInput.style.borderColor = 'red'; // Change border color to red
                                                 } else {
-                                                    // Reset styles
+                                                    // Perform AJAX request to check if the value exists in the database
+                                                    var xhr = new XMLHttpRequest();
+                                                    xhr.open('GET', 'aktivitas.php?checkValue=' + encodeURIComponent(searchInput.value), true);
+
+                                                    xhr.onload = function() {
+                                                        if (xhr.status === 200) {
+                                                            console.log(xhr.responseText);
+                                                            var response = JSON.parse(xhr.responseText);
+                                                            if (response.count === 0) {
+                                                                // Value not found in the database
+                                                                event.preventDefault();
+                                                                searchInput.placeholder = 'Pencarian tidak ditemukan!';
+                                                                searchInput.style.borderColor = 'red';
+                                                            } else {
+                                                                // Reset styles
+                                                                searchInput.placeholder = 'Cari Jadwal';
+                                                                searchInput.style.borderColor = '';
+                                                            }
+                                                        }
+                                                    };
+
+                                                    xhr.send();
+                                                }
+                                            });
+
+                                            document.getElementById('searchInput').addEventListener('click', function() {
+                                                var searchInput = document.getElementById('searchInput');
+                                                searchInput.placeholder = 'Cari Jadwal';
+                                                searchInput.style.borderColor = '';
+                                            });
+
+                                            document.addEventListener('keydown', function(event) {
+                                                var searchInput = document.getElementById('searchInput');
+
+                                                // Check if the 'F' key is pressed and the placeholder is 'Kolom pencarian tidak boleh kosong!'
+                                                if (event.key.toLowerCase() === '/' && searchInput.placeholder === 'Kolom pencarian tidak boleh kosong!') {
                                                     searchInput.placeholder = 'Cari Jadwal';
                                                     searchInput.style.borderColor = '';
                                                 }
-                                            }
-                                        };
+                                            });
+                                        </script>
 
-                                        xhr.send();
-                                    }
-                                });
+                                        <table class="table text-nowrap table-centered table-hover" id="dataTable" width="100%"
+                                            cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">No.</th>
+                                                    <?php if ($_SESSION['email'] === 'arenafinder101@gmail.com'): ?>
+                                                        <th scope="col">
+                                                            Email Pengelola
+                                                        </th>
+                                                    <?php endif; ?>
+                                                    <?php if ($_SESSION['email'] === 'arenafinder101@gmail.com'): ?>
+                                                        <th scope="col">
+                                                            Nama Tempat
+                                                        </th>
+                                                    <?php endif; ?>
+                                                    <th scope="col">Jenis Olahraga</th>
+                                                    <th scope="col">Tanggal</th>
+                                                    <th scope="col">Waktu Mulai</th>
+                                                    <th scope="col">Waktu Selesai</th>
+                                                    <th scope="col">Harga</th>
+                                                    <th scope="col">Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="hoverable">
+                                                <?php
+                                                if (isset($_GET['reset'])) {
+                                                    // Pengguna menekan tombol "Hapus Pencarian"
+                                                    header("Location: jadwal.php"); // Mengarahkan ke halaman tanpa parameter pencarian
+                                                    exit();
+                                                }
 
-                                document.getElementById('searchInput').addEventListener('click', function() {
-                                    var searchInput = document.getElementById('searchInput');
-                                    searchInput.placeholder = 'Cari Jadwal';
-                                    searchInput.style.borderColor = '';
-                                });
+                                                $jumlahDataPerHalaman = 10;
 
-                                document.addEventListener('keydown', function(event) {
-                                    var searchInput = document.getElementById('searchInput');
+                                                // Perform the query to get the total number of rows
+                                                $queryCount = mysqli_query($conn, "SELECT COUNT(*) as total FROM venue_price");
+                                                $countResult = mysqli_fetch_assoc($queryCount);
+                                                $jumlahData = $countResult['total'];
 
-                                    // Check if the 'F' key is pressed and the placeholder is 'Kolom pencarian tidak boleh kosong!'
-                                    if (event.key.toLowerCase() === '/' && searchInput.placeholder === 'Kolom pencarian tidak boleh kosong!') {
-                                        searchInput.placeholder = 'Cari Jadwal';
-                                        searchInput.style.borderColor = '';
-                                    }
-                                });
-                            </script>
+                                                // Calculate the total number of pages
+                                                $jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
 
-                            <table class="table text-nowrap table-centered table-hover" id="dataTable" width="100%"
-                                cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">No.</th>
-                                        <?php if ($_SESSION['email'] === 'arenafinder101@gmail.com'): ?>
-                                            <th scope="col">
-                                                Email Pengelola
-                                            </th>
-                                        <?php endif; ?>
-                                        <?php if ($_SESSION['email'] === 'arenafinder101@gmail.com'): ?>
-                                            <th scope="col">
-                                                Nama Tempat
-                                            </th>
-                                        <?php endif; ?>
-                                        <th scope="col">Jenis Olahraga</th>
-                                        <th scope="col">Tanggal</th>
-                                        <th scope="col">Waktu Mulai</th>
-                                        <th scope="col">Waktu Selesai</th>
-                                        <th scope="col">Harga</th>
-                                        <th scope="col">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="hoverable">
-                                    <?php
-                                    if (isset($_GET['reset'])) {
-                                        // Pengguna menekan tombol "Hapus Pencarian"
-                                        header("Location: jadwal.php"); // Mengarahkan ke halaman tanpa parameter pencarian
-                                        exit();
-                                    }
+                                                // Get the current page
+                                                $page = (isset($_GET["page"])) ? $_GET["page"] : 1;
 
-                                    $jumlahDataPerHalaman = 10;
+                                                // Calculate the starting data index for the current page
+                                                $awalData = ($page - 1) * $jumlahDataPerHalaman;
 
-                                    // Perform the query to get the total number of rows
-                                    $queryCount = mysqli_query($conn, "SELECT COUNT(*) as total FROM venue_price");
-                                    $countResult = mysqli_fetch_assoc($queryCount);
-                                    $jumlahData = $countResult['total'];
+                                                $email = $_SESSION['email'];
 
-                                    // Calculate the total number of pages
-                                    $jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
-
-                                    // Get the current page
-                                    $page = (isset($_GET["page"])) ? $_GET["page"] : 1;
-
-                                    // Calculate the starting data index for the current page
-                                    $awalData = ($page - 1) * $jumlahDataPerHalaman;
-
-                                    $email = $_SESSION['email'];
-
-                                    if ($email === 'arenafinder101@gmail.com') {
-                                        // Jika email adalah arenafinder.app@gmail.com, tampilkan semua data
-                                        if (isset($_GET['search'])) {
-                                            $searchTerm = $conn->real_escape_string($_GET['search']);
-                                            $sql = "SELECT vp.*, v.sport, v.email, v.venue_name
+                                                if ($email === 'arenafinder101@gmail.com') {
+                                                    // Jika email adalah arenafinder.app@gmail.com, tampilkan semua data
+                                                    if (isset($_GET['search'])) {
+                                                        $searchTerm = $conn->real_escape_string($_GET['search']);
+                                                        $sql = "SELECT vp.*, v.sport, v.email, v.venue_name
                                                         FROM venue_price vp
                                                         JOIN venues v ON vp.id_venue = v.id_venue
                                                         WHERE v.sport LIKE '%$searchTerm%'
                                                         ORDER BY vp.id_price DESC
                                                         LIMIT $awalData, $jumlahDataPerHalaman";
-                                        } else {
-                                            $sql = "SELECT vp.*, v.sport, v.email, v.venue_name
+                                                    } else {
+                                                        $sql = "SELECT vp.*, v.sport, v.email, v.venue_name
                                                         FROM venue_price vp
                                                         JOIN venues v ON vp.id_venue = v.id_venue
                                                         ORDER BY vp.id_price DESC
                                                         LIMIT $awalData, $jumlahDataPerHalaman";
-                                        }
-                                    } else {
-                                        // Jika user tidak login dengan email arenafinder.app@gmail.com, tampilkan data sesuai dengan emailnya
-                                        if (isset($_GET['search'])) {
-                                            $searchTerm = $conn->real_escape_string($_GET['search']);
-                                            $sql = "SELECT vp.*, v.sport, v.email, v.venue_name
+                                                    }
+                                                } else {
+                                                    // Jika user tidak login dengan email arenafinder.app@gmail.com, tampilkan data sesuai dengan emailnya
+                                                    if (isset($_GET['search'])) {
+                                                        $searchTerm = $conn->real_escape_string($_GET['search']);
+                                                        $sql = "SELECT vp.*, v.sport, v.email, v.venue_name
                                                         FROM venue_price vp
                                                         JOIN venues v ON vp.id_venue = v.id_venue
                                                         WHERE v.email = '$email' AND v.sport LIKE '%$searchTerm%'
                                                         ORDER BY vp.id_price DESC
                                                         LIMIT $awalData, $jumlahDataPerHalaman";
-                                        } else {
-                                            $sql = "SELECT vp.*, v.sport, v.email, v.venue_name
+                                                    } else {
+                                                        $sql = "SELECT vp.*, v.sport, v.email, v.venue_name
                                                         FROM venue_price vp
                                                         JOIN venues v ON vp.id_venue = v.id_venue
                                                         WHERE v.email = '$email'
                                                         ORDER BY vp.id_price DESC
                                                         LIMIT $awalData, $jumlahDataPerHalaman";
-                                        }
-                                    }
+                                                    }
+                                                }
 
-                                    $jadwal = mysqli_query($conn, $sql);
-                                    $urut = 1 + $awalData;
+                                                $jadwal = mysqli_query($conn, $sql);
+                                                $urut = 1 + $awalData;
 
-                                    while ($r2 = mysqli_fetch_array($jadwal)) {
-                                        $id = $r2['id_price'];
-                                        $email = $r2['email'];
-                                        $venueName = $r2['venue_name'];
-                                        $sport = $r2['sport'];
-                                        $tgl = $r2['date'];
-                                        $w_mulai = $r2['start_hour'];
-                                        $w_selesai = $r2['end_hour'];
-                                        $harga = $r2['price'];
-                                    ?>
-                                        <tr>
-                                            <th scope="row">
-                                                <?php echo $urut++ ?>
-                                            </th>
-                                            <?php if ($_SESSION['email'] === 'arenafinder101@gmail.com'): ?>
-                                                <td scope="row">
-                                                    <?php echo $email ?>
-                                                </td>
-                                            <?php endif; ?>
-                                            <?php if ($_SESSION['email'] === 'arenafinder101@gmail.com'): ?>
-                                                <td scope="row">
-                                                    <?php echo $venueName ?>
-                                                </td>
-                                            <?php endif; ?>
-                                            <td scope="row">
-                                                <?php echo $sport ?>
-                                            </td>
-                                            <td scope="row">
-                                                <?php echo $tgl ?>
-                                            </td>
-                                            <td scope="row">
-                                                <?php echo $w_mulai ?>
-                                            </td>
-                                            <td scope="row">
-                                                <?php echo $w_selesai ?>
-                                            </td>
-                                            <td scope="row">
-                                                <?php echo $harga ?>
-                                            </td>
-                                            <td scope="row">
-                                                <?php
-                                                if (
-                                                    isset($_SESSION['email']) && $_SESSION['email'] ===
-                                                    'arenafinder101@gmail.com'
-                                                ) {
-                                                } else {
-                                                    // User is not logged in or has a different email, show the Edit button
-                                                    echo '<a href="jadwal.php?op=edit&id=' . $id . '"><button type="button"
+                                                while ($r2 = mysqli_fetch_array($jadwal)) {
+                                                    $id = $r2['id_price'];
+                                                    $email = $r2['email'];
+                                                    $venueName = $r2['venue_name'];
+                                                    $sport = $r2['sport'];
+                                                    $tgl = $r2['date'];
+                                                    $w_mulai = $r2['start_hour'];
+                                                    $w_selesai = $r2['end_hour'];
+                                                    $harga = $r2['price'];
+                                                ?>
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <?php echo $urut++ ?>
+                                                        </th>
+                                                        <?php if ($_SESSION['email'] === 'arenafinder101@gmail.com'): ?>
+                                                            <td scope="row">
+                                                                <?php echo $email ?>
+                                                            </td>
+                                                        <?php endif; ?>
+                                                        <?php if ($_SESSION['email'] === 'arenafinder101@gmail.com'): ?>
+                                                            <td scope="row">
+                                                                <?php echo $venueName ?>
+                                                            </td>
+                                                        <?php endif; ?>
+                                                        <td scope="row">
+                                                            <?php echo $sport ?>
+                                                        </td>
+                                                        <td scope="row">
+                                                            <?php echo $tgl ?>
+                                                        </td>
+                                                        <td scope="row">
+                                                            <?php echo $w_mulai ?>
+                                                        </td>
+                                                        <td scope="row">
+                                                            <?php echo $w_selesai ?>
+                                                        </td>
+                                                        <td scope="row">
+                                                            <?php echo $harga ?>
+                                                        </td>
+                                                        <td scope="row">
+                                                            <?php
+                                                            if (
+                                                                isset($_SESSION['email']) && $_SESSION['email'] ===
+                                                                'arenafinder101@gmail.com'
+                                                            ) {
+                                                            } else {
+                                                                // User is not logged in or has a different email, show the Edit button
+                                                                echo '<a href="jadwal.php?op=edit&id=' . $id . '"><button type="button"
                                                             class="btn btn-warning">Edit</button></a>';
+                                                            }
+                                                            ?>
+                                                            <a href="jadwal.php?op=delete&id=<?php echo $id ?>"
+                                                                onclick="return confirm('Yakin mau menghapus data ini?')"><button
+                                                                    type="button" class="btn btn-danger">Delete</button></a>
+                                                        </td>
+                                                        <script>
+                                                            document.addEventListener('DOMContentLoaded', function() {
+                                                                <?php if ($isArenaFinderEmail): ?>
+                                                                    document.getElementById('editButton').addEventListener('click', function() {
+                                                                        // Manually trigger the modal
+                                                                        $('#editModal').modal('show');
+                                                                    });
+                                                                <?php endif; ?>
+                                                            });
+                                                        </script>
+
+                                                    </tr>
+                                                <?php
                                                 }
                                                 ?>
-                                                <a href="jadwal.php?op=delete&id=<?php echo $id ?>"
-                                                    onclick="return confirm('Yakin mau menghapus data ini?')"><button
-                                                        type="button" class="btn btn-danger">Delete</button></a>
-                                            </td>
-                                            <script>
-                                                document.addEventListener('DOMContentLoaded', function() {
-                                                    <?php if ($isArenaFinderEmail): ?>
-                                                        document.getElementById('editButton').addEventListener('click', function() {
-                                                            // Manually trigger the modal
-                                                            $('#editModal').modal('show');
-                                                        });
-                                                    <?php endif; ?>
-                                                });
-                                            </script>
+                                            </tbody>
+                                        </table>
+                                        <!-- Pagination code -->
+                                        <ul class='pagination'>
+                                            <!-- Previous page link -->
+                                            <?php
+                                            if ($page > 1) {
+                                                echo "<li class='page-item'><a class='page-link' href='jadwal.php?page=" . ($page - 1) . "'>&laquo; Previous</a></li>";
+                                            }
 
-                                        </tr>
-                                    <?php
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                            <!-- Pagination code -->
-                            <ul class='pagination'>
-                                <!-- Previous page link -->
-                                <?php
-                                if ($page > 1) {
-                                    echo "<li class='page-item'><a class='page-link' href='jadwal.php?page=" . ($page - 1) . "'>&laquo; Previous</a></li>";
-                                }
+                                            // Numbered pagination links
+                                            for ($i = 1; $i <= $jumlahHalaman; $i++) {
+                                                echo "<li class='page-item " . (($page == $i) ? 'active' : '') . "'><a class='page-link' href='jadwal.php?page=$i'>$i</a></li>";
+                                            }
 
-                                // Numbered pagination links
-                                for ($i = 1; $i <= $jumlahHalaman; $i++) {
-                                    echo "<li class='page-item " . (($page == $i) ? 'active' : '') . "'><a class='page-link' href='jadwal.php?page=$i'>$i</a></li>";
-                                }
-
-                                // Next page link
-                                if ($page < $jumlahHalaman) {
-                                    echo "<li class='page-item'><a class='page-link' href='jadwal.php?page=" . ($page + 1) . "'>Next &raquo;</a></li>";
-                                }
-                                ?>
-                            </ul>
+                                            // Next page link
+                                            if ($page < $jumlahHalaman) {
+                                                echo "<li class='page-item'><a class='page-link' href='jadwal.php?page=" . ($page + 1) . "'>Next &raquo;</a></li>";
+                                            }
+                                            ?>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
-                </div>
+
             </div>
-
         </div>
-
-    </div>
-    </div>
 
     </div>
     <!-- /.container-fluid -->
@@ -888,7 +887,7 @@ if ($error || $sukses || $error2 || $sukses2) {
     </div>
     <!-- End of Page Wrapper -->
 
-    <!-- Scroll to Top Button--> 
+    <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>

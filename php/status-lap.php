@@ -472,7 +472,7 @@ $tanggal = "";
             </div>
         </form>
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('DOMContentLoaded', function() {
                 flatpickr("#staticEmail", {
                     enableTime: false, // Enable time selection
                     dateFormat: "Y-m-d", // Specify the date format
@@ -564,7 +564,7 @@ $tanggal = "";
                     // Card untuk data
                     echo '<div class="card" id="card-main">';
                     echo '<div class="card-body">';
-                    echo '<h5 class="card-title">' . ($row['membership'] == 0 ? 'Non Member' : 'Member') . '</h5>';
+                    echo '<h5 class="card-title">' .  'Non Member'  . '</h5>';
                     echo '<p class="card-text" id="date-card">' . $row['date'] . '</p>';
                     echo '<div class="waktu-container">';
                     echo '<span class="card-text" id="time-card">' . $row['start_hour'] . ' - </span>';
@@ -586,10 +586,10 @@ $tanggal = "";
     </div>
 
     <div class="footer">
-<h1 style="font-size: 20px; color: white;">Arena</h1>
-    <h1 style="font-size: 20px; color: #A1FF9F;">Finder</h1>
+        <h1 style="font-size: 20px; color: white;">Arena</h1>
+        <h1 style="font-size: 20px; color: #A1FF9F;">Finder</h1>
         <div class="hierarki">
-            <p style="font-size: 20px; color: white; margin-left: 55px;">Hierarki 
+            <p style="font-size: 20px; color: white; margin-left: 55px;">Hierarki
                 <a href="index.php" style="margin-top: 10px;">Beranda</a>
                 <a href="aktivitas.php">Aktivitas</a>
                 <a href="referensi.php">Referensi</a>
@@ -611,7 +611,7 @@ $tanggal = "";
             </p>
         </div>
 
-</div>
+    </div>
 
 
     <!-- flatpickr -->

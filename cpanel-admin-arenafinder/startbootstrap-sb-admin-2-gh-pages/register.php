@@ -53,17 +53,17 @@ if (isset($_POST["register"])) {
           alert("Nama pengguna sudah terdaftar. Mohon pilih nama pengguna lain.");
           window.location.replace('register.php');
         </script>
-      <?php
+        <?php
       } else {
         // Cek validasi sandi akun
         if (!isValidPassword($password)) {
-        // Notifikasi peringatan jika sandi salah
+          // Notifikasi peringatan jika sandi salah
         ?>
           <script>
             alert("Password harus memiliki 8 sampai 12 karakter, mengandung angka, huruf besar, huruf kecil, dan karakter khusus.");
             window.location.replace('register.php');
           </script>
-        <?php
+          <?php
         } else {
           $password_hash = password_hash($password, PASSWORD_BCRYPT);
 
@@ -77,7 +77,7 @@ if (isset($_POST["register"])) {
             $_SESSION['mail'] = $email;
 
             require "Mail/phpmailer/PHPMailerAutoload.php";
-            $mail = new PHPMailer; 
+            $mail = new PHPMailer;
 
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
@@ -110,7 +110,7 @@ if (isset($_POST["register"])) {
                 alert("<?php echo "Daftar akun sukses, kode OTP dikirim ke " . $email ?>");
                 window.location.replace('verification.php');
               </script>
-    <?php
+  <?php
             }
           }
         }
@@ -149,9 +149,9 @@ function isValidPassword($password)
 
 <script>
   // JavaScript validation for phone number (client-side)
-  document.forms['register'].addEventListener('submit', function (e) {
+  document.forms['register'].addEventListener('submit', function(e) {
     var phoneInput = document.getElementById('phone-input').value;
-    
+
     if (phoneInput.length < 12 || phoneInput.length > 13 || !/^\d+$/.test(phoneInput)) {
       alert("Nomor telepon harus terdiri dari 12 atau 13 digit dan hanya mengandung angka.");
       e.preventDefault(); // Prevent form submission
@@ -161,7 +161,7 @@ function isValidPassword($password)
 
 
 
- 
+
 <!DOCTYPE html>
 <html lang="en">
 

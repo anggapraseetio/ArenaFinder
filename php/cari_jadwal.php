@@ -402,7 +402,6 @@ if (!$koneksi) {
                 margin-left: -100px;
             }
         }
-        
     </style>
 </head>
 
@@ -479,7 +478,7 @@ if (!$koneksi) {
                         // Mengambil data dari database
                         $futsalData = $row['sport']; // Mengambil data dari kolom 'sport' di tabel 'venues'
                         $tanggalData = $row['date']; // Mengambil data dari kolom 'date' di tabel 'venue_price'
-                    
+
                         // Echo data ke dalam span
                         echo '<span class="text-wrapper">Jadwal</span>';
                         echo '<span class="span">' . $futsalData . ' </span>';
@@ -563,7 +562,6 @@ if (!$koneksi) {
 
                 // Setel innerHTML setelah perulangan selesai
                 cardCon.innerHTML = kontenHTML;
-
             </script>
 
             <br>
@@ -668,16 +666,16 @@ if (!$koneksi) {
             card.appendChild(dayOfWeek);
 
             // Perform an asynchronous request to get data from venue_price
-            fetch('get_venue_price.php', {  // Update the path if needed
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    action: 'get_data',
-                    date: clickedDate.toISOString().split('T')[0], // Format date as YYYY-MM-DD
-                }),
-            })
+            fetch('get_venue_price.php', { // Update the path if needed
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'get_data',
+                        date: clickedDate.toISOString().split('T')[0], // Format date as YYYY-MM-DD
+                    }),
+                })
                 .then(response => response.json())
                 .then(data => {
                     // Assuming you have a container with id "scheduleContainer" in your HTML
@@ -748,7 +746,7 @@ if (!$koneksi) {
             card.appendChild(dayOfWeek);
 
             // Handle card click
-            card.addEventListener("click", function () {
+            card.addEventListener("click", function() {
                 handleCardClick(day);
             });
 
@@ -806,15 +804,15 @@ if (!$koneksi) {
             // Menggeser ke kartu selanjutnya jika melebihi threshold, sebaliknya kembali ke posisi semula
             if (currentTranslate > 0) {
                 container.style.transform = "translateX(0)";
-                previousTranslate = currentTranslate = 0; z
+                previousTranslate = currentTranslate = 0;
+                z
             } else if (
                 currentTranslate <
                 -(cards.length - 5) * (cards[0].offsetWidth + 20)
             ) {
                 container.style.transform = `translateX(${-(cards.length - 5) * (cards[0].offsetWidth + 20)
                     }px)`;
-                previousTranslate = currentTranslate =
-                    -(cards.length - 5) * (cards[0].offsetWidth + 20);
+                previousTranslate = currentTranslate = -(cards.length - 5) * (cards[0].offsetWidth + 20);
             } else if (currentTranslate < -50) { // Set the limit value (adjust as needed)
                 container.style.transform = `translateX(${currentTranslate}px)`;
                 previousTranslate = currentTranslate;
@@ -827,9 +825,9 @@ if (!$koneksi) {
 
         // Menghitung posisi dari event (sentuhan atau klik mouse)
         function getEventPosition(event) {
-            return event.type.includes("mouse")
-                ? event.clientX
-                : event.touches[0].clientX;
+            return event.type.includes("mouse") ?
+                event.clientX :
+                event.touches[0].clientX;
         }
 
         // Memperbarui transformasi pada container
@@ -876,11 +874,11 @@ if (!$koneksi) {
                 }
                 // // Determine the card class based on the status
                 // $cardClass = ($row['status_pemesanan'] == 'Sudah Dipesan') ? 'card shadow gray-card' : 'card shadow';
-        
+
                 // Card untuk data
                 echo '<div class="card" id="card-main">';
                 echo '<div class="card-body">';
-                echo '<h5 class="card-title">' . ($row['membership'] == 0 ? 'Non Member' : 'Member') . '</h5>';
+                echo '<h5 class="card-title">' . 'Non Member'  . '</h5>';
                 echo '<p class="card-text" id="date-card">' . $row['date'] . '</p>';
                 echo '<div class="waktu-container">';
                 echo '<span class="card-text" id="time-card">' . $row['start_hour'] . ' - </span>';
@@ -897,12 +895,12 @@ if (!$koneksi) {
         ?>
     </div>
 
-    
-        <div class="footer"  style="margin-left: 0;">
-            <h1 style="font-size: 20px; color: white;">Arena</h1>
-            <h1 style="font-size: 20px; color: #A1FF9F;">Finder</h1>
-            <div class="hierarki">
-            <p style="font-size: 20px; color: white; margin-left: 55px;">Hierarki 
+
+    <div class="footer" style="margin-left: 0;">
+        <h1 style="font-size: 20px; color: white;">Arena</h1>
+        <h1 style="font-size: 20px; color: #A1FF9F;">Finder</h1>
+        <div class="hierarki">
+            <p style="font-size: 20px; color: white; margin-left: 55px;">Hierarki
                 <a href="index.php" style="margin-top: 10px;">Beranda</a>
                 <a href="aktivitas.php">Aktivitas</a>
                 <a href="referensi.php">Referensi</a>
@@ -922,28 +920,28 @@ if (!$koneksi) {
             <p style="font-size: 20px; color: white; margin-left: 100px;">Aplikasi Mobile
                 <a href="https://wa.me/62895807400305">Download Aplikasi?</a>
             </p>
-     </div>
-  
+        </div>
 
-            <!-- flatpickr -->
-            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-            <script>
-                flatpickr("input[type=datetime-local]", {});
-            </script>
-            <!-- Include Bootstrap JS and jQuery -->
-            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-            <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    flatpickr("#staticEmail", {
-                        enableTime: false, // Enable time selection
-                        minDate: "today", // Set the minimum date to today
-                        dateFormat: "Y-m-d", // Specify the date format
-                        defaultDate: "today"
-                    });
+
+        <!-- flatpickr -->
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script>
+            flatpickr("input[type=datetime-local]", {});
+        </script>
+        <!-- Include Bootstrap JS and jQuery -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                flatpickr("#staticEmail", {
+                    enableTime: false, // Enable time selection
+                    minDate: "today", // Set the minimum date to today
+                    dateFormat: "Y-m-d", // Specify the date format
+                    defaultDate: "today"
                 });
-            </script>
-    </body>
+            });
+        </script>
+</body>
 
 </html>

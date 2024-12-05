@@ -24,4 +24,3 @@ if (isset($_GET['jenis_lap']) && isset($_GET['keanggotaan'])) {
 } else {
     echo json_encode(['error' => 'Parameter tidak lengkap']);
 }
-?>

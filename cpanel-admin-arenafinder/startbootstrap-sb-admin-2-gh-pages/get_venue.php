@@ -3,7 +3,7 @@
 $host = "localhost";
 $user = "tifz1761_root";
 $pass = "tifnganjuk321";
-$db= "tifz1761_arenafinder";
+$db = "tifz1761_arenafinder";
 
 $koneksi = mysqli_connect("$host", "$user", "$pass", "$db");
 
@@ -43,4 +43,3 @@ echo $response;
 
 // Tutup koneksi database
 mysqli_close($koneksi);
-?>

@@ -33,5 +33,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Gagal memperbarui data pengguna: " . mysqli_error($conn);
     }
 }
-
-?>

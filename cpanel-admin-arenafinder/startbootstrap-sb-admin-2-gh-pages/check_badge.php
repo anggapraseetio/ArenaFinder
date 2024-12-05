@@ -27,4 +27,3 @@ if ($result) {
 
 // Tutup koneksi
 $conn->close();
-?>

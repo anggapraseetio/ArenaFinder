@@ -384,11 +384,7 @@ if (!$koneksi) {
             border-right: 2px solid #000;
             font-size: 24px;
             color: #02406D;
-            animation: typing
-                <?php echo strlen($dynamicText) / 10; ?>
-                s steps(
-                    <?php echo strlen($dynamicText); ?>
-                ) infinite;
+            animation: typing <?php echo strlen($dynamicText) / 10; ?> s steps(<?php echo strlen($dynamicText); ?>) infinite;
         }
 
         @keyframes typing {
@@ -423,11 +419,7 @@ if (!$koneksi) {
                 text-align: center;
                 border-right: 2px solid #000;
                 font-size: 24px;
-                animation: typing
-                    <?php echo strlen($dynamicText) / 10; ?>
-                    s steps(
-                        <?php echo strlen($dynamicText); ?>
-                    ) infinite;
+                animation: typing <?php echo strlen($dynamicText) / 10; ?> s steps(<?php echo strlen($dynamicText); ?>) infinite;
             }
 
             .form-container {
@@ -617,10 +609,10 @@ if (!$koneksi) {
 
 
     <div class="footer">
-<h1 style="font-size: 20px; color: white;">Arena</h1>
-    <h1 style="font-size: 20px; color: #A1FF9F;">Finder</h1>
+        <h1 style="font-size: 20px; color: white;">Arena</h1>
+        <h1 style="font-size: 20px; color: #A1FF9F;">Finder</h1>
         <div class="hierarki">
-            <p style="font-size: 20px; color: white; margin-left: 55px;">Hierarki 
+            <p style="font-size: 20px; color: white; margin-left: 55px;">Hierarki
                 <a href="index.php" style="margin-top: 10px;">Beranda</a>
                 <a href="aktivitas.php">Aktivitas</a>
                 <a href="referensi.php">Referensi</a>
@@ -642,7 +634,7 @@ if (!$koneksi) {
             </p>
         </div>
 
-</div>
+    </div>
 
     <!-- flatpickr -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -654,7 +646,7 @@ if (!$koneksi) {
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             flatpickr("#staticEmail", {
                 enableTime: false, // Enable time selection
                 dateFormat: "Y-m-d", // Specify the date format

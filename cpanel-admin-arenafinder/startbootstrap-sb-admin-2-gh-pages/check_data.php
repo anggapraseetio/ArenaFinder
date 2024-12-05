@@ -136,4 +136,3 @@ elseif (isset($_POST['cancelButton'])) {
 
 // Close the database connection
 $conn->close();
-?>

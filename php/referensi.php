@@ -549,7 +549,7 @@ if (!$koneksi) {
           // Loop through each sport and generate a button
           foreach ($sports as $sport) {
             $sportName = $sport['sport'];
-            ?>
+          ?>
 
             <button class="all" type="submit" name="sport" value="<?php echo $sportName; ?>"
               data-sport-name="<?php echo $sportName; ?>">
@@ -559,7 +559,7 @@ if (!$koneksi) {
                 <?php echo $sportName; ?>
               </span>
             </button>
-            <?php
+          <?php
           }
           ?>
         </div>
@@ -690,7 +690,7 @@ if (!$koneksi) {
         $sql3 = "SELECT * FROM venues WHERE sport_status = '$tipe_lapangan'";
         $q3 = mysqli_query($koneksi, $sql3);
         $count = 0; // Untuk menghitung jumlah kartu pada setiap baris
-        
+
         while ($row = mysqli_fetch_array($q3)) {
           // Membuka baris baru setiap kali 4 kartu telah ditampilkan
           if ($count % 4 == 0) {
@@ -729,7 +729,7 @@ if (!$koneksi) {
         $sql3 = "SELECT * FROM venues WHERE sport_status = '$tipe_lapangan'";
         $q3 = mysqli_query($koneksi, $sql3);
         $count = 0; // Untuk menghitung jumlah kartu pada setiap baris
-        
+
         while ($row = mysqli_fetch_array($q3)) {
           // Membuka baris baru setiap kali 4 kartu telah ditampilkan
           if ($count % 4 == 0) {
@@ -764,7 +764,7 @@ if (!$koneksi) {
     function showCards(category) {
       var cards = document.querySelectorAll('.card');
 
-      cards.forEach(function (card) {
+      cards.forEach(function(card) {
         var tipeLap = card.getAttribute('data-tipe-lap');
 
         // Tampilkan hanya kartu dengan kategori yang sesuai
@@ -777,32 +777,32 @@ if (!$koneksi) {
     }
   </script>
 
-<div class="footer">
-<h1 style="font-size: 20px; color: white;">Arena</h1>
+  <div class="footer">
+    <h1 style="font-size: 20px; color: white;">Arena</h1>
     <h1 style="font-size: 20px; color: #A1FF9F;">Finder</h1>
-        <div class="hierarki">
-            <p style="font-size: 20px; color: white; margin-left: 55px;">Hierarki 
-                <a href="index.php" style="margin-top: 10px;">Beranda</a>
-                <a href="aktivitas.php">Aktivitas</a>
-                <a href="referensi.php">Referensi</a>
-                <!-- <a href="info_mitra.php">Info Mitra</a> -->
-            </p>
-            <p style="font-size: 20px; color: white; margin-left: 150px;">Bantuan
-                <a href="bantuan.html" style="margin-top: 10px;">Apa saja layanan yang disediakan?</a>
-                <a href="bantuan.html">Siapa target penggunanya?</a>
-                <a href="bantuan.html">Bagaimana sistem ini bekerja?</a>
-                <a href="bantuan.html">Bagaimana cara daftar lapangan?</a>
-                <a href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php">Masuk aplikasi?</a>
-                <a href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php">Daftar aplikasi?</a>
-            </p>
-            <p style="font-size: 20px; color: white; margin-left: 100px;">Narahubung
-                <a href="https://wa.me/6285785488403">https://wa.me/087860616270</a>
-            </p>
-            <p style="font-size: 20px; color: white; margin-left: 100px;">Aplikasi Mobile
-                <a href="https://wa.me/62895807400305">Download Aplikasi?</a>
-            </p>
-        </div>
-</div>
+    <div class="hierarki">
+      <p style="font-size: 20px; color: white; margin-left: 55px;">Hierarki
+        <a href="index.php" style="margin-top: 10px;">Beranda</a>
+        <a href="aktivitas.php">Aktivitas</a>
+        <a href="referensi.php">Referensi</a>
+        <!-- <a href="info_mitra.php">Info Mitra</a> -->
+      </p>
+      <p style="font-size: 20px; color: white; margin-left: 150px;">Bantuan
+        <a href="bantuan.html" style="margin-top: 10px;">Apa saja layanan yang disediakan?</a>
+        <a href="bantuan.html">Siapa target penggunanya?</a>
+        <a href="bantuan.html">Bagaimana sistem ini bekerja?</a>
+        <a href="bantuan.html">Bagaimana cara daftar lapangan?</a>
+        <a href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/login.php">Masuk aplikasi?</a>
+        <a href="/ArenaFinder/cpanel-admin-arenafinder/startbootstrap-sb-admin-2-gh-pages/register.php">Daftar aplikasi?</a>
+      </p>
+      <p style="font-size: 20px; color: white; margin-left: 100px;">Narahubung
+        <a href="https://wa.me/6285785488403">https://wa.me/087860616270</a>
+      </p>
+      <p style="font-size: 20px; color: white; margin-left: 100px;">Aplikasi Mobile
+        <a href="https://wa.me/62895807400305">Download Aplikasi?</a>
+      </p>
+    </div>
+  </div>
 
   <!-- Include Bootstrap JS and jQuery -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -810,7 +810,7 @@ if (!$koneksi) {
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
   <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
       $("#ref-btn").popover({
         content: "Menu ini hanya bisa diakses oleh super admin/developer",
         trigger: "hover",
@@ -822,10 +822,10 @@ if (!$koneksi) {
     // Simulasikan status login admin (ganti dengan kode sesuai aplikasi Anda)
     const isAdmin = false; // Ganti menjadi true jika pengguna adalah admin
 
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
       const refBtn = document.getElementById("ref-btn");
 
-      refBtn.addEventListener("click", function (event) {
+      refBtn.addEventListener("click", function(event) {
         if (isAdmin) {
           event.preventDefault(); // Mencegah tautan dari diikuti
           alert("Anda adalah admin. Anda tidak dapat mengakses tautan ini.");

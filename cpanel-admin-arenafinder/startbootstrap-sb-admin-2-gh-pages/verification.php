@@ -13,7 +13,7 @@ if (isset($_POST["verify"])) {
         // Hapus data pengguna dari database
         $deleteQuery = "DELETE FROM users WHERE email = '$email'";
         mysqli_query($conn, $deleteQuery);
-        
+
         $verificationMessage = "Maaf, kode OTP sudah kadaluwarsa. Silakan daftar kembali.";
         echo <<<EOL
   <html>
